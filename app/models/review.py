@@ -17,6 +17,7 @@ class Review(db.Model):
 
     user = db.relationship("User", back_populates="user_reviews")
     business = db.relationship("Business", back_populates="business_reviews")
+    review_images = db.relationship("ReviewImages", back_populates="review", cascade='all, delete')
 
     def to_dict(self):
         return {
@@ -27,4 +28,8 @@ class Review(db.Model):
             'stars': self.stars,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
+            'review_images': [review_image.to_dict() for review_image in self.review_images]
         }
+
+    def reviewer(self):
+        return self.user.to_dict()

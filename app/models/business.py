@@ -43,4 +43,8 @@ class Business(db.Model):
             'business_type': self.business_type,
             'price': self.price,
             'url': self.url,
+            'images': [business_image.to_dict() for business_image in self.business_images],
+            'owner': self.owner.to_dict(),
+            'all_reviews': [review.to_dict() for review in self.business_reviews],
+            'num_reviews': len(self.business_reviews),
         }
