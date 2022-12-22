@@ -1,6 +1,7 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, IntegerField
 from wtforms.validators import DataRequired, Length, NumberRange
+from app.models import Review
 
 class ReviewForm(FlaskForm):
     review = TextAreaField('review', validators=[DataRequired('To submit your review, please explain your rating to others.'), Length(min=1, max=3000, message='Your review might be too longer, consider shortening your review to 3000 characters.')])
