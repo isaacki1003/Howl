@@ -77,3 +77,24 @@ def delete_business(id):
     db.session.delete(business)
     db.session.commit()
     return {'message': 'Business deleted'}
+
+#ADD IMAGES TO A BUSINESS
+# @business_routes.route('/<int:id>/images', methods=['POST'])
+# @login_required
+# def add_business_images(id):
+
+
+#GET ALL REVIEWS FOR A BUSINESS
+@business_routes.route('/<int:id>/reviews')
+def get_business_reviews(id):
+    business = Business.query.get(id)
+    reviews = []
+    if business:
+        business_reviews = business.business_reviews
+        for review in business_reviews:
+            images = review.review_images
+            result = review.to_dict()
+            result['images'] = images
+            result['reviewer'] = review.reviewer()
+            reviews.append(result)
+    return {'reviews': reviews}
