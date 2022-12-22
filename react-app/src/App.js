@@ -8,6 +8,9 @@ import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
 import { authenticate } from './store/session';
+import CreateBusiness from './components/business/CreateBusiness';
+import Landing from './components/landing/Landing';
+import EditBusiness from './components/business/EditBusiness';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -34,6 +37,12 @@ function App() {
         <Route path='/sign-up' exact={true}>
           <SignUpForm />
         </Route>
+        <Route path="/create-business">
+					<CreateBusiness />
+				</Route>
+        <Route path="/business/:businessId/edit">
+          <EditBusiness />
+        </Route>
         <ProtectedRoute path='/users' exact={true} >
           <UsersList/>
         </ProtectedRoute>
@@ -41,7 +50,7 @@ function App() {
           <User />
         </ProtectedRoute>
         <Route path='/' exact={true} >
-          <h1>My Home Page</h1>
+          <Landing />
         </Route>
       </Switch>
     </BrowserRouter>

@@ -22,6 +22,9 @@ class Business(db.Model):
     price = db.Column(db.Integer, nullable=False)
     url = db.Column(db.String(250), nullable=True)
 
+    owner = db.relationship("User", back_populates="user_businesses")
+    business_reviews = db.relationship("Review", back_populates="business", cascade='all, delete')
+
     def to_dict(self):
         return {
             'id': self.id,
@@ -38,6 +41,4 @@ class Business(db.Model):
             'business_type': self.business_type,
             'price': self.price,
             'url': self.url,
-            'created_at': self.created_at,
-            'updated_at': self.updated_at
         }
