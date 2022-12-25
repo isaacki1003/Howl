@@ -65,13 +65,9 @@ const EditBusiness = () => {
         };
 
         const business2 = await dispatch(editBusiness(payload, businessId));
-        if (business2.errors) {
-            setErrors(business2.errors);
-        } else {
-            await dispatch(getSingleBusiness(businessId));
-            history.push(`/${businessId}`);
+        await dispatch(getSingleBusiness(businessId));
+        history.push(`/${businessId}`);
         }
-    };
 
     return (
         <div>
@@ -237,6 +233,6 @@ const EditBusiness = () => {
         </div>
     )
 
-}
+};
 
 export default EditBusiness;
