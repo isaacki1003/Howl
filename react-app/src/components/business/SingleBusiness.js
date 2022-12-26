@@ -18,7 +18,7 @@ const SingleBusiness = () => {
             setBusinessImages(results.images);
         }
         execute();
-        return () => dispatch(cleanUpBusiness());
+        // return () => dispatch(cleanUpBusiness());
     }, [businessId]);
 
     return (

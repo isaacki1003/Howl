@@ -8,6 +8,10 @@ const SingleBusinessBody = ({ business }) => {
     const dispatch = useDispatch();
     const history = useHistory();
 
+	if (!business) {
+		return <div>Loading...</div>;
+	  }
+
     const handleDelete = async (e) => {
         if (
 			window.confirm(
@@ -19,7 +23,7 @@ const SingleBusinessBody = ({ business }) => {
 		}
 	};
 
-    const theOwner = user?.id == business.owner_id;
+    const theOwner = user?.id == business?.owner_id;
 
     return (
 		<div className="business-details-body-wrapper">
