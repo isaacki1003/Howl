@@ -66,7 +66,7 @@ class Business(db.Model):
         images = owner_image_urls + review_image_urls
         return images
 
-     def get_a_review(self):
+    def get_a_review(self):
         if self.business_reviews:
             return [review.to_dict() for review in self.business_reviews]
         return []
