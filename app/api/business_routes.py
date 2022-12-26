@@ -1,8 +1,8 @@
 from flask import Blueprint, request
 from flask_login import login_required, current_user, login_user, logout_user
 from .auth_routes import validation_errors_to_error_messages
-from app.models import User, db, Business
-from app.forms import BusinessForm
+from app.models import User, db, Business, BusinessImages, Review, ReviewImages
+from app.forms import BusinessForm, BusinessImageForm, ReviewForm
 
 business_routes = Blueprint('business', __name__)
 
@@ -79,9 +79,21 @@ def delete_business(id):
     return {'message': 'Business deleted'}
 
 #ADD IMAGES TO A BUSINESS
-# @business_routes.route('/<int:id>/images', methods=['POST'])
-# @login_required
-# def add_business_images(id):
+@business_routes.route('/<int:id>/images', methods=['POST'])
+@login_required
+def add_business_images(id):
+    form = BusinessImageForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        image = BusinessImages(
+            business_id = form.data['business_id'],
+            url = form.data['url'],
+            preview = form.data['preview']
+        )
+        db.session.add(image)
+        db.session.commit()
+        return image.to_dict()
+    return {'error': 'Error with Image'}
 
 
 #GET ALL REVIEWS FOR A BUSINESS
@@ -98,3 +110,24 @@ def get_business_reviews(id):
             result['reviewer'] = review.reviewer()
             reviews.append(result)
     return {'reviews': reviews}
+
+#ADD A REVIEW TO A BUSINESS
+@business_routes.route('/<int:id>/reviews', methods=['POST'])
+@login_required
+def add_business_review(id):
+    business = Business.query.get(id)
+    form = ReviewForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if business:
+        if form.validate_on_submit():
+            review = Review(
+                business_id = business.id,
+                user_id = current_user.id,
+                rating = form.data['rating'],
+                review = form.data['review']
+            )
+            db.session.add(review)
+            db.session.commit()
+            return review.to_dict()
+        return {'errors': validation_errors_to_error_messages(form.errors)}, 401
+    return {'error': 'Business not found'}, 404

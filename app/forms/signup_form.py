@@ -3,7 +3,6 @@ from wtforms import StringField
 from wtforms.validators import DataRequired, Email, ValidationError, Length
 from app.models import User
 
-
 def user_exists(form, field):
     # Checking if user exists
     email = field.data
@@ -12,7 +11,6 @@ def user_exists(form, field):
         raise ValidationError('Email address is already in use.')
     if not '@' in email or not '.' in email:
         raise ValidationError('Email address is invalid.')
-
 
 class SignUpForm(FlaskForm):
     first_name = StringField('first_name', validators=[DataRequired('Please enter your first name.'), Length(min=1, max=30, message='Your first name must be greater than 1 and less than 30 characters.')])

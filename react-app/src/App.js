@@ -11,6 +11,7 @@ import { authenticate } from './store/session';
 import CreateBusiness from './components/business/CreateBusiness';
 import Landing from './components/landing/Landing';
 import EditBusiness from './components/business/EditBusiness';
+import SingleBusiness from './components/business/SingleBusiness';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -43,6 +44,9 @@ function App() {
         <Route path="/business/:businessId/edit">
           <EditBusiness />
         </Route>
+        <Route exact path="/business/:businessId">
+					<SingleBusiness />
+				</Route>
         <ProtectedRoute path='/users' exact={true} >
           <UsersList/>
         </ProtectedRoute>

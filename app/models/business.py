@@ -1,5 +1,6 @@
 from .db import db, environment, SCHEMA, add_prefix_for_prod
 from datetime import datetime
+from .review import Review
 
 class Business(db.Model):
     __tablename__ = 'businesses'
@@ -48,3 +49,24 @@ class Business(db.Model):
             'all_reviews': [review.to_dict() for review in self.business_reviews],
             'num_reviews': len(self.business_reviews),
         }
+
+    def average_rating(self):
+        if len(self.business_reviews) == 0:
+            return 0
+        else:
+            return round(sum([review.stars for review in self.business_reviews]) / len(self.business_reviews), 2)
+
+    def number_of_reviews(self):
+        return len(self.business_reviews)
+
+    def get_business_images(self):
+        owner_image_urls = [each_image['url'] for each_image in [image.to_dict() for image in self.business_images]]
+        review_images = [review.review_images for review in self.business_reviews]
+        review_image_urls = [ image['url']  for review_images in review_images for image in review_images]
+        images = owner_image_urls + review_image_urls
+        return images
+
+     def get_a_review(self):
+        if self.business_reviews:
+            return [review.to_dict() for review in self.business_reviews]
+        return []
