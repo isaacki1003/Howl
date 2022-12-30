@@ -15,19 +15,25 @@ const SingleBusiness = () => {
     useEffect(() => {
         const execute = async () => {
             const results = await dispatch(getSingleBusiness(businessId));
-            setBusinessImages(results.images);
+            console.log(results)
+            if (results) {
+                setBusinessImages(results.images);
+              }
         }
         execute();
-        // return () => dispatch(cleanUpBusiness());
+        return () => {
+            dispatch(cleanUpBusiness());
+        };
     }, [businessId]);
 
     return (
-        <div>
-            <div>
-                <div>
-                    {businessImages.map((url) => (
+        <div className="business-details-page-wrapper center">
+                <div className="business-details-images-container">
+                    <div className="business-detail-faded-background"></div>
+                    {businessImages.map((url1) => (
                         <img
-                            src={url}
+                            src={url1.url}
+                            // key={url}
                             onError={({ currentTarget }) => {
                                 currentTarget.onerror = null;
                                 currentTarget.src =
@@ -36,10 +42,14 @@ const SingleBusiness = () => {
                         />
                     ))}
                 </div>
-                <div>
+                <div className="business-details-header-wrapper">
+				    <h1 className="business-details-name">{business.name}</h1>
+                    <div className={`business-details-total-reviews`}>
+					<div className="total-reviews">{business.num_reviews} reviews</div>
+				</div>
                     <SingleBusinessBody business={business} />
                 </div>
-            </div>
+
         </div>
     )
 }

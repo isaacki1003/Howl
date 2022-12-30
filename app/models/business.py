@@ -43,6 +43,7 @@ class Business(db.Model):
             'hours': self.hours,
             'business_type': self.business_type,
             'price': self.price,
+            'averageRating': self.average_rating(),
             'url': self.url,
             'images': [business_image.to_dict() for business_image in self.business_images],
             'owner': self.owner.to_dict(),

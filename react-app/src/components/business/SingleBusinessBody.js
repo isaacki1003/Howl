@@ -1,9 +1,11 @@
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
 import { deleteBusiness } from "../../store/business";
+import SingleBusinessReviews from "../reviews/SingleBusinessReviews";
 
 const SingleBusinessBody = ({ business }) => {
     const user = useSelector(state => state.session.user);
+
     const { businessId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -23,7 +25,7 @@ const SingleBusinessBody = ({ business }) => {
 		}
 	};
 
-    const theOwner = user?.id == business?.owner_id;
+    const theOwner = user?.id == business.owner_id;
 
     return (
 		<div className="business-details-body-wrapper">
@@ -31,10 +33,10 @@ const SingleBusinessBody = ({ business }) => {
 				{!theOwner && (
 					<div className="create-reviews-wrapper">
 						<NavLink
-							to={`/${businessId}/new-review`}
+							to={`/business/${businessId}/create-review`}
 							className="create-new-review-link"
 						>
-							<i class="fa-regular fa-star" /> Write a review
+							<i className="fa-regular fa-star" /> Write a review
 						</NavLink>
 					</div>
 				)}
@@ -44,12 +46,13 @@ const SingleBusinessBody = ({ business }) => {
 							to={`/business/${businessId}/edit`}
 							className="create-new-review-link"
 						>
-							<i class="fa-regular fa-star" /> Edit Business
+							<i className="fa-regular fa-star" /> Edit Business
 						</NavLink>
 						<button
 							className="create-new-review-link-button"
 							onClick={handleDelete}
 						>
+							<i class="fa-solid fa-x"></i>  ‎
 							Delete Business
 						</button>
 					</div>
@@ -61,7 +64,10 @@ const SingleBusinessBody = ({ business }) => {
 					</div>
 				</div>
 
-				 {/* INSERT REVIEWS HERE  */}
+				<div className="business-details-block">
+					<h1>Reviews</h1>
+					<SingleBusinessReviews business={business} />
+				</div>
 
 			</div>
 			<div className="business-details-right-Col">
@@ -75,19 +81,19 @@ const SingleBusinessBody = ({ business }) => {
 							>
 								{business.business_web_page}
 							</a>
-							<i class="fa-solid fa-arrow-up-right-from-square"></i>
+							<i className="fa-solid fa-arrow-up-right-from-square"></i>
 						</div>
 					)}
 					<div className="business-right-details">
 						{business.phone_number}
-						<i class="fa-solid fa-phone-volume"></i>
+						<i className="fa-solid fa-phone-volume"></i>
 					</div>
 					<div className="business-right-details no-border">
 						<div>
 							{business.address} {business.city}, {business.state}{' '}
 							{business.zip}
 						</div>
-						<i class="fa-solid fa-location-dot"></i>
+						<i className="fa-solid fa-location-dot"></i>
 					</div>
 				</div>
 			</div>

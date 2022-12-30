@@ -1,0 +1,28 @@
+.landing-wrapper {
+    flex-shrink: 1;
+    min-width: 50%;
+    box-sizing: border-box;
+    max-height: 100%;
+}
+
+.landing-wrapper > img {
+    width: 100%;
+    object-fit: cover;
+    height: 100%;
+}
+
+.landing-img-wrapper {
+    box-sizing: border-box;
+    height: 60vh;
+    display: flex;
+}
+
+.prev-img-nav-link {
+    position: relative;
+    bottom: 20%;
+    left: 2.5%;
+    color: white;
+    font-family: 'Josefin Sans', sans-serif;
+    font-weight: bold;
+    font-size: 1.8rem;
+}

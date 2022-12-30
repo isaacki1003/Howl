@@ -14,17 +14,17 @@ const normalize = (data) => {
   };
 
 
-const loadAllBusinesses = (buss) => {
+const loadAllBusinesses = (bussinesses) => {
 	return {
 	  type: GET_ALL_BUSINESSES,
-	  buss
+	  bussinesses
 	};
 };
 
-const loadSingleBusiness = (bus) => {
+const loadSingleBusiness = (business) => {
 	return {
 		type: GET_SINGLE_BUSINESS,
-		bus
+		business
 	};
 };
 
@@ -40,6 +40,7 @@ export const getAllBusinesses = () => async (dispatch) => {
 
 export const getSingleBusiness = (business_id) => async (dispatch) => {
 	const response = await fetch(`/api/business/${business_id}`);
+	// console.log(response)
 
 	if (response.ok) {
 		const data = await response.json();
@@ -97,6 +98,26 @@ export const deleteBusiness = (business_id) => async () => {
 		return true;
 	}
 	return false;
+};
+
+export const AddBusinessImage = (imagedata, businessId) => async () => {
+	const response = await fetch(`/api/business/${businessId}/images`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(imagedata)
+	});
+
+	if (response.ok) {
+		const data = await response.json();
+		return data;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		if (data.errors) {
+			return data;
+		}
+	}
 };
 
 export const cleanUpBusiness = () => ({
