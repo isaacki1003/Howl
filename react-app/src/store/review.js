@@ -13,19 +13,19 @@ const normalize = (data) => {
 	return obj;
   };
 
-const loadAllReviews = (revs) => ({
+const loadAllReviews = (reviews) => ({
 	type: GET_ALL_REVIEWS,
-	revs
+	reviews
 });
 
-const loadSingleReview = (rev) => ({
+const loadSingleReview = (review) => ({
 	type: GET_REVIEW,
-	rev
+	review
 });
 
-const loadBusinessReviews = (revs) => ({
+const loadBusinessReviews = (reviews) => ({
 	type: GET_SINGLE_BUSINESS_REVIEWS,
-	revs
+	reviews
 });
 
 export const getAllReviews = () => async (dispatch) => {
@@ -75,12 +75,13 @@ export const DeleteReviewImage = (image_id) => async () => {
 	}
 };
 
-export const getSingleBusinessReviews = (business_id) => async (dispatch) => {
-	const response = await fetch(`/api/business/${business_id}/reviews`);
+export const getSingleBusinessReviews = (businessId) => async (dispatch) => {
+	const response = await fetch(`/api/business/${businessId}/reviews`);
 
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(loadBusinessReviews(data.reviews));
+		console.log(data.reviews)
 		return data.reviews;
 	}
 };

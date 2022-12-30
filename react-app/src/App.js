@@ -12,6 +12,10 @@ import CreateBusiness from './components/business/CreateBusiness';
 import Landing from './components/landing/Landing';
 import EditBusiness from './components/business/EditBusiness';
 import SingleBusiness from './components/business/SingleBusiness';
+import FindBusinessToReview from './components/reviews/FindBusinessToReview';
+import CreateReview from './components/reviews/CreateReview';
+import Header from './components/Header';
+import BlackHeader from './components/BlackHeader';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -30,21 +34,30 @@ function App() {
 
   return (
     <BrowserRouter>
-      <NavBar />
       <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />
         </Route>
-        <Route path='/sign-up' exact={true}>
+        <Route path='/signup' exact={true}>
           <SignUpForm />
         </Route>
-        <Route path="/create-business">
+        <ProtectedRoute path='/writeareview' exact={true}>
+          <FindBusinessToReview />
+        </ProtectedRoute>
+        <ProtectedRoute path="/create-business" exact={true}>
 					<CreateBusiness />
-				</Route>
-        <Route path="/business/:businessId/edit">
+				</ProtectedRoute>
+        <ProtectedRoute path="/find-business-to-review" exact={true}>
+					<FindBusinessToReview />
+				</ProtectedRoute>
+        <ProtectedRoute path="/business/:businessId/create-review" exact={true}>
+					<CreateReview />
+				</ProtectedRoute>
+        <ProtectedRoute path="/business/:businessId/edit" exact={true}>
           <EditBusiness />
-        </Route>
+        </ProtectedRoute>
         <Route exact path="/business/:businessId">
+          <BlackHeader />
 					<SingleBusiness />
 				</Route>
         <ProtectedRoute path='/users' exact={true} >
@@ -54,6 +67,7 @@ function App() {
           <User />
         </ProtectedRoute>
         <Route path='/' exact={true} >
+          <Header />
           <Landing />
         </Route>
       </Switch>
