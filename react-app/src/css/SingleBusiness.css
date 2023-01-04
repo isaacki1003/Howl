@@ -11,7 +11,7 @@
 /* Business header CSS*/
 .business-details-images-container{
     height: 450px;
-    width: 80vw;
+    width: 100vw;
     min-width: 800px;
     display: flex;
     overflow: hidden;
@@ -21,22 +21,12 @@
 }
 .business-detail-faded-background{
     height: 450px;
-    width: 80vw;
+    width: 100vw;
     min-width: 800px;
     position: absolute;
-    /* top: 93.88px; */
     background: linear-gradient(0deg, rgba(39, 38, 42, 1) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
- @media (max-width: 2000px) {
-    .business-detail-faded-background {
-        width: 100%;
-    }
-
-    .business-details-images-container {
-        width: 100%;
-    }
- }
 .business-details-images-container > img{
     object-fit: cover;
     flex-grow: 1;
@@ -53,6 +43,8 @@
     flex-direction: column;
     row-gap: 0.8rem;
     padding-bottom: 25px;
+    margin-top: 1.8em;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 
@@ -68,7 +60,7 @@
 }
 
 .business-details-category-link{
-    color: #49b1cb;
+    color: white;
 }
 .business-details-category-link:hover {
     text-decoration: underline;
@@ -93,9 +85,9 @@
 }
 
 .total-reviews{
-    color: white;
     font-size: 1.3rem;
     margin-left: 10px;
+    color: white;
 }
 .oneStar {
     color: rgb(255, 204, 75)
@@ -121,6 +113,7 @@
     width: 60vw;
     min-width: 700px;
     display: flex;
+    color: black;
 }
 
 .business-details-container {
@@ -131,25 +124,38 @@
 .business-details-block{
     display: flex;
     flex-direction: column;
-    /* border: 5px solid purple; */
-    padding: 2rem 0;
     row-gap: 1rem;
     border-top: 1px solid #ebebeb;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+}
+
+.title-business-smaller {
+    margin-bottom: 0em;
+    font-size: 1.5rem;
+}
+
+.title-business-smaller1 {
+    margin-bottom: 0.3em;
+    font-size: 1.5rem;
 }
 
 .business-details-block-map{
     display: flex;
-    padding: 2rem 0;
     column-gap: 3rem;
     border-top: 1px solid #ebebeb;
     min-width: fit-content;
     align-items: center;
+    margin-bottom: 1.5em;
+    margin-top: 0.5em;
 }
-@media (max-width: 1530px) {
+/* @media (max-width: 1530px) {
     .business-details-block-map{
         flex-direction: column;
     }
- }
+ } */
 
 
 .hours-wrapper{
@@ -175,19 +181,11 @@
 }
 
 .business-details-description{
-    line-height: 2rem;
+    line-height: 1rem;
 }
 
 
-
-/* Review CSS */
-
-/* .business-reviews-wrapper{
-    border: 1px solid red;
-} */
-
 .business-review-card-container{
-    /* border: 2px solid purple; */
     display: flex;
     flex-direction: column;
     row-gap: 1rem;
@@ -220,7 +218,7 @@
     font-size: 13px;
     margin-left: 1rem;
 }
-.card-review-single-image{
+.card-rev-sing-img{
     width: 174px;
     height: 100%;
     object-fit: cover;
@@ -228,66 +226,82 @@
     transition: all .3s ease-in-out;
 }
 
-.card-review-single-image:hover{
-    transform: scale(2);
+.card-rev-sing-img:hover{
+    transform: scale(1.25);
 }
 .user-review-icon{
     font-size: 50px;
 }
 
 .create-new-review-link{
-    padding: 0.8rem 1.8rem;
+    padding: 1em 0 1em 2em;
     color: white;
     text-decoration: none;
     background-color: red;
     border-radius: 5px;
     border: none;
+    font-size: 16px;
+    font-weight: 100;
+    width: 160px;
+    font-family: 'Josefin Sans', sans-serif;
 }
+
 .create-new-review-link-button{
-    padding: 0.8rem 0;
+    padding: 1em 0;
     color: white;
     text-decoration: none;
     background-color: red;
     border-radius: 5px;
     border: none;
-    height: 47.09px;
-    width: 178px;
-    font-size: 1rem;
+    width: 190px;
+    font-size: 16px;
+    font-weight: 100;
     cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif;
+    margin-left: 2em;
 }
+
 .create-reviews-wrapper{
-    height: 100px;
+    margin-top: 0.8em;
+    height: 80px;
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-start;
+    margin-bottom: 0.5em;
 }
 
 
 .edit-review-link{
     font-size: 25px;
     color: black;
-    margin-left: 20px;
+    margin-left: 70%;
 }
 
 .edit-review-link:hover {
-    color: #04C858;
+    color: red;
+}
+
+.format-name-review {
+    white-space: nowrap;
+    margin-bottom: 0;
 }
 
 
 /* Right side box */
 
-.additional-details-box{
+.additional-details-box {
     border: 1px solid #ebebeb;
     padding: 1rem;
     border-radius: 3px;
     position: sticky;
-    top: 10px;
+    top: 13rem;
+    margin-left: 2rem;
+    width: 100%;
 }
 
 .business-details-right-Col{
     min-width: 320px;
-    margin-left: 20px;
-
+    margin-left: 2em;
 }
 
 .business-right-details{

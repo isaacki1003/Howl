@@ -28,8 +28,12 @@ class Review(db.Model):
             'stars': self.stars,
             'created_at': self.created_at,
             'updated_at': self.updated_at,
-            'review_images': [review_image.to_dict() for review_image in self.review_images]
+            'reviewImages': self.get_review_images(),
+            'reviewer': self.get_reviewer()
         }
 
-    def reviewer(self):
+    def get_reviewer(self):
         return self.user.to_dict()
+
+    def get_review_images(self):
+        return [image.to_dict() for image in self.review_images]

@@ -22,11 +22,11 @@ const AllBusinesses = () => {
 
 
     return (
-        <div className="recent-businesses-wrapper center">
-          <h2>
+        <div className="rec-bus-wrapper center">
+          <h2 className='font-howl'>
             All Businesses
           </h2>
-          <div className="recent-businesses-container">
+          <div className="cont-rec-bus">
             {chosen ? (
               chosen.map((business, i) => (
                 <BusinessTemplate key={i} business={business} />

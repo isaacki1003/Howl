@@ -5,18 +5,21 @@ const CLEAR_BUSINESS = 'business/CLEAR_BUSINESS';
 const initialState = { allBusinesses: {}, singleBusiness: {} };
 
 const normalize = (data) => {
+	if (!data || !Array.isArray(data)) {
+	  return {};
+	}
 	const obj = {};
 	data.forEach((each) => (obj[each.id] = each));
 	return obj;
-};
+  };
 
-const loadAllBusinesses = (businesses) => {
-	console.log(businesses); // add this line
+
+const loadAllBusinesses = (bussinesses) => {
 	return {
 	  type: GET_ALL_BUSINESSES,
-	  businesses
+	  bussinesses
 	};
-  };
+};
 
 const loadSingleBusiness = (business) => {
 	return {
@@ -26,19 +29,18 @@ const loadSingleBusiness = (business) => {
 };
 
 export const getAllBusinesses = () => async (dispatch) => {
-	const response = await fetch('/api/business/');
-	console.log("response IN getALLBusinesses: ", response);
+	const response = await fetch('/api/business');
 
 	if (response.ok) {
 		const data = await response.json();
-		console.log("data IN getALLBusinesses: ", data);
 		dispatch(loadAllBusinesses(data.businesses));
 		return data.businesses;
 	}
 };
 
-export const getSingleBusiness = (businessId) => async (dispatch) => {
-	const response = await fetch(`/api/business/${businessId}`);
+export const getSingleBusiness = (business_id) => async (dispatch) => {
+	const response = await fetch(`/api/business/${business_id}`);
+	// console.log(response)
 
 	if (response.ok) {
 		const data = await response.json();
@@ -67,14 +69,15 @@ export const createBusiness = (businessInfo) => async (dispatch) => {
 	}
 };
 
-export const editBusiness = (businessInfo, businessId) => async () => {
-	const response = await fetch(`/api/business/${businessId}`, {
+export const editBusiness = (business_info, business_id) => async () => {
+	const response = await fetch(`/api/business/${business_id}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(businessInfo)
+		body: JSON.stringify(business_info)
 	});
+
 	if (response.ok) {
 		const data = await response.json();
 		return data;
@@ -86,8 +89,8 @@ export const editBusiness = (businessInfo, businessId) => async () => {
 	}
 };
 
-export const deleteBusiness = (id) => async () => {
-	const response = await fetch(`/api/business/${id}`, {
+export const deleteBusiness = (business_id) => async () => {
+	const response = await fetch(`/api/business/${business_id}`, {
 		method: 'DELETE'
 	});
 
@@ -95,6 +98,26 @@ export const deleteBusiness = (id) => async () => {
 		return true;
 	}
 	return false;
+};
+
+export const AddBusinessImage = (imagedata, businessId) => async () => {
+	const response = await fetch(`/api/business/${businessId}/images`, {
+		method: 'POST',
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		body: JSON.stringify(imagedata)
+	});
+
+	if (response.ok) {
+		const data = await response.json();
+		return data;
+	} else if (response.status < 500) {
+		const data = await response.json();
+		if (data.errors) {
+			return data;
+		}
+	}
 };
 
 export const cleanUpBusiness = () => ({
@@ -106,7 +129,6 @@ export default function businessReducer(state = initialState, action) {
 	switch (action.type) {
 		case GET_ALL_BUSINESSES:
 			newState.allBusinesses = normalize(action.businesses);
-			console.log("IN REDUCER: ", newState); // add this line
 			return newState;
 		case GET_SINGLE_BUSINESS:
 			newState.singleBusiness = action.business;

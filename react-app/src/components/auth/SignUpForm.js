@@ -1,94 +1,162 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux'
-import { Redirect } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { NavLink, Redirect, useHistory } from 'react-router-dom';
 import { signUp } from '../../store/session';
 
 const SignUpForm = () => {
-  const [errors, setErrors] = useState([]);
-  const [username, setUsername] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [repeatPassword, setRepeatPassword] = useState('');
-  const user = useSelector(state => state.session.user);
-  const dispatch = useDispatch();
+	const [errors, setErrors] = useState([]);
+	const [email, setEmail] = useState('');
+	const [password, setPassword] = useState('');
+	const [first_name, setFirstName] = useState('');
+	const [last_name, setLastName] = useState('');
+	const [haveErrors, setHaveErrors] = useState(false);
+	const [RepeatPassword, setRepeatPassword] = useState('');
+	const user = useSelector((state) => state.session.user);
+	const history = useHistory();
+	const dispatch = useDispatch();
 
-  const onSignUp = async (e) => {
-    e.preventDefault();
-    if (password === repeatPassword) {
-      const data = await dispatch(signUp(username, email, password));
-      if (data) {
-        setErrors(data)
-      }
-    }
-  };
+	const onSignUp = async (e) => {
+		e.preventDefault();
+		const payload = {
+			first_name,
+			last_name,
+			email,
+			password,
+			RepeatPassword
+		};
+		const data = await dispatch(signUp(payload));
+		if (data) {
+			setHaveErrors(true);
+			setErrors(data);
+		}
+	};
 
-  const updateUsername = (e) => {
-    setUsername(e.target.value);
-  };
+	const updateFirstName = (e) => {
+		setFirstName(e.target.value);
+	};
 
-  const updateEmail = (e) => {
-    setEmail(e.target.value);
-  };
+	const updateLastName = (e) => {
+		setLastName(e.target.value);
+	};
 
-  const updatePassword = (e) => {
-    setPassword(e.target.value);
-  };
+	const updateEmail = (e) => {
+		setEmail(e.target.value);
+	};
 
-  const updateRepeatPassword = (e) => {
-    setRepeatPassword(e.target.value);
-  };
+	const updatePassword = (e) => {
+		setPassword(e.target.value);
+	};
 
-  if (user) {
-    return <Redirect to='/' />;
-  }
+	const updateRepeatPassword = (e) => {
+		setRepeatPassword(e.target.value);
+	};
+	const switchToLogin = () => {
+		history.push('/login');
+	};
+	if (user) {
+		return <Redirect to="/" />;
+	}
 
-  return (
-    <form onSubmit={onSignUp}>
-      <div>
-        {errors.map((error, ind) => (
-          <div key={ind}>{error}</div>
-        ))}
-      </div>
-      <div>
-        <label>User Name</label>
-        <input
-          type='text'
-          name='username'
-          onChange={updateUsername}
-          value={username}
-        ></input>
-      </div>
-      <div>
-        <label>Email</label>
-        <input
-          type='text'
-          name='email'
-          onChange={updateEmail}
-          value={email}
-        ></input>
-      </div>
-      <div>
-        <label>Password</label>
-        <input
-          type='password'
-          name='password'
-          onChange={updatePassword}
-          value={password}
-        ></input>
-      </div>
-      <div>
-        <label>Repeat Password</label>
-        <input
-          type='password'
-          name='repeat_password'
-          onChange={updateRepeatPassword}
-          value={repeatPassword}
-          required={true}
-        ></input>
-      </div>
-      <button type='submit'>Sign Up</button>
-    </form>
-  );
+	return (
+		<div className="login-wrap center">
+			<div className="red-top-bar center">
+				<NavLink className="nav-link logo-name" to="/">
+					HOWL
+				</NavLink>
+			</div>
+			{haveErrors && (
+				<div className="err-bx center">
+					{errors.map((error, ind) => (
+						<div>{error}</div>
+					))}
+					<p
+						className="close-err-msg"
+						onClick={() => setHaveErrors(false)}
+					>
+						X
+					</p>
+				</div>
+			)}
+			<div className="center login-inner-wrap">
+				<div className="login-col-left">
+					<div className="login-form-wrapper">
+						<div className="text-above-form">
+            <div className="form-title1">Sign Up For Howl</div>
+						</div>
+						<form onSubmit={onSignUp}>
+							<div>
+								<input
+									type="text"
+									name="first_name"
+									onChange={updateFirstName}
+									value={first_name}
+									placeholder="First Name"
+									className="inp-bxs"
+								></input>
+							</div>
+							<div>
+								<input
+									type="text"
+									name="last_name"
+									onChange={updateLastName}
+									value={last_name}
+									placeholder="Last Name"
+									className="inp-bxs"
+								></input>
+							</div>
+							<div>
+								<input
+									type="text"
+									name="email"
+									onChange={updateEmail}
+									value={email}
+									placeholder="Email"
+									className="inp-bxs"
+								></input>
+							</div>
+							<div>
+								<input
+									type="password"
+									name="password"
+									onChange={updatePassword}
+									value={password}
+									placeholder="Password"
+									className="inp-bxs"
+								></input>
+							</div>
+							<div>
+								<input
+									type="password"
+									name="confirm-password"
+									onChange={updateRepeatPassword}
+									value={RepeatPassword}
+									placeholder="Confirm Password"
+									className="inp-bxs"
+								></input>
+							</div>
+
+							<button type="submit" className="login-demo form-button">
+								Sign Up
+							</button>
+						</form>
+						<div className="switch-form-bottom">
+							<p id="p1-bottom">Already on Howl? </p>{' '}
+							<p id="p2" onClick={switchToLogin}>
+								{' '}
+								Log in
+							</p>
+						</div>
+					</div>
+				</div>
+				<div className="login-col-right">
+					<img
+						style={{ height: '250px', width: '350px' }}
+						src="https://s3-media0.fl.yelpcdn.com/assets/2/www/img/7922e77f338d/signup/signup_illustration.png"
+					/>
+				</div>
+			</div>
+		</div>
+	);
 };
 
 export default SignUpForm;

@@ -11,7 +11,7 @@ def seed_businesses():
         zip_code='90024',
         description='Casual seafood restaurant that serves a variety of fresh seafood',
         phone_number='(310) 208-4888',
-        hours='Mon-15:00-22:00,Tue-15:00-22:00,Wed-15:00-22:00,Thu-15:00-22:00,Fri-15:00-22:00:30,Sat-12:00-22:00,Sun-12:00-22:00',
+        hours='Mon-15:00-22:00,Tue-15:00-22:00,Wed-15:00-22:00,Thu-15:00-22:00,Fri-15:00-22:00,Sat-12:00-22:00,Sun-12:00-22:00',
         business_type='Seafood, Cajun/Creole',
         price=50,
         url='https://www.theboilingcrab.com',
@@ -27,7 +27,7 @@ def seed_businesses():
         zip_code='90230',
         description='American chain store of bakery-café fast casual restaurants with over 2,000 locations.',
         phone_number='(310) 390-3763',
-        hours='Mon-06:00-22:00,Tue-06:00-22:00,Wed-06:00-22:00,Thu-06:00-22:00,Fri-06:00-22:00:30,Sat-06:00-22:00,Sun-06:00-22:00',
+        hours='Mon-06:00-22:00,Tue-06:00-22:00,Wed-06:00-22:00,Thu-06:00-22:00,Fri-06:00-22:00,Sat-06:00-22:00,Sun-06:00-22:00',
         business_type='Sandwiches, Salads, Soup',
         price=20,
         url='https://www.panerabread.com',
@@ -43,15 +43,32 @@ def seed_businesses():
         zip_code='90095',
         description='Conference center that holds events and meetings for UCLA students and faculty.',
         phone_number='(855) 522-8252',
-        hours='Mon-00:00-23:59,Tue-00:00-23:59,Wed-00:00-23:59,Thu-00:00-23:59,Fri-00:00-23:59:30,Sat-00:00-23:59,Sun-00:00-23:59',
+        hours='Mon-00:00-23:59,Tue-00:00-23:59,Wed-00:00-23:59,Thu-00:00-23:59,Fri-00:00-23:59,Sat-00:00-23:59,Sun-00:00-23:59',
         business_type='Buffet, Catering, Conference Center',
         price=70,
         url='https://luskinconferencecenter.ucla.edu/',
     )
 
+    appAcademy = Business(
+        owner_id=3,
+        name='App Academy',
+        address='10880 Wilshire Blvd',
+        city='Los Angeles',
+        state='CA',
+        country='USA',
+        zip_code='90024',
+        description='App Academy is a full-stack software engineering program that teaches students how to code.',
+        phone_number='(310) 208-4888',
+        hours='Mon-00:00-23:59,Tue-00:00-23:59,Wed-00:00-23:59,Thu-00:00-23:59,Fri-00:00-23:59,Sat-00:00-23:59,Sun-00:00-23:59',
+        business_type='Coding Bootcamp',
+        price=100,
+        url='https://www.appacademy.io/',
+    )
+
     db.session.add(theBoilingCrab)
     db.session.add(paneraBread)
     db.session.add(theLuskinConferenceCenter)
+    db.session.add(appAcademy)
     db.session.commit()
 
 

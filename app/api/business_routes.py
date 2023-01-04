@@ -100,16 +100,16 @@ def add_business_images(id):
 @business_routes.route('/<int:id>/reviews')
 def get_business_reviews(id):
     business = Business.query.get(id)
-    reviews = []
+    res = []
     if business:
-        business_reviews = business.business_reviews
-        for review in business_reviews:
+        reviews = business.business_reviews
+        for review in reviews:
             images = review.review_images
             result = review.to_dict()
             result['images'] = images
             result['reviewer'] = review.reviewer()
-            reviews.append(result)
-    return {'reviews': reviews}
+            res.append(result)
+    return {'reviews': res}
 
 #ADD A REVIEW TO A BUSINESS
 @business_routes.route('/<int:id>/reviews', methods=['POST'])
@@ -121,7 +121,7 @@ def add_business_review(id):
     if business:
         if form.validate_on_submit():
             review = Review(
-                business_id = business.id,
+                business_id = id,
                 user_id = current_user.id,
                 rating = form.data['rating'],
                 review = form.data['review']
