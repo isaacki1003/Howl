@@ -100,7 +100,7 @@ const SingleBusinessReviews = ({ business }) => {
 			</div>
 			{reviews?.reverse().map((review) => {
 				const reviewDate = new Date(review.created_at).toLocaleDateString();
-				const show = review.user_id == user?.id;
+				const show = review?.user_id == user?.id;
 				return (
 					<div className="business-review-card-container">
 						<div id="card-reviewer-name">

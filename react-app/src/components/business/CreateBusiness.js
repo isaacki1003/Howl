@@ -85,7 +85,7 @@ const CreateBusiness = () => {
         // } else {
             setBusinessId(business?.id);
             setShowImagesForm(true);
-            console.log(businessInfo)
+            // console.log(businessInfo)
         // }
     };
 

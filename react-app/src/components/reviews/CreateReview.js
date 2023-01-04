@@ -36,14 +36,9 @@ const CreateReview = () => {
 	const [urls, setUrls] = useState('');
 	const [reviewImages, setReviewImages] = useState([]);
 	const [imageError, setImageError] = useState('');
-	const [showLoginModal, setShowLoginModal] = useState(false);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-
-		if (!user) {
-			setShowLoginModal(true);
-		}
 
 		if (user) {
 			const alreadyHaveReview = businessReviews.filter(
@@ -51,32 +46,32 @@ const CreateReview = () => {
 			);
 			if (alreadyHaveReview.length > 0) {
 				window.alert(
-					'You already have a review for this business. Please consider editing your original review instead.'
+					'You already have a review for this business. Please edit your review instead.'
 				);
-				return history.push(`/${businessId}`);
+				return history.push(`/business/${businessId}`);
 			}
-			const reviewdata = {
-				Business_id: Number(businessId),
+			const reviewInfo = {
 				user_id: user.id,
+				Business_id: Number(businessId),
 				stars,
 				review
 			};
 			// post review
-			const newReview = await dispatch(postNewReview(reviewdata));
-			// if (newReview.errors) {
-			// 	setReviewErrors(newReview.errors);
-			// } else {
+			const newReview = await dispatch(postNewReview(reviewInfo));
+			if (newReview?.errors) {
+				setReviewErrors(newReview.errors);
+			} else {
 				/// post images for review
 				reviewImages.forEach(async (url) => {
 					const imageData = {
-						review_id: newReview && newReview.id,
+						review_id: Number(newReview?.id),
 						url
 					};
 					await dispatch(postNewReviewImage(imageData));
 				});
 
 				history.push(`/business/${businessId}`);
-			// }
+			}
 		}
 	};
 

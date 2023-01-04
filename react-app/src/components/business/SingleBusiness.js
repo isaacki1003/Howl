@@ -33,9 +33,9 @@ const SingleBusiness = () => {
     useEffect(() => {
         const execute = async () => {
             const results = await dispatch(getSingleBusiness(businessId));
-            setBusinessImages(results.images)
+            setBusinessImages(results?.images)
 
-            const businessCategories = results.business_type.split(',');
+            const businessCategories = results?.business_type.split(',');
 			setCategories(businessCategories);
 
             setPriceRange(setPriceDollarSign(Number(results.price)));

@@ -121,9 +121,9 @@ def add_business_review(id):
     if business:
         if form.validate_on_submit():
             review = Review(
-                business_id = id,
+                business_id = Integer.parseInt(id),
                 user_id = current_user.id,
-                rating = form.data['rating'],
+                stars = form.data['stars'],
                 review = form.data['review']
             )
             db.session.add(review)
