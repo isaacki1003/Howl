@@ -16,6 +16,7 @@ import FindBusinessToReview from './components/reviews/FindBusinessToReview';
 import CreateReview from './components/reviews/CreateReview';
 import Header from './components/Header';
 import BlackHeader from './components/BlackHeader';
+import EditReview from './components/reviews/EditReview';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -60,6 +61,9 @@ function App() {
           <BlackHeader />
 					<SingleBusiness />
 				</Route>
+        <ProtectedRoute path='/business/:businessId/reviews/:reviewId/edit' exact={true}>
+          <EditReview />
+        </ProtectedRoute>
         <ProtectedRoute path='/users' exact={true} >
           <UsersList/>
         </ProtectedRoute>

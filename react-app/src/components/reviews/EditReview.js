@@ -1,9 +1,16 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
-import { postNewReview, postNewReviewImage } from '../../store/review';
-import { getAllBusinesses } from '../../store/business';
+import {
+	getSingleReview,
+	DeleteReviewImage,
+	deleteReview,
+	postNewReviewImage,
+	updateReview
+} from '../../store/review';
+import { getSingleBusiness, singleBusinessCleanUp } from '../../store/business';
 import { FaStar } from 'react-icons/fa';
+// import './ReviewEditForm.css';
 
 const starsColor = (rating) => {
 	if (rating < 2) return 'rgb(255, 204, 75)';
@@ -13,21 +20,15 @@ const starsColor = (rating) => {
 	else return 'rgb(251, 67, 60)';
 };
 
-const CreateReview = () => {
-	const { businessId } = useParams();
-    const business = useSelector((state) => state.business.singleBusiness);
 
+const EditReview = () => {
+	const { reviewId, businessId } = useParams();
 	const user = useSelector((state) => state.session.user);
-	const businessReviews = useSelector((state) =>
-		Object.values(state.review.businessReviews)
-	);
+	const thisReview = useSelector((state) => state.review.singleReview);
+	const business = useSelector((state) => state.business.singleBusiness);
+
 	const dispatch = useDispatch();
 	const history = useHistory();
-	useEffect(() => {
-		if (!business) {
-			business = dispatch(getAllBusinesses());
-		}
-	}, []);
 
 	const [stars, setStars] = useState(0);
 	const [hover, setHover] = useState(null);
@@ -36,60 +37,64 @@ const CreateReview = () => {
 	const [urls, setUrls] = useState('');
 	const [reviewImages, setReviewImages] = useState([]);
 	const [imageError, setImageError] = useState('');
-	const [showLoginModal, setShowLoginModal] = useState(false);
+
+	useEffect(() => {
+		const getReview = async () => {
+			await dispatch(getSingleBusiness(businessId));
+			const review = await dispatch(getSingleReview(reviewId));
+			setReview(review.review);
+			setStars(review.stars);
+			setReviewImages(review.reviewImages);
+		};
+
+		getReview();
+	}, []);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		const reviewdata = {
+			stars,
+			review
+		};
 
-		if (!user) {
-			setShowLoginModal(true);
-		}
-
-		if (user) {
-			const alreadyHaveReview = businessReviews.filter(
-				(review) => review.reviewer.id == user.id
-			);
-			if (alreadyHaveReview.length > 0) {
-				window.alert(
-					'You already have a review for this business. Please consider editing your original review instead.'
-				);
-				return history.push(`/${businessId}`);
-			}
-			const reviewdata = {
-				Business_id: Number(businessId),
-				user_id: user.id,
-				stars,
-				review
-			};
-			// post review
-			const newReview = await dispatch(postNewReview(reviewdata));
-			// if (newReview.errors) {
-			// 	setReviewErrors(newReview.errors);
-			// } else {
-				/// post images for review
-				reviewImages.forEach(async (url) => {
-					const imageData = {
-						review_id: newReview && newReview.id,
-						url
-					};
-					await dispatch(postNewReviewImage(imageData));
-				});
-
-				history.push(`/business/${businessId}`);
-			// }
+		const editedReview = await dispatch(updateReview(reviewdata, reviewId));
+		if (editedReview.errors) {
+			setReviewErrors(editedReview.errors);
+		} else {
+			history.push(`/business/${businessId}`);
 		}
 	};
 
-	const handleAddPhoto = (e) => {
+	const HandleDeleteReview = async (e) => {
 		e.preventDefault();
 
+		const deleted = await dispatch(deleteReview(reviewId));
+
+		if (deleted) history.push(`/business/${businessId}`);
+	};
+	const handleAddPhoto = async (e) => {
+		e.preventDefault();
+
+
+		const image = {
+			review_id: Number(reviewId),
+			url: urls
+		};
+
+		const newImage = await dispatch(postNewReviewImage(image));
 		let images = reviewImages;
-		images.push(urls);
+		images.push(newImage);
 		setReviewImages(images);
 		setUrls('');
 		setImageError('');
 	};
-	if (!business) return null;
+
+	const handleRemovePhoto = async (id) => {
+		let images = reviewImages;
+		images = images.filter((image) => image.id !== id);
+		const deletePhoto = await dispatch(DeleteReviewImage(id));
+		if (deletePhoto) setReviewImages(images);
+	};
 	return (
 		<>
 			<div className="red-top-bar center">
@@ -107,7 +112,7 @@ const CreateReview = () => {
 					</NavLink>
 					<form className="" onSubmit={handleSubmit}>
 						<div className="rev-form-inps">
-							<div className="star-rat">
+							<div className="stars-rat">
 								{[...Array(5)].map((star, i) => {
 									const ratingValue = i + 1;
 									return (
@@ -120,7 +125,7 @@ const CreateReview = () => {
 												onClick={() => setStars(ratingValue)}
 											/>
 											<FaStar
-												className="star-rat"
+												className="stars-rat"
 												class="fa-solid fa-star"
 												color={
 													ratingValue <= (hover || stars)
@@ -146,43 +151,66 @@ const CreateReview = () => {
 							<div className="rev-errs">{reviewErrors.review}</div>
 						</div>
 						<div className="ret-bus-frm-rev add-a-photo">
-							Add Some Photos
+							Add/Remove Photos
 						</div>
 						<div className="rev-form-inps">
 							<div id="rev-img-errs">{imageError}</div>
 							<input
 								type="url"
-								placeholder="Image URL"
+								placeholder="image url"
 								className="inp-url"
 								onChange={(e) => setUrls(e.target.value)}
 								value={urls}
 							/>
-							<button type="add" className="add-a-image" onClick={handleAddPhoto}>
+							<button
+								type="add"
+								className="add-a-image"
+								onClick={handleAddPhoto}
+							>
 								Add photo
 							</button>
-							<div className="rev-prev-imge">
-								{reviewImages.map((url) => (
-									<img
-										className="rev-sing-img"
-										src={url}
-										onError={({ currentTarget }) => {
-											currentTarget.onerror = null;
-											currentTarget.src =
-												'https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?w=2000';
-										}}
-									/>
+							<div className="review-preview-image">
+								{reviewImages.map((image) => (
+									<div className="review-image-wrapper center">
+										<img
+											className="review-single-image"
+											src={image.url}
+											onError={({ currentTarget }) => {
+												currentTarget.onerror = null;
+												currentTarget.src =
+													'https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?w=2000';
+											}}
+										/>
+										<div
+											className="delete-review-image"
+											onClick={() => handleRemovePhoto(image.id)}
+										>
+											remove
+										</div>
+									</div>
 								))}
 							</div>
 						</div>
-						<button className="rev-submit" type="submit">
-							Post Review
-						</button>
+						<div className="button-seperator">
+							<button
+								className="rev-submit"
+								type="delete"
+								onClick={HandleDeleteReview}
+							>
+								Delete Review
+							</button>
+							<button
+								className="complete-review rev-submit"
+								type="submit"
+							>
+								Complete
+							</button>
+						</div>
 					</form>
 				</div>
 			</div>
-
 		</>
 	);
 };
 
-export default CreateReview;
+export default EditReview;

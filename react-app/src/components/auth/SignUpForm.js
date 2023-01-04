@@ -1,42 +1,42 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, Redirect, useHistory } from 'react-router-dom';
-import { signUp, login } from '../../store/session';
+import { signUp } from '../../store/session';
 
 const SignUpForm = () => {
 	const [errors, setErrors] = useState([]);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
+	const [first_name, setFirstName] = useState('');
+	const [last_name, setLastName] = useState('');
 	const [haveErrors, setHaveErrors] = useState(false);
-	const [confirmPassword, setConfirmPassword] = useState('');
+	const [RepeatPassword, setRepeatPassword] = useState('');
 	const user = useSelector((state) => state.session.user);
 	const history = useHistory();
 	const dispatch = useDispatch();
 
 	const onSignUp = async (e) => {
 		e.preventDefault();
-		const userData = {
-			first_name: firstName,
-			last_name: lastName,
+		const payload = {
+			first_name,
+			last_name,
 			email,
-			password
+			password,
+			RepeatPassword
 		};
-		if (password !== confirmPassword) {
-			setHaveErrors(true);
-			setErrors({ comfirmPassword: 'Passwords do not match!' });
-			return;
-		}
-		const data = await dispatch(signUp(userData));
+		const data = await dispatch(signUp(payload));
 		if (data) {
 			setHaveErrors(true);
 			setErrors(data);
 		}
 	};
 
-	const loginDemo = async (e) => {
-		await dispatch(login('demo@aa.io', 'password'));
+	const updateFirstName = (e) => {
+		setFirstName(e.target.value);
+	};
+
+	const updateLastName = (e) => {
+		setLastName(e.target.value);
 	};
 
 	const updateEmail = (e) => {
@@ -47,8 +47,8 @@ const SignUpForm = () => {
 		setPassword(e.target.value);
 	};
 
-	const updateConfirmPassword = (e) => {
-		setConfirmPassword(e.target.value);
+	const updateRepeatPassword = (e) => {
+		setRepeatPassword(e.target.value);
 	};
 	const switchToLogin = () => {
 		history.push('/login');
@@ -66,21 +66,9 @@ const SignUpForm = () => {
 			</div>
 			{haveErrors && (
 				<div className="err-bx center">
-					{Object.values(errors).length > 0 && (
-						<div className="login-form-error">
-							<span className="unable-to-login">
-								{errors.comfirmPassword
-									? errors.comfirmPassword
-									: errors['first_name']
-									? errors['first_name']
-									: errors['last_name']
-									? errors['last_name']
-									: errors.email
-									? errors.email
-									: errors.password}
-							</span>
-						</div>
-					)}
+					{errors.map((error, ind) => (
+						<div>{error}</div>
+					))}
 					<p
 						className="close-err-msg"
 						onClick={() => setHaveErrors(false)}
@@ -99,9 +87,9 @@ const SignUpForm = () => {
 							<div>
 								<input
 									type="text"
-									name="firstName"
-									onChange={(e) => setFirstName(e.target.value)}
-									value={firstName}
+									name="first_name"
+									onChange={updateFirstName}
+									value={first_name}
 									placeholder="First Name"
 									className="inp-bxs"
 								></input>
@@ -109,9 +97,9 @@ const SignUpForm = () => {
 							<div>
 								<input
 									type="text"
-									name="lastName"
-									onChange={(e) => setLastName(e.target.value)}
-									value={lastName}
+									name="last_name"
+									onChange={updateLastName}
+									value={last_name}
 									placeholder="Last Name"
 									className="inp-bxs"
 								></input>
@@ -140,8 +128,8 @@ const SignUpForm = () => {
 								<input
 									type="password"
 									name="confirm-password"
-									onChange={updateConfirmPassword}
-									value={confirmPassword}
+									onChange={updateRepeatPassword}
+									value={RepeatPassword}
 									placeholder="Confirm Password"
 									className="inp-bxs"
 								></input>

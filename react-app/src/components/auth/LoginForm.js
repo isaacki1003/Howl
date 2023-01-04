@@ -50,13 +50,9 @@ const LoginForm = () => {
 			</div>
 			{haveErrors && (
 				<div className="err-bx center">
-					{Object.values(errors).length > 0 && (
-						<div className="login-form-error">
-							<span className="unable-to-login">
-								{errors.email ? errors.email : errors.password}
-							</span>
-						</div>
-					)}
+					{errors.map((error, ind) => (
+						<div key={ind}>{error}</div>
+					))}
 					<p
 						className="close-err-msg"
 						onClick={() => setHaveErrors(false)}

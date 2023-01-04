@@ -77,7 +77,11 @@ const Header = () => {
 				{user && (
 					<>
 						<div className="prof-user" onClick={openMenu}>
-							<i class="fa-solid fa-circle-user icon-user"></i>
+						<img
+							src="https://www.pngrepo.com/png/397630/180/older-person.png"
+							alt="self logo"
+							style={{ height: '29px', width: '29px' }}
+						/>
 						</div>
 						{showMenu && (
 							<div className="down-nav">

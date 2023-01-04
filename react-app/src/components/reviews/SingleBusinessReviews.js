@@ -7,23 +7,22 @@ import Stars from './Stars';
 const SingleBusinessReviews = ({ business }) => {
     const { businessId } = useParams();
     const user = useSelector(state => state.session.user);
-    const reviews = useSelector((state) => state.review.businessReviews);
-    console.log(reviews)
+    const reviews = business.all_reviews;
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        const execute = async () => {
-            await dispatch(getSingleBusinessReviews(businessId));
-        };
-        execute();
-    }, [businessId, dispatch]);
+    // useEffect(() => {
+    //     const execute = async () => {
+    //         await dispatch(getSingleBusinessReviews(businessId));
+    //     };
+    //     execute();
+    // }, []);
 
     let one = 0;
 	let two = 0;
 	let three = 0;
 	let four = 0;
 	let five = 0;
-	reviews.forEach((review) => {
+	reviews?.forEach((review) => {
 		if (review.stars == 5) five++;
 		if (review.stars == 4) four++;
 		if (review.stars == 3) three++;
@@ -36,18 +35,18 @@ const SingleBusinessReviews = ({ business }) => {
 	if (four !== 0) four = (four / business.num_reviews) * 100;
 	if (five !== 0) five = (five / business.num_reviews) * 100;
 
-    if (!reviews.length) return <div>Be the first to review this business!</div>;
+    if (!reviews?.length) return <div>Be the first to review this business!</div>;
 	return (
 		<div className="business-reviews-wrapper">
 			<div className="business-overall-review-bar">
 				<div className="overall-review-stars">
-					<div style={{ fontWeight: 'bold', fontSize: '20px' }}>
+					<div style={{ fontWeight: 'bold', fontSize: '14px' }}>
 						Overall Rating
 					</div>
-					<div style={{ fontSize: '40px' }}>
-						<Stars rating={business.averageRating()} />
+					<div style={{ fontSize: '30px' }}>
+						<Stars rating={business.averageRating} />
 					</div>
-					<div style={{ fontWeight: 'bold', fontSize: '15px' }}>
+					<div style={{ fontWeight: 'bold', fontSize: '18px' }}>
 						{business.num_reviews} reviews
 					</div>
 				</div>
@@ -99,22 +98,28 @@ const SingleBusinessReviews = ({ business }) => {
 					</div>
 				</div>
 			</div>
-			{reviews.reverse().map((review) => {
+			{reviews?.reverse().map((review) => {
 				const reviewDate = new Date(review.created_at).toLocaleDateString();
-				const show = review.reviewer.id == user?.id;
+				const show = review.user_id == user?.id;
 				return (
 					<div className="business-review-card-container">
 						<div id="card-reviewer-name">
 							<div className="user-review-icon">
-								<i class="fa-regular fa-circle-user"></i>
+								<img
+									src="https://www.pngrepo.com/png/296664/180/alien-avatar.png"
+									alt="self logo"
+									style={{ height: '40px', width: '40px' }}
+								/>
 							</div>
-							{review.reviewer.first_name} {review.reviewer.last_name[0]}.
+							<div className='format-name-review'>
+								{review.reviewer?.first_name} {review.reviewer?.last_name}
+							</div>
 							{show && (
 								<NavLink
-									to={`/${businessId}/reviews/${review.id}/edit`}
+									to={`/business/${businessId}/reviews/${review.id}/edit`}
 									className="nav-link edit-review-link"
 								>
-									<i class="fa-solid fa-pen-to-square"></i>
+									<i class="fa-solid fa-ellipsis"></i>
 								</NavLink>
 							)}
 						</div>
@@ -123,9 +128,9 @@ const SingleBusinessReviews = ({ business }) => {
 							<p id="card-review-date">{reviewDate}</p>
 						</div>
 						<div id="card-review-review">{review.review}</div>
-						{review.images.length > 0 && (
+						{review.reviewImages?.length > 0 && (
 							<div id="card-review-images">
-								{review.images.map((image, i) => {
+								{review.reviewImages.map((image, i) => {
 									if (i < 4) {
 										return (
 											<img

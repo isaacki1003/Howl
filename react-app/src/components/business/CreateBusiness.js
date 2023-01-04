@@ -3,7 +3,37 @@ import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory } from 'react-router-dom';
 import { createBusiness } from '../../store/business';
 import AddImagesBusiness from './AddImagesBusiness';
+import states from '../../UsStates';
 
+const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+function formatPhoneNumber(value) {
+	// if input value is falsy eg if the user deletes the input, then just return
+	if (!value) return value;
+
+	// clean the input for any non-digit values.
+	const phoneNumber = value.replace(/[^\d]/g, '');
+
+	// phoneNumberLength is used to know when to apply our formatting for the phone number
+	const phoneNumberLength = phoneNumber.length;
+
+	// we need to return the value with no formatting if its less than four digits
+	// this is to avoid weird behavior that occurs if you  format the area code too early
+	if (phoneNumberLength < 4) return phoneNumber;
+
+	// if phoneNumberLength is greater than 4 and less the 7 we start to return
+	// the formatted number
+	if (phoneNumberLength < 7) {
+		return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+	}
+
+	// finally, if the phoneNumberLength is greater then seven, we add the last
+	// bit of formatting and return it.
+	return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(
+		3,
+		6
+	)}-${phoneNumber.slice(6, 10)}`;
+}
 
 const CreateBusiness = () => {
     const [businessId, setBusinessId] = useState('');
@@ -20,6 +50,8 @@ const CreateBusiness = () => {
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
     const [errors, setErrors] = useState([]);
+    const [showImagesForm, setShowImagesForm] = useState(false);
+
 
 
     const user = useSelector((state) => state.session.user);
@@ -30,7 +62,7 @@ const CreateBusiness = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const payload = {
+        const businessInfo = {
             owner_id: user.id,
             name,
             address,
@@ -47,14 +79,14 @@ const CreateBusiness = () => {
             // might not need line above since nullable
         };
 
-        const business = await dispatch(createBusiness(payload));
-        if (business.errors) {
-            setErrors(business.errors);
-        } else {
-            setBusinessId(business.id);
-            console.log(payload)
-            history.push(`/business/${business.id}`);
-        }
+        const business = await dispatch(createBusiness(businessInfo));
+        // if (business.errors) {
+        //     setErrors(business.errors);
+        // } else {
+            setBusinessId(business?.id);
+            setShowImagesForm(true);
+            console.log(businessInfo)
+        // }
     };
 
     return (
@@ -66,7 +98,7 @@ const CreateBusiness = () => {
 			</div>
             <div className="create-business-container">
 				<div className="left-side">
-
+                {!showImagesForm && (
                     <form onSubmit={handleSubmit}>
 
                             <label className="business-large-text">
@@ -171,6 +203,9 @@ const CreateBusiness = () => {
                                 value={state}
                                 onChange={(e) => setState(e.target.value)}
                             >
+                                {states.map((state) => (
+                                    <option value={state.value}>{state.label}</option>
+                                ))}
                             </select>
 
                             <label className="business-label-address-small">
@@ -219,7 +254,8 @@ const CreateBusiness = () => {
                                 Next
                             </button>
                     </form>
-                    {<AddImagesBusiness businessId={businessId} />}
+                )}
+                {showImagesForm && <AddImagesBusiness businessId={businessId} />}
                 </div>
             </div>
             <div>

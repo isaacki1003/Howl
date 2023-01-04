@@ -33,7 +33,6 @@ const Landing = () => {
 							<div className="landing-wrapper" key={i}>
 								<img
 									src={previewImage[0].url}
-									className="front-page-images"
 									onError={({ currentTarget }) => {
 										currentTarget.onerror = null;
 										currentTarget.src =

@@ -16,6 +16,7 @@
 .login-inner-wrap {
     min-height: 600px;
     width: 960px;
+    margin-top: 10em;
 }
 
 .login-col-right {
@@ -116,6 +117,7 @@
     justify-content: space-between;
     padding: 0 1rem;
     height: 45px;
+    color: black;
     width: 600px;
     font-size: 0.9rem;
     position: absolute;

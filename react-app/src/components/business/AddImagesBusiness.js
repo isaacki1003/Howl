@@ -47,7 +47,9 @@ const AddImagesBusiness = ({ businessId }) => {
 				className="business-images-form center"
 				onSubmit={submitImages}
 			>
-				<h2>Lets add some images for your business.</h2>
+				<label className="business-large-text">
+					Lets add some images to your business profile.
+                </label>
 				<div id="rev-img-errs">{imageError}</div>
 				<input
 					type="url"
@@ -73,7 +75,7 @@ const AddImagesBusiness = ({ businessId }) => {
 					))}
 				</div>
 
-				<button className="submit-business-form complete" type="submit">
+				<button className="rev-submit complete" type="submit">
 					{reviewImages.length > 0 ? 'Complete' : "I'll add it later"}
 				</button>
 			</form>

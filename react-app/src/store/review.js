@@ -5,9 +5,6 @@ const GET_SINGLE_BUSINESS_REVIEWS = 'reviews/GET_SINGLE_BUSINESS_REVIEWS';
 const initialstate = { allReviews: {}, singleReview: {}, businessReviews: {} };
 
 const normalize = (data) => {
-	if (!data || !Array.isArray(data)) {
-	  return {};
-	}
 	const obj = {};
 	data.forEach((each) => (obj[each.id] = each));
 	return obj;
@@ -115,6 +112,7 @@ export const postNewReview = (reviewInfo) => async (dispatch) => {
 		},
 		body: JSON.stringify(reviewInfo)
 	});
+	console.log(response)
 	if (response.ok) {
 		const data = await response.json();
 		return data;

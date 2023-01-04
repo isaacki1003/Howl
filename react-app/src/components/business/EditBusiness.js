@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getSingleBusiness, editBusiness } from '../../store/business';
+import states from '../../UsStates';
 
 const EditBusiness = () => {
     const [name, setName] = useState('');
@@ -13,7 +14,7 @@ const EditBusiness = () => {
     const [description, setDescription] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
     const [hours, setHours] = useState('');
-    const [type, setType] = useState('');
+    const [business_type, setBusinessType] = useState('');
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
     const [errors, setErrors] = useState([]);
@@ -37,7 +38,7 @@ const EditBusiness = () => {
                 setDescription(business.description);
                 setPhoneNumber(business.phone_number);
                 setHours(business.hours);
-                setType(business.type);
+                setBusinessType(business.business_type);
                 setPrice(business.price);
                 setUrl(business.url);
             }
@@ -58,7 +59,7 @@ const EditBusiness = () => {
             description,
             phone_number,
             hours,
-            type,
+            business_type,
             price: Number(price),
             url,
             // might not need line above since nullable
@@ -66,7 +67,7 @@ const EditBusiness = () => {
 
         const business2 = await dispatch(editBusiness(payload, businessId));
         await dispatch(getSingleBusiness(businessId));
-        history.push(`/${businessId}`);
+        history.push(`/business/${businessId}`);
         }
 
     return (
@@ -138,9 +139,9 @@ const EditBusiness = () => {
                             type="text"
                             name="business_type"
                             className="business-label-short"
-                            value={type}
+                            value={business_type}
                             placeholder="e.g. Cajun/Creole, Seafood, Soup"
-                            onChange={(e) => setType(e.target.value)}
+                            onChange={(e) => setBusinessType(e.target.value)}
                         />
 
                         <label className="business-large-text">
@@ -183,6 +184,9 @@ const EditBusiness = () => {
                             value={state}
                             onChange={(e) => setState(e.target.value)}
                         >
+                        {states.map((state) => (
+                            <option value={state.value}>{state.label}</option>
+                        ))}
                         </select>
 
                         <label className="business-label-address-small">

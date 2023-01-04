@@ -49,10 +49,13 @@
     font-size: 18px;
     color: rgb(67, 63, 63);
     font-weight: 400;
+    font-family: 'Josefin Sans', sans-serif;
+
 }
 
 .nav-card-bus {
     font-size: 1.2rem;
     color: #027A97;
     font-weight: 500;
+    font-family: 'Josefin Sans', sans-serif;
 }

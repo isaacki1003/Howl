@@ -1,6 +1,7 @@
 
 .nav-link{
     text-decoration: none;
+    font-family: 'Josefin Sans';
 }
 
 .logo-name {
@@ -35,6 +36,7 @@
 
 .create-business-container {
     margin-top: 125px;
+    font-family: 'Josefin Sans';
 }
 
 .left-side {
@@ -81,7 +83,12 @@ label.business-small-text1 {
     margin-right: 2em;
     padding-left: 1em;
     margin-bottom: 4em;
-    max-width: clamp(330px, 75%, 660px)
+    max-width: clamp(330px, 75%, 660px);
+    font-family: 'Josefin Sans';
+}
+
+.business-label-short:hover {
+    border: 1px solid red;
 }
 
 .business-label-short-address {
@@ -93,7 +100,8 @@ label.business-small-text1 {
     height: 35px;
     margin-right: 2em;
     padding-left: 1em;
-    max-width: clamp(330px, 75%, 660px)
+    max-width: clamp(330px, 75%, 660px);
+    font-family: 'Josefin Sans';
 }
 
 .business-label-short-address1 {
@@ -105,25 +113,40 @@ label.business-small-text1 {
     height: 35px;
     margin-right: 2em;
     padding-left: 1em;
-    max-width: clamp(330px, 75%, 660px)
+    max-width: clamp(330px, 75%, 660px);
+    font-family: 'Josefin Sans';
 }
+
+.business-label-short-address1:hover {
+    border: 1px solid red;
+}
+
+.business-label-short-address:hover {
+    border: 1px solid red;
+}
+
 
 
 .business-label-short-state {
     display: flex;
     margin-left: 6em;
     margin-bottom: 2em;
-    width: 75px;
+    width: 125px;
     height: 35px;
     margin-top: 0.5em;
     margin-right: 2em;
     padding-left: 1em;
+    font-family: 'Josefin Sans';
     /* max-width: 660px; */
+}
+
+.business-label-short-state:hover {
+    border: 1px solid red;
 }
 
 .business-label-long {
     display: flex;
-    margin-left: 5em;
+    margin-left: 6em;
 
     margin-top: 2em;
     width: 74%;
@@ -131,7 +154,10 @@ label.business-small-text1 {
     margin-right: 2em;
     padding-left: 1em;
     margin-bottom: 3em;
-    max-width: clamp(330px, 75%, 660px)
+    max-width: clamp(330px, 75%, 660px);
+    font-family: 'Josefin Sans';
+    line-height: 2em;
+    padding-top: 1em;
 }
 
 
@@ -161,6 +187,50 @@ img.calcifer-create {
     float: right;
     width: 40%;
     margin-right: 5em;
-    margin-top: 25%;
+    margin-top: 15%;
     height: 100%;
+}
+
+.button-seperator{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.complete-review{
+    background-color: #71cb98;
+}
+
+
+.delete-review-image{
+    cursor: pointer;
+    color: red;
+}
+
+.review-image-wrapper{
+    flex-direction: column;
+}
+
+
+
+
+
+.business-preview-image{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    border-top: 1px solid gray;
+    justify-content: space-between;
+    padding: 2rem;
+}
+
+.business-images-input-field{
+    width: 500px;
+    height: 35px;
+}
+.add-business-single-image{
+    height: 300px;
+    width: 435px;
+    object-fit: cover;
+    border-radius: 10px;
 }
