@@ -46,7 +46,7 @@ const CreateBusiness = () => {
     const [description, setDescription] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
     const [hours, setHours] = useState('');
-    const [type, setType] = useState('');
+    const [business_type, setBusinessType] = useState('');
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
     const [errors, setErrors] = useState([]);
@@ -73,7 +73,7 @@ const CreateBusiness = () => {
             description,
             phone_number,
             hours,
-            type,
+            business_type,
             price: Number(price),
             url,
             // might not need line above since nullable
@@ -156,11 +156,11 @@ const CreateBusiness = () => {
                             </label>
                             <input
                                 type="text"
-                                name="type"
+                                name="business_type"
                                 className="business-label-short"
-                                value={type}
+                                value={business_type}
                                 placeholder="e.g. Cajun/Creole, Seafood, Soup"
-                                onChange={(e) => setType(e.target.value)}
+                                onChange={(e) => setBusinessType(e.target.value)}
                             />
 
                             <label className="business-large-text">

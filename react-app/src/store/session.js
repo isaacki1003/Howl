@@ -53,7 +53,6 @@ export const login = (email, password) => async (dispatch) => {
   } else {
     return ['An error occurred. Please try again.']
   }
-
 }
 
 export const logout = () => async (dispatch) => {
@@ -69,14 +68,17 @@ export const logout = () => async (dispatch) => {
 };
 
 
-export const signUp = (userInfo) => async (dispatch) => {
+export const signUp = ({ first_name, last_name, email, password }) => async (dispatch) => {
   const response = await fetch('/api/auth/signup', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      userInfo
+      first_name,
+			last_name,
+			email,
+			password
     }),
   });
 

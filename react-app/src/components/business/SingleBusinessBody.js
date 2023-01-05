@@ -53,13 +53,13 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 		const review = reviews[i];
 		if (review.user_id === user?.id) {
 			return (
-				<div className="business-details-body-wrapper">
-					<div className="business-details-container">
+				<div className="dets-bus-bd-wrap">
+					<div className="dets-bus-cont">
 						{!theOwner && (
-							<div className="create-reviews-wrapper">
+							<div className="new-rev-wrap-x">
 								<NavLink
 									to={`/business/${businessId}/reviews/${review.id}/edit`}
-									className="create-new-review-link"
+									className="new-rev-lnk-1"
 								>
 									<i class="fa-regular fa-star"></i> Edit your review
 								</NavLink>
@@ -67,15 +67,15 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 						)}
 
 						{theOwner && (
-							<div className="create-reviews-wrapper">
+							<div className="new-rev-wrap-x">
 								<NavLink
 									to={`/business/${businessId}/edit`}
-									className="create-new-review-link"
+									className="new-rev-lnk-1"
 								>
 									<i className="fa-solid fa-star" /> Edit Business
 								</NavLink>
 								<button
-									className="create-new-review-link-button"
+									className="new-rev-lnk-1-butt"
 									onClick={handleDelete}
 								>
 									<i class="fa-solid fa-x"></i>  ‎
@@ -83,18 +83,18 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 								</button>
 							</div>
 						)}
-						<div className="business-details-block-map">
-						<div className="hours-wrapper">
+						<div className="dets-bus-blk-map">
+						<div className="hrs-wrap">
 								<h1 className="title-business-smaller1">Hours</h1>
-								<div id="operation-hours-container">
-									<div id="each-day">
+								<div id="op-hr-cont">
+									<div id="ev-day-1">
 										{operating?.map((day) => (
-											<div id="day-of-week">{day[0]}</div>
+											<div id="day-wk">{day[0]}</div>
 										))}
 									</div>
-									<div id="each-day">
+									<div id="ev-day-1">
 										{operating?.map((day) => (
-											<div id="hours-of-operation">
+											<div id="hrs-op">
 												<div>{day[1]}</div>
 												{day[0] == todayDay && (
 													<div
@@ -112,23 +112,23 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 							</div>
 						</div>
 
-						<div className="business-details-block">
+						<div className="dets-bus-blk">
 							<h1 className="title-business-smaller1">About the Business</h1>
-							<div className="business-details-description">
+							<div className="dets-bus-desc">
 								{business.description}
 							</div>
 						</div>
 
-						<div className="business-details-block">
+						<div className="dets-bus-blk">
 							<h1 className="title-business-smaller1">Recommended Reviews</h1>
 							<SingleBusinessReviews business={business} />
 						</div>
 
 					</div>
-					<div className="business-details-right-Col">
-						<div className="additional-details-box">
+					<div className="dets-bus-right-Col">
+						<div className="more-dets-box-1">
 							{business.url && (
-								<div className="business-right-details">
+								<div className="bus-dets-right">
 									<a
 										href={business.url}
 										style={{ color: '#49B1CB', textDecoration: 'none', fontFamily: 'Josefin Sans' }}
@@ -149,7 +149,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 									</a>
 								</div>
 							)}
-							<div className="business-right-details">
+							<div className="bus-dets-right">
 								{business.phone_number}
 								<img
 									src="https://www.pngrepo.com/png/46219/180/phone.png"
@@ -157,7 +157,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 									style={{ height: '26px', width: '26px' }}
 								/>
 							</div>
-							<div className="business-right-details no-border">
+							<div className="bus-dets-right no-border">
 								<div>
 									{business.address} {business.city}, {business.state}{' '}
 									{business.zip}
@@ -176,13 +176,13 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 	}
 
 	return (
-		<div className="business-details-body-wrapper">
-			<div className="business-details-container">
+		<div className="dets-bus-bd-wrap">
+			<div className="dets-bus-cont">
 				{!theOwner && (
-					<div className="create-reviews-wrapper">
+					<div className="new-rev-wrap-x">
 						<NavLink
 							to={`/business/${businessId}/create-review`}
-							className="create-new-review-link"
+							className="new-rev-lnk-1"
 						>
 							<i className="fa-regular fa-star" /> Write a review
 						</NavLink>
@@ -190,15 +190,15 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 				)}
 
 				{theOwner && (
-					<div className="create-reviews-wrapper">
+					<div className="new-rev-wrap-x">
 						<NavLink
 							to={`/business/${businessId}/edit`}
-							className="create-new-review-link"
+							className="new-rev-lnk-1"
 						>
 							<i className="fa-solid fa-star" /> Edit Business
 						</NavLink>
 						<button
-							className="create-new-review-link-button"
+							className="new-rev-lnk-1-butt"
 							onClick={handleDelete}
 						>
 							<i class="fa-solid fa-x"></i>  ‎
@@ -206,18 +206,18 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 						</button>
 					</div>
 				)}
-				<div className="business-details-block-map">
-				<div className="hours-wrapper">
+				<div className="dets-bus-blk-map">
+				<div className="hrs-wrap">
 						<h1 className="title-business-smaller1">Hours</h1>
-						<div id="operation-hours-container">
-							<div id="each-day">
+						<div id="op-hr-cont">
+							<div id="ev-day-1">
 								{operating?.map((day) => (
-									<div id="day-of-week">{day[0]}</div>
+									<div id="day-wk">{day[0]}</div>
 								))}
 							</div>
-							<div id="each-day">
+							<div id="ev-day-1">
 								{operating?.map((day) => (
-									<div id="hours-of-operation">
+									<div id="hrs-op">
 										<div>{day[1]}</div>
 										{day[0] == todayDay && (
 											<div
@@ -235,23 +235,23 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 					</div>
 				</div>
 
-				<div className="business-details-block">
+				<div className="dets-bus-blk">
 					<h1 className="title-business-smaller1">About the Business</h1>
-					<div className="business-details-description">
+					<div className="dets-bus-desc">
 						{business.description}
 					</div>
 				</div>
 
-				<div className="business-details-block">
+				<div className="dets-bus-blk">
 					<h1 className="title-business-smaller1">Recommended Reviews</h1>
 					<SingleBusinessReviews business={business} />
 				</div>
 
 			</div>
-			<div className="business-details-right-Col">
-				<div className="additional-details-box">
+			<div className="dets-bus-right-Col">
+				<div className="more-dets-box-1">
 					{business.url && (
-						<div className="business-right-details">
+						<div className="bus-dets-right">
 							<a
 								href={business.url}
 								style={{ color: '#49B1CB', textDecoration: 'none', fontFamily: 'Josefin Sans' }}
@@ -272,7 +272,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 							</a>
 						</div>
 					)}
-					<div className="business-right-details">
+					<div className="bus-dets-right">
 						{business.phone_number}
 						<img
 							src="https://www.pngrepo.com/png/46219/180/phone.png"
@@ -280,7 +280,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 							style={{ height: '26px', width: '26px' }}
 						/>
 					</div>
-					<div className="business-right-details no-border">
+					<div className="bus-dets-right no-border">
 						<div>
 							{business.address} {business.city}, {business.state}{' '}
 							{business.zip}

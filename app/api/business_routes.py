@@ -26,18 +26,19 @@ def create_business():
     form = BusinessForm()
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        print('FORM DATA -------------______---------> ', form.data)
         business = Business(
             owner_id = form.data['owner_id'],
             name = form.data['name'],
             address = form.data['address'],
             city = form.data['city'],
             state = form.data['state'],
-            zip_code = form.data['zip_code'],
             country = form.data['country'],
+            zip_code = form.data['zip_code'],
             description = form.data['description'],
             phone_number = form.data['phone_number'],
             hours = form.data['hours'],
-            business_type = form.data['business_type'],
+            business_type = form.data['type'],
             price = form.data['price'],
             url = form.data['url'],
         )
@@ -53,6 +54,8 @@ def update_business(id):
     business = Business.query.get(id)
     form = BusinessForm()
     form['csrf_token'].data = request.cookies['csrf_token']
+    print('FORM DATA -------------______---------> ', form.data)
+
     if form.validate_on_submit():
         business.name = form.data['name'],
         business.address = form.data['address'],
@@ -121,7 +124,7 @@ def add_business_review(id):
     if business:
         if form.validate_on_submit():
             review = Review(
-                business_id = Integer.parseInt(id),
+                business_id = id,
                 user_id = current_user.id,
                 stars = form.data['stars'],
                 review = form.data['review']

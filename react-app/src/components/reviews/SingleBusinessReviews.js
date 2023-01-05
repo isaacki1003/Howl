@@ -38,8 +38,8 @@ const SingleBusinessReviews = ({ business }) => {
     if (!reviews?.length) return <div>Be the first to review this business!</div>;
 	return (
 		<div className="business-reviews-wrapper">
-			<div className="business-overall-review-bar">
-				<div className="overall-review-stars">
+			<div className="bus-rev-bar-xx">
+				<div className="rev-stars-xxx">
 					<div style={{ fontWeight: 'bold', fontSize: '14px' }}>
 						Overall Rating
 					</div>
@@ -50,48 +50,48 @@ const SingleBusinessReviews = ({ business }) => {
 						{business.num_reviews} reviews
 					</div>
 				</div>
-				<div className="business-over-bar-wrapper">
-					<div className="stars-bar-container">
-						<div className="stars-bar-title">5 stars</div>
-						<div className="stars-bar-gray">
+				<div className="bus-over-wrap">
+					<div className="cont-str-bar">
+						<div className="tit-str-bar">5 stars</div>
+						<div className="grey-str-bar">
 							<div
-								className="b-fiveStars stars-bar-color"
+								className="b-fiveStars clr-str-bar"
 								style={{ width: `${five}%` }}
 							></div>
 						</div>
 					</div>
-					<div className="stars-bar-container">
-						<div className="stars-bar-title">4 stars</div>
-						<div className="stars-bar-gray">
+					<div className="cont-str-bar">
+						<div className="tit-str-bar">4 stars</div>
+						<div className="grey-str-bar">
 							<div
-								className="b-fourStars stars-bar-color"
+								className="b-fourStars clr-str-bar"
 								style={{ width: `${four}%` }}
 							></div>
 						</div>
 					</div>
-					<div className="stars-bar-container">
-						<div className="stars-bar-title">3 stars</div>
-						<div className="stars-bar-gray">
+					<div className="cont-str-bar">
+						<div className="tit-str-bar">3 stars</div>
+						<div className="grey-str-bar">
 							<div
-								className="b-threeStars stars-bar-color"
+								className="b-threeStars clr-str-bar"
 								style={{ width: `${three}%` }}
 							></div>
 						</div>
 					</div>
-					<div className="stars-bar-container">
-						<div className="stars-bar-title">2 stars</div>
-						<div className="stars-bar-gray">
+					<div className="cont-str-bar">
+						<div className="tit-str-bar">2 stars</div>
+						<div className="grey-str-bar">
 							<div
-								className="b-twoStars stars-bar-color"
+								className="b-twoStars clr-str-bar"
 								style={{ width: `${two}%` }}
 							></div>
 						</div>
 					</div>
-					<div className="stars-bar-container">
-						<div className="stars-bar-title  onestar-div">1 star</div>
-						<div className="stars-bar-gray">
+					<div className="cont-str-bar">
+						<div className="tit-str-bar  one-str-1">1 star</div>
+						<div className="grey-str-bar">
 							<div
-								className="b-oneStar stars-bar-color"
+								className="b-oneStar clr-str-bar"
 								style={{ width: `${one}%` }}
 							></div>
 						</div>
@@ -102,34 +102,34 @@ const SingleBusinessReviews = ({ business }) => {
 				const reviewDate = new Date(review.created_at).toLocaleDateString();
 				const show = review?.user_id == user?.id;
 				return (
-					<div className="business-review-card-container">
+					<div className="bus-rev-crd-cont">
 						<div id="card-reviewer-name">
-							<div className="user-review-icon">
+							<div className="user-rev-icn-1">
 								<img
 									src="https://www.pngrepo.com/png/296664/180/alien-avatar.png"
 									alt="self logo"
 									style={{ height: '40px', width: '40px' }}
 								/>
 							</div>
-							<div className='format-name-review'>
+							<div className='rev-name-correct'>
 								{review.reviewer?.first_name} {review.reviewer?.last_name}
 							</div>
 							{show && (
 								<NavLink
 									to={`/business/${businessId}/reviews/${review.id}/edit`}
-									className="nav-link edit-review-link"
+									className="nav-link edit-rev-lnk-1"
 								>
 									<i class="fa-solid fa-ellipsis"></i>
 								</NavLink>
 							)}
 						</div>
-						<div id="card-review-stars">
+						<div id="card-rev-strs-1">
 							<Stars rating={review.stars} />{' '}
-							<p id="card-review-date">{reviewDate}</p>
+							<p id="card-rev-dt-1">{reviewDate}</p>
 						</div>
-						<div id="card-review-review">{review.review}</div>
+						<div id="card-rev-rev">{review.review}</div>
 						{review.reviewImages?.length > 0 && (
-							<div id="card-review-images">
+							<div id="card-rev-imgs-x">
 								{review.reviewImages.map((image, i) => {
 									if (i < 4) {
 										return (

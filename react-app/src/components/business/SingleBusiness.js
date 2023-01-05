@@ -76,9 +76,9 @@ const SingleBusiness = () => {
 
 
     return (
-        <div className="business-details-page-wrapper center">
-                <div className="business-details-images-container">
-                    <div className="business-detail-faded-background"></div>
+        <div className="dets-bus-page-wrapper center">
+                <div className="dets-bus-img-cont">
+                    <div className="bus-det-back"></div>
                     {businessImages?.map((url1) => (
                         <img
                             src={url1.url}
@@ -91,9 +91,9 @@ const SingleBusiness = () => {
                         />
                     ))}
                 </div>
-                <div className="business-details-header-wrapper">
-				    <h1 className="business-details-name">{business.name}</h1>
-                    <div className={`business-details-total-reviews ${color}`}>
+                <div className="dets-bus-wrap-head">
+				    <h1 className="dets-bus-name">{business.name}</h1>
+                    <div className={`dets-bus-tot-revs ${color}`}>
                         {[...Array(5)].map((star, i) => {
                             if (i < Math.floor(rating)) return <i class="fa-solid fa-star" />;
                             else if (rating % Math.floor(rating) >= 0.5) {
@@ -101,22 +101,22 @@ const SingleBusiness = () => {
                                 return <i class="fa-regular fa-star-half-stroke" />;
                             } else return <i class="fa-regular fa-star" />;
                         })}
-					<div className="total-reviews">{business.num_reviews} reviews</div>
+					<div className="tot-revs">{business.num_reviews} reviews</div>
 				</div>
-                <div className="business-details-price-categories">
+                <div className="dets-bus-p-cat">
 					<div style={{ fontWeight: '400' }}>{priceRange} • </div>
-					{categories.map((category) => (
+					{categories?.map((category) => (
 						<>
 							<NavLink
 								to={`/search/?desc=${category.replace(/^\s+|\s+$/g, '')}&loc=`}
-								className="nav-link business-details-category-link"
+								className="nav-link dets-bus-cat-redir"
 							>
 								{category},
 							</NavLink>
 						</>
 					))}
 				</div>
-				<div className="business-details-hours">
+				<div className="dets-bus-hours">
 					<div
 						className={`business-open-close ${
 							operatingHours[0] ? 'open' : 'close'

@@ -32,6 +32,7 @@ const CreateReview = () => {
 	const [stars, setStars] = useState(0);
 	const [hover, setHover] = useState(null);
 	const [review, setReview] = useState('');
+	const [haveErrors, setHaveErrors] = useState(false);
 	const [reviewErrors, setReviewErrors] = useState([]);
 	const [urls, setUrls] = useState('');
 	const [reviewImages, setReviewImages] = useState([]);
@@ -52,7 +53,7 @@ const CreateReview = () => {
 			}
 			const reviewInfo = {
 				user_id: user.id,
-				Business_id: Number(businessId),
+				business_id: Number(businessId),
 				stars,
 				review
 			};
@@ -60,11 +61,12 @@ const CreateReview = () => {
 			const newReview = await dispatch(postNewReview(reviewInfo));
 			if (newReview?.errors) {
 				setReviewErrors(newReview.errors);
+				setHaveErrors(true);
 			} else {
 				/// post images for review
 				reviewImages.forEach(async (url) => {
 					const imageData = {
-						review_id: Number(newReview?.id),
+						review_id: newReview?.id,
 						url
 					};
 					await dispatch(postNewReviewImage(imageData));
@@ -86,12 +88,25 @@ const CreateReview = () => {
 	};
 	if (!business) return null;
 	return (
-		<>
+		<div className=''>
 			<div className="red-top-bar center">
 				<NavLink className="nav-link logo-name" to="/">
 					FLUM
 				</NavLink>
 			</div>
+			{haveErrors && (
+				<div className="center err-bx1">
+					{reviewErrors.map((error, ind) => (
+						<div>{error}</div>
+					))}
+					<p
+						className="close-err-msg"
+						onClick={() => setReviewErrors(false)}
+					>
+						X
+					</p>
+				</div>
+			)}
 			<div className="new-rev-frm-wrap center">
 				<div className="review-form-container">
 					<NavLink
@@ -130,7 +145,6 @@ const CreateReview = () => {
 									);
 								})}
 							</div>
-							<div className="rev-errs">{reviewErrors.stars}</div>
 							<textarea
 								className="review-text"
 								name="review-text"
@@ -138,7 +152,6 @@ const CreateReview = () => {
 								onChange={(e) => setReview(e.target.value)}
 								placeholder='I recently visited a pizza place in Los Angeles called "Papas Pies" and I was blown away by the quality of their pizzas. The crust was perfectly crispy and the toppings were fresh and flavorful. I particularly enjoyed the "Meat Lovers" pizza, which was loaded with an assortment of meats and cheeses. The service was also top-notch - the staff was friendly and efficient, and the atmosphere was casual and inviting. Overall, I highly recommend Papas Pies for anyone in search of delicious, high-quality pizza in Los Angeles.'
 							/>
-							<div className="rev-errs">{reviewErrors.review}</div>
 						</div>
 						<div className="ret-bus-frm-rev add-a-photo">
 							Add Some Photos
@@ -176,7 +189,7 @@ const CreateReview = () => {
 				</div>
 			</div>
 
-		</>
+		</div>
 	);
 };
 
