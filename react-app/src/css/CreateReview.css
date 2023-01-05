@@ -8,6 +8,14 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
+.rev-create-wrapper1 {
+    min-height: 90vh;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
 .cent-rev-create-nav-div {
     width: 100%;
     min-width: 473px;
@@ -79,6 +87,11 @@
 .write-review-title {
     font-size: 2rem;
     margin-bottom: 20px;
+}
+
+.write-review-title1 {
+    font-size: 5rem;
+    margin-bottom: 1em;
 }
 
 .rev-search-rev-create-wrap {
