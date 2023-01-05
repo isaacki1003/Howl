@@ -1,21 +1,12 @@
-import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useSelector } from 'react-redux';
 import { NavLink, useParams } from 'react-router-dom';
-import { getSingleBusinessReviews } from '../../store/review';
 import Stars from './Stars';
 
 const SingleBusinessReviews = ({ business }) => {
     const { businessId } = useParams();
     const user = useSelector(state => state.session.user);
     const reviews = business.all_reviews;
-    const dispatch = useDispatch();
-
-    // useEffect(() => {
-    //     const execute = async () => {
-    //         await dispatch(getSingleBusinessReviews(businessId));
-    //     };
-    //     execute();
-    // }, []);
 
     let one = 0;
 	let two = 0;
@@ -23,11 +14,11 @@ const SingleBusinessReviews = ({ business }) => {
 	let four = 0;
 	let five = 0;
 	reviews?.forEach((review) => {
-		if (review.stars == 5) five++;
-		if (review.stars == 4) four++;
-		if (review.stars == 3) three++;
-		if (review.stars == 2) two++;
-		if (review.stars == 1) one++;
+		if (review.stars === 5) five++;
+		if (review.stars === 4) four++;
+		if (review.stars === 3) three++;
+		if (review.stars === 2) two++;
+		if (review.stars === 1) one++;
 	});
 	if (one !== 0) one = (one / business.num_reviews) * 100;
 	if (two !== 0) two = (two / business.num_reviews) * 100;
@@ -100,7 +91,7 @@ const SingleBusinessReviews = ({ business }) => {
 			</div>
 			{reviews?.reverse().map((review) => {
 				const reviewDate = new Date(review.created_at).toLocaleDateString();
-				const show = review?.user_id == user?.id;
+				const show = review?.user_id === user?.id;
 				return (
 					<div className="bus-rev-crd-cont">
 						<div id="card-reviewer-name">
@@ -134,6 +125,7 @@ const SingleBusinessReviews = ({ business }) => {
 									if (i < 4) {
 										return (
 											<img
+												alt={i}
 												className="card-rev-sing-img"
 												src={image.url}
 												onError={({ currentTarget }) => {
@@ -143,6 +135,9 @@ const SingleBusinessReviews = ({ business }) => {
 												}}
 											/>
 										);
+									}
+									else {
+										return null;
 									}
 								})}
 							</div>

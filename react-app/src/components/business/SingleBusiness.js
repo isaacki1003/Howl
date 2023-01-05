@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, NavLink } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import SingleBusinessBody from './SingleBusinessBody';
 
@@ -45,7 +45,7 @@ const SingleBusiness = () => {
 			const currentHour = date.getHours();
 			const operationHoursEachDay = results.hours.split(','); //['Mon-11:30-21:30', 'Tue-11:30-21:30', 'Wed-11:30-21:30'....
 			const todayHours = operationHoursEachDay // ['Thu', '11:30', '21:30']
-				.filter((day) => day.slice(0, 3) == todayDay)[0]
+				.filter((day) => day.slice(0, 3) === todayDay)[0]
 				.split('-');
 			if (todayHours[1] !== 'Closed') {
 				const openHour = todayHours[1].split(':'); //  ['11', '30']
@@ -69,7 +69,7 @@ const SingleBusiness = () => {
         return () => {
             dispatch(cleanUpBusiness());
         };
-    }, [businessId]);
+    }, [businessId, dispatch]);
 
     let rating = business.averageRating;
 	const color = getColorForRating(rating);
@@ -82,7 +82,7 @@ const SingleBusiness = () => {
                     {businessImages?.map((url1) => (
                         <img
                             src={url1.url}
-                            // key={url}
+                            alt={url1.url}
                             onError={({ currentTarget }) => {
                                 currentTarget.onerror = null;
                                 currentTarget.src =

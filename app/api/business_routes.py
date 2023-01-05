@@ -19,7 +19,7 @@ def get_business(id):
     return {'business': business.to_dict()}
 
 #CREATE A BUSINESS
-@business_routes.route('/', methods=['POST'])
+@business_routes.route('', methods=['POST'])
 @login_required
 def create_business():
     user_id = current_user.id
@@ -38,7 +38,7 @@ def create_business():
             description = form.data['description'],
             phone_number = form.data['phone_number'],
             hours = form.data['hours'],
-            business_type = form.data['type'],
+            business_type = form.data['business_type'],
             price = form.data['price'],
             url = form.data['url'],
         )
@@ -62,7 +62,6 @@ def update_business(id):
         business.city = form.data['city'],
         business.state = form.data['state'],
         business.zip_code = form.data['zip_code'],
-        business.country = form.data['country'],
         business.description = form.data['description'],
         business.phone_number = form.data['phone_number'],
         business.hours = form.data['hours'],

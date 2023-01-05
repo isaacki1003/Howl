@@ -4,6 +4,35 @@ import { NavLink, useHistory, useParams } from 'react-router-dom';
 import { getSingleBusiness, editBusiness } from '../../store/business';
 import states from '../../UsStates';
 
+const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+
+function formatPhoneNumber(value) {
+	// if input value is falsy eg if the user deletes the input, then just return
+	if (!value) return value;
+
+	// clean the input for any non-digit values.
+	const phoneNumber = value.replace(/[^\d]/g, '');
+
+	// phoneNumberLength is used to know when to apply our formatting for the phone number
+	const phoneNumberLength = phoneNumber.length;
+
+	// we need to return the value with no formatting if its less than four digits
+	// this is to avoid weird behavior that occurs if you  format the area code too early
+	if (phoneNumberLength < 4) return phoneNumber;
+
+	// if phoneNumberLength is greater than 4 and less the 7 we start to return
+	// the formatted number
+	if (phoneNumberLength < 7) {
+		return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
+	}
+
+	// finally, if the phoneNumberLength is greater then seven, we add the last
+	// bit of formatting and return it.
+	return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}
+
+-${phoneNumber.slice(6, 10)}`;
+}
+
 const EditBusiness = () => {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
@@ -13,14 +42,19 @@ const EditBusiness = () => {
     const [zip_code, setZipCode] = useState('');
     const [description, setDescription] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
-    const [hours, setHours] = useState('');
+    const [hours, setOperationHours] = useState([]);
+    const [day, setDay] = useState('Mon');
+    const [openHour, setOpenHour] = useState('');
+	const [closeHour, setCloseHour] = useState('');
+    const [displayHours, setDisplayHours] = useState([]);
+    const [hourError, setHourError] = useState('');
     const [business_type, setBusinessType] = useState('');
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
     const [errors, setErrors] = useState([]);
 
     const user = useSelector((state) => state.session.user);
-    const business = useSelector((state) => state.business.singleBusiness);
+    // const business = useSelector((state) => state.business.singleBusiness);
     const { businessId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -28,6 +62,30 @@ const EditBusiness = () => {
     useEffect(() => {
         const getBusiness = async () => {
             const business = await dispatch(getSingleBusiness(businessId));
+            let OpHours = business.hours;
+				OpHours = OpHours.split(',');
+				setOperationHours(OpHours);
+				let operating = OpHours.map((eachDay) => {
+                    eachDay = eachDay.split('-');
+                    if (eachDay[1] !== 'Closed') {
+                        const openHour = eachDay[1].split(':'); //  ['11', '30']
+                        const closeHour = eachDay[2].split(':'); // ['21', '30']
+                        openHour[1] =
+                            Number(openHour[0]) > 11
+                                ? openHour[1] + ' PM'
+                                : openHour[1] + ' AM';
+                        closeHour[1] =
+                            Number(closeHour[0]) > 11
+                                ? closeHour[1] + ' PM'
+                                : closeHour[1] + ' AM';
+                        openHour[0] = ((Number(openHour[0]) + 11) % 12) + 1;
+                        closeHour[0] = ((Number(closeHour[0]) + 11) % 12) + 1;
+                        eachDay[1] = openHour.join(':') + ' - ' + closeHour.join(':');
+                        return eachDay.slice(0, 2);
+                    }
+                    return eachDay;
+                });
+                setDisplayHours(operating)
             if (business) {
                 setName(business.name);
                 setAddress(business.address);
@@ -37,7 +95,6 @@ const EditBusiness = () => {
                 setZipCode(business.zip_code);
                 setDescription(business.description);
                 setPhoneNumber(business.phone_number);
-                setHours(business.hours);
                 setBusinessType(business.business_type);
                 setPrice(business.price);
                 setUrl(business.url);
@@ -46,9 +103,52 @@ const EditBusiness = () => {
         getBusiness();
     }, [businessId]);
 
+    const addHours = (e) => {
+		e.preventDefault();
+		if (!openHour || !closeHour)
+			return setHourError('Please enter enter operation hours.');
+
+		const hour = `${day}-${openHour}-${closeHour}`;
+		const OpHours = hours;
+		OpHours.push(hour);
+		setOperationHours(OpHours);
+		let operating = OpHours.map((eachDay) => {
+			eachDay = eachDay.split('-');
+			if (eachDay[1] !== 'Closed') {
+				const openHour = eachDay[1].split(':'); //  ['11', '30']
+				const closeHour = eachDay[2].split(':'); // ['21', '30']
+				openHour[1] =
+					Number(openHour[0]) > 11 ? openHour[1] + ' PM' : openHour[1] + ' AM';
+				closeHour[1] =
+					Number(closeHour[0]) > 11
+						? closeHour[1] + ' PM'
+						: closeHour[1] + ' AM';
+				openHour[0] = ((Number(openHour[0]) + 11) % 12) + 1;
+				closeHour[0] = ((Number(closeHour[0]) + 11) % 12) + 1;
+				eachDay[1] = openHour.join(':') + ' - ' + closeHour.join(':');
+				return eachDay.slice(0, 2);
+			}
+			return eachDay;
+		});
+		setDisplayHours(operating);
+	};
+
+	const removeHour = (i) => {
+		const hours = displayHours.filter((e, index) => index !== i);
+		const opHours = hours.filter((e, index) => index !== i);
+		setDisplayHours(hours);
+		setOperationHours(opHours);
+	};
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const payload = {
+        let res_opHours = hours;
+		let closedDays = days.filter(
+			(day) => !hours.join(',').includes(day)
+		);
+		closedDays = closedDays.map((day) => day + '-Closed');
+		res_opHours = res_opHours.concat(closedDays);
+        const businessInfo = {
             owner_id: user.id,
             name,
             address,
@@ -57,15 +157,16 @@ const EditBusiness = () => {
             country,
             zip_code,
             description,
-            phone_number,
-            hours,
+            phone_number: String(phone_number),
+            hours: res_opHours.join(','),
             business_type,
             price: Number(price),
             url,
-            // might not need line above since nullable
         };
 
-        const business2 = await dispatch(editBusiness(payload, businessId));
+        console.log(businessInfo)
+        console.log(businessId)
+        const business2 = await dispatch(editBusiness(businessInfo, businessId));
         await dispatch(getSingleBusiness(businessId));
         history.push(`/business/${businessId}`);
         }
@@ -218,6 +319,51 @@ const EditBusiness = () => {
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                         />
+
+						<div className="add-hours-wrapper">
+							<select
+								type="text"
+								name="day"
+								value={day}
+								onChange={(e) => setDay(e.target.value)}
+							>
+								{' '}
+								{days.map((day) => (
+									<option value={day}>{day}</option>
+								))}
+							</select>
+							<input
+								className="business-input-field-hour"
+								type="time"
+								value={openHour}
+								name="openHour"
+								onChange={(e) => setOpenHour(e.target.value)}
+							/>
+							<input
+								className="business-input-field-hour"
+								type="time"
+								value={closeHour}
+								name="closeHour"
+								onChange={(e) => setCloseHour(e.target.value)}
+							/>
+							<button type="add-hour" onClick={addHours}>
+								Add Hours
+							</button>
+						</div>
+                        <div className="display-hours-container">
+							{displayHours.map((each, i) => (
+								<div className="display-single-hour">
+									<div>{each[0]}</div>
+									<div>{each[1]}</div>
+									<div
+										className="remove-display-hour"
+										onClick={() => removeHour(i)}
+									>
+										remove
+									</div>
+								</div>
+							))}
+						</div>
 
                         <label className="business-large-text">
                             What is your business like?

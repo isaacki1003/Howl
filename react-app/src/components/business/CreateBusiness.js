@@ -41,27 +41,72 @@ const CreateBusiness = () => {
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
-    const [country, setCountry] = useState('');
+    const [country, setCountry] = useState('USA');
     const [zip_code, setZipCode] = useState('');
     const [description, setDescription] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
-    const [hours, setHours] = useState('');
+	const [operation_hours, setOperationHours] = useState([]);
+    const [day, setDay] = useState('Mon');
+    const [openHour, setOpenHour] = useState('');
+	const [closeHour, setCloseHour] = useState('');
+    const [displayHours, setDisplayHours] = useState([]);
+    const [hourError, setHourError] = useState('');
     const [business_type, setBusinessType] = useState('');
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
     const [errors, setErrors] = useState([]);
     const [showImagesForm, setShowImagesForm] = useState(false);
 
-
-
     const user = useSelector((state) => state.session.user);
-
 
     const dispatch = useDispatch();
     const history = useHistory();
 
+    const addHours = (e) => {
+		e.preventDefault();
+		if (!openHour || !closeHour)
+			return setHourError('Please enter enter operation hours.');
+
+		const hour = `${day}-${openHour}-${closeHour}`;
+		const OpHours = operation_hours;
+		OpHours.push(hour);
+		setOperationHours(OpHours);
+		let operating = OpHours.map((eachDay) => {
+			eachDay = eachDay.split('-');
+			if (eachDay[1] !== 'Closed') {
+				const openHour = eachDay[1].split(':'); //  ['11', '30']
+				const closeHour = eachDay[2].split(':'); // ['21', '30']
+				openHour[1] =
+					Number(openHour[0]) > 11 ? openHour[1] + ' PM' : openHour[1] + ' AM';
+				closeHour[1] =
+					Number(closeHour[0]) > 11
+						? closeHour[1] + ' PM'
+						: closeHour[1] + ' AM';
+				openHour[0] = ((Number(openHour[0]) + 11) % 12) + 1;
+				closeHour[0] = ((Number(closeHour[0]) + 11) % 12) + 1;
+				eachDay[1] = openHour.join(':') + ' - ' + closeHour.join(':');
+				return eachDay.slice(0, 2);
+			}
+			return eachDay;
+		});
+		setDisplayHours(operating);
+	};
+
+	const removeHour = (i) => {
+		const hours = displayHours.filter((e, index) => index !== i);
+		const opHours = operation_hours.filter((e, index) => index !== i);
+		setDisplayHours(hours);
+		setOperationHours(opHours);
+	};
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        let res_opHours = operation_hours;
+		let closedDays = days.filter(
+			(day) => !operation_hours.join(',').includes(day)
+		);
+		closedDays = closedDays.map((day) => day + '-Closed');
+		res_opHours = res_opHours.concat(closedDays);
         const businessInfo = {
             owner_id: user.id,
             name,
@@ -72,18 +117,20 @@ const CreateBusiness = () => {
             zip_code,
             description,
             phone_number,
-            hours,
+            hours: res_opHours.join(','),
             business_type,
             price: Number(price),
             url,
             // might not need line above since nullable
         };
 
+        console.log(businessInfo)
+
         const business = await dispatch(createBusiness(businessInfo));
         // if (business.errors) {
         //     setErrors(business.errors);
         // } else {
-            setBusinessId(business?.id);
+            setBusinessId(business.id);
             setShowImagesForm(true);
             // console.log(businessInfo)
         // }
@@ -236,6 +283,62 @@ const CreateBusiness = () => {
                                 placeholder="$24"
                                 onChange={(e) => setPrice(e.target.value)}
                             />
+
+                            <label className="business-large-text">
+                                What are your business hours?
+                            </label>
+                            <label className="business-small-text">
+                                Please do not add on days you are closed.
+                            </label>
+							<div className="add-hours-wrapper">
+								<select
+									type="text"
+									name="day"
+									value={day}
+									onChange={(e) => setDay(e.target.value)}
+								>
+									{' '}
+									{days.map((day) => (
+										<option value={day}>{day}</option>
+									))}
+								</select>
+								<input
+									className="business-input-field-hour"
+									type="time"
+									value={openHour}
+									name="openHour"
+									pattern="[0-9]{2}:[0-9]{2}"
+									onChange={(e) => setOpenHour(e.target.value)}
+								/>
+								<input
+									className="business-input-field-hour"
+									type="time"
+									value={closeHour}
+									name="closeHour"
+									pattern="[0-9]{2}:[0-9]{2}"
+									minLength={5}
+									maxLength={5}
+									onChange={(e) => setCloseHour(e.target.value)}
+								/>
+								<button type="add-hour" onClick={addHours}>
+									Add Hours
+								</button>
+							</div>
+
+                            <div className="display-hours-container">
+								{displayHours.map((each, i) => (
+									<div className="display-single-hour">
+										<div>{each[0]}</div>
+										<div>{each[1]}</div>
+										<div
+											className="remove-display-hour"
+											onClick={() => removeHour(i)}
+										>
+											remove
+										</div>
+									</div>
+								))}
+							</div>
 
                             <label className="business-large-text">
                                 What is your business like?

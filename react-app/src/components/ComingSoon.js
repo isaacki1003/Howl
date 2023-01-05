@@ -18,7 +18,7 @@ const ComingSoon = () => {
                         </div>
                 </div>
                 <div>
-                    <img src="https://s3-media0.fl.yelpcdn.com/assets/public/first_to_review_375x200_v2.yji-df81b4f3f809d02f4d8f.svg" />
+                    <img alt='coming-soon-img' src="https://s3-media0.fl.yelpcdn.com/assets/public/first_to_review_375x200_v2.yji-df81b4f3f809d02f4d8f.svg" />
                 </div>
             </div>
 

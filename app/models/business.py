@@ -18,8 +18,8 @@ class Business(db.Model):
     zip_code = db.Column(db.String(15), nullable=False)
     description = db.Column(db.String(250), nullable=False)
     phone_number = db.Column(db.String(20), nullable=False)
-    hours = db.Column(db.String(300), nullable=False)
-    business_type = db.Column(db.String(150), nullable=False)
+    hours = db.Column(db.String(400), nullable=False)
+    business_type = db.Column(db.String(250), nullable=False)
     price = db.Column(db.Integer, nullable=False)
     url = db.Column(db.String(250), nullable=True)
 
