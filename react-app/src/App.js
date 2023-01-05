@@ -12,11 +12,13 @@ import CreateBusiness from './components/business/CreateBusiness';
 import Landing from './components/landing/Landing';
 import EditBusiness from './components/business/EditBusiness';
 import SingleBusiness from './components/business/SingleBusiness';
-import FindBusinessToReview from './components/reviews/FindBusinessToReview';
+// import FindBusinessToReview from './components/reviews/FindBusinessToReview';
 import CreateReview from './components/reviews/CreateReview';
 import Header from './components/Header';
 import BlackHeader from './components/BlackHeader';
 import EditReview from './components/reviews/EditReview';
+import PageNotFound from './components/PageNotFound';
+import ComingSoon from './components/ComingSoon';
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -43,13 +45,11 @@ function App() {
           <SignUpForm />
         </Route>
         <ProtectedRoute path='/writeareview' exact={true}>
-          <FindBusinessToReview />
+          {/* <FindBusinessToReview /> */}
+          <ComingSoon />
         </ProtectedRoute>
         <ProtectedRoute path="/create-business" exact={true}>
 					<CreateBusiness />
-				</ProtectedRoute>
-        <ProtectedRoute path="/find-business-to-review" exact={true}>
-					<FindBusinessToReview />
 				</ProtectedRoute>
         <ProtectedRoute path="/business/:businessId/create-review" exact={true}>
 					<CreateReview />
@@ -64,15 +64,18 @@ function App() {
         <ProtectedRoute path='/business/:businessId/reviews/:reviewId/edit' exact={true}>
           <EditReview />
         </ProtectedRoute>
-        <ProtectedRoute path='/users' exact={true} >
+        <ProtectedRoute path='/users' exact={true}>
           <UsersList/>
         </ProtectedRoute>
-        <ProtectedRoute path='/users/:userId' exact={true} >
+        <ProtectedRoute path='/users/:userId' exact={true}>
           <User />
         </ProtectedRoute>
-        <Route path='/' exact={true} >
+        <Route path='/' exact={true}>
           <Header />
           <Landing />
+        </Route>
+        <Route path='/'>
+          <PageNotFound />
         </Route>
       </Switch>
     </BrowserRouter>
