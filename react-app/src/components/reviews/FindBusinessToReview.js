@@ -7,7 +7,7 @@ const FindBusinessToReview = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
 	const location = useLocation();
-	const params = new URLSearchParams(location.search);
+	// const params = new URLSearchParams(location.search);
 	const [search, setSearch] = useState('');
 	const [searchOpen, setSearchOpen] = useState(false);
 	const [searchResults, setSearchResults] = useState([]);
@@ -17,7 +17,7 @@ const FindBusinessToReview = () => {
 
 	useEffect(() => {
 		if (!allBusinesses.length) dispatch(getAllBusinesses());
-	}, []);
+	}, [allBusinesses.length, dispatch]);
 
 	useEffect(() => {
 		if (search.length > 0) {
@@ -35,7 +35,7 @@ const FindBusinessToReview = () => {
 		} else {
 			setSearchResults([]);
 		}
-	}, [search]);
+	}, [search, allBusinesses]);
 
 	useEffect(() => {
 		if (!searchOpen) return;
@@ -92,6 +92,7 @@ const FindBusinessToReview = () => {
 										>
 											{result.images[0] && (
 												<img
+													alt={result.images[0].url}
 													src={result.images[0].url}
 													className="search-result-image"
 													onError={({ currentTarget }) => {
@@ -128,7 +129,7 @@ const FindBusinessToReview = () => {
 						</div>
 					</div>
 					<div>
-						<img src="https://s3-media0.fl.yelpcdn.com/assets/public/first_to_review_375x200_v2.yji-df81b4f3f809d02f4d8f.svg" />
+						<img alt='find-business-img' src="https://s3-media0.fl.yelpcdn.com/assets/public/first_to_review_375x200_v2.yji-df81b4f3f809d02f4d8f.svg" />
 					</div>
 				</div>
 			</div>

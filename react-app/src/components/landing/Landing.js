@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import AllBusinesses from '../business/AllBusinesses';
 import { getAllBusinesses } from '../../store/business';
 
 const Landing = () => {
-    const allBusinesses = useSelector((state) => state.business.allBusinesses);
 	const [selected, setSelected] = useState([]);
 	const dispatch = useDispatch();
 
@@ -19,19 +18,20 @@ const Landing = () => {
 			setSelected(shuffled.slice(0, 1));
 		};
 		get();
-	}, []);
+	}, [dispatch]);
 
 	return (
 		<div className="">
 			<div className="landing-img-wrapper">
 				{selected.map((each, i) => {
 					const previewImage = each.images.filter(
-						(image) => image.preview == true
+						(image) => image.preview === true
 					);
 					return (
 						<>
 							<div className="landing-wrapper" key={i}>
 								<img
+									alt={previewImage[0].url}
 									src={previewImage[0].url}
 									onError={({ currentTarget }) => {
 										currentTarget.onerror = null;

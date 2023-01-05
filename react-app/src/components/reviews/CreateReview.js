@@ -15,7 +15,7 @@ const starsColor = (rating) => {
 
 const CreateReview = () => {
 	const { businessId } = useParams();
-    const business = useSelector((state) => state.business.singleBusiness);
+    let business = useSelector((state) => state.business.singleBusiness);
 
 	const user = useSelector((state) => state.session.user);
 	const businessReviews = useSelector((state) =>
@@ -43,7 +43,7 @@ const CreateReview = () => {
 
 		if (user) {
 			const alreadyHaveReview = businessReviews.filter(
-				(review) => review.reviewer.id == user.id
+				(review) => review.reviewer.id === user.id
 			);
 			if (alreadyHaveReview.length > 0) {
 				window.alert(
@@ -94,19 +94,21 @@ const CreateReview = () => {
 					FLUM
 				</NavLink>
 			</div>
-			{haveErrors && (
-				<div className="center err-bx1">
-					{reviewErrors.map((error, ind) => (
-						<div>{error}</div>
-					))}
-					<p
-						className="close-err-msg"
-						onClick={() => setReviewErrors(false)}
-					>
-						X
-					</p>
-				</div>
-			)}
+			<div className='center'>
+				{haveErrors && (
+					<div className="center err-bx1">
+						{reviewErrors.map((error, ind) => (
+							<div>{error} ‎   </div>
+						))}
+						<p
+							className="close-err-msg"
+							onClick={() => setReviewErrors(false)}
+						>
+							‎ ‎ X
+						</p>
+					</div>
+				)}
+			</div>
 			<div className="new-rev-frm-wrap center">
 				<div className="review-form-container">
 					<NavLink
@@ -171,6 +173,7 @@ const CreateReview = () => {
 							<div className="rev-prev-imge">
 								{reviewImages.map((url) => (
 									<img
+										alt='url'
 										className="rev-sing-img"
 										src={url}
 										onError={({ currentTarget }) => {

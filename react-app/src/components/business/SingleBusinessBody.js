@@ -47,7 +47,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 		}
 	};
 
-    const theOwner = user?.id == business.owner_id;
+    const theOwner = user?.id === business.owner_id;
 
     for (let i = 0; i < reviews?.length; i++) {
 		const review = reviews[i];
@@ -96,7 +96,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 										{operating?.map((day) => (
 											<div id="hrs-op">
 												<div>{day[1]}</div>
-												{day[0] == todayDay && (
+												{day[0] === todayDay && (
 													<div
 														className={`business-open-close ${
 															operatingHours[0] ? 'open' : 'close'
@@ -133,6 +133,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 										href={business.url}
 										style={{ color: '#49B1CB', textDecoration: 'none', fontFamily: 'Josefin Sans' }}
 										target="_blank"
+										rel="noreferrer"
 									>
 										{business.url}
 									</a>
@@ -140,6 +141,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 										href={business.url}
 										style={{ color: '#49B1CB' }}
 										target="_blank"
+										rel="noreferrer"
 									>
 										<img
 											src="https://www.pngrepo.com/png/452341/180/redirect-to-url.png"
@@ -219,7 +221,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 								{operating?.map((day) => (
 									<div id="hrs-op">
 										<div>{day[1]}</div>
-										{day[0] == todayDay && (
+										{day[0] === todayDay && (
 											<div
 												className={`business-open-close ${
 													operatingHours[0] ? 'open' : 'close'
@@ -256,6 +258,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 								href={business.url}
 								style={{ color: '#49B1CB', textDecoration: 'none', fontFamily: 'Josefin Sans' }}
 								target="_blank"
+								rel="noreferrer"
 							>
 								{business.url}
 							</a>
@@ -263,6 +266,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 								href={business.url}
 								style={{ color: '#49B1CB' }}
 								target="_blank"
+								rel="noreferrer"
 							>
 								<img
 									src="https://www.pngrepo.com/png/452341/180/redirect-to-url.png"

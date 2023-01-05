@@ -27,7 +27,7 @@ const AddImagesBusiness = ({ businessId }) => {
         reviewImages.forEach(async (url, i) => {
 			const imageData = {
 				url,
-				preview: i == 0 ? true : false,
+				preview: i === 0 ? true : false,
 				business_id: businessId
 			};
 
@@ -64,6 +64,7 @@ const AddImagesBusiness = ({ businessId }) => {
 				<div className="bus-prev-img-x">
 					{reviewImages.map((url) => (
 						<img
+							alt='add-bus-one-img'
 							className="add-bus-one-img"
 							src={url}
 							onError={({ currentTarget }) => {

@@ -1,5 +1,4 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 
 const BusinessTemplate = ({ business }) => {
@@ -17,7 +16,7 @@ const BusinessTemplate = ({ business }) => {
                     {descriptionHelper}
                 </div>
                 <div className='bring-down'>
-                    <img src={`${business.images[0].url}`} style={{height: '230px', width: '90%'}}/>
+                    <img alt={`${business.images[0].url}`} src={`${business.images[0].url}`} style={{height: '230px', width: '90%'}}/>
                 </div>
             </div>
         </div>

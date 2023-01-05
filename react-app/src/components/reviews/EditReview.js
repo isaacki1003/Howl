@@ -8,16 +8,16 @@ import {
 	postNewReviewImage,
 	updateReview
 } from '../../store/review';
-import { getSingleBusiness, singleBusinessCleanUp } from '../../store/business';
+import { getSingleBusiness } from '../../store/business';
 import { FaStar } from 'react-icons/fa';
 // import './ReviewEditForm.css';
 
 const starsColor = (rating) => {
-	if (rating < 2) return 'rgb(255, 204, 75)';
-	if (rating < 3) return 'rgb(255, 173, 72)';
-	if (rating < 4) return 'rgb(255, 135, 66)';
-	if (rating < 5) return 'rgb(255, 100, 61)';
-	else return 'rgb(251, 67, 60)';
+	if (rating < 2) return 'rgb(255, 204, 74)';
+	if (rating < 3) return 'rgb(255, 173, 71)';
+	if (rating < 4) return 'rgb(255, 135, 68)';
+	if (rating < 5) return 'rgb(255, 100, 66)';
+	else return 'rgb(251, 67, 47)';
 };
 
 
@@ -33,6 +33,7 @@ const EditReview = () => {
 	const [stars, setStars] = useState(0);
 	const [hover, setHover] = useState(null);
 	const [review, setReview] = useState('');
+	const [haveErrors, setHaveErrors] = useState(false);
 	const [reviewErrors, setReviewErrors] = useState([]);
 	const [urls, setUrls] = useState('');
 	const [reviewImages, setReviewImages] = useState([]);
@@ -48,7 +49,7 @@ const EditReview = () => {
 		};
 
 		getReview();
-	}, []);
+	}, [businessId, dispatch, reviewId]);
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -60,6 +61,7 @@ const EditReview = () => {
 		const editedReview = await dispatch(updateReview(reviewdata, reviewId));
 		if (editedReview.errors) {
 			setReviewErrors(editedReview.errors);
+			setHaveErrors(true);
 		} else {
 			history.push(`/business/${businessId}`);
 		}
@@ -101,6 +103,21 @@ const EditReview = () => {
 				<NavLink className="nav-link logo-name" to="/">
 					FLUM
 				</NavLink>
+			</div>
+			<div className='center'>
+				{haveErrors && (
+					<div className="center err-bx1">
+						{reviewErrors.map((error, ind) => (
+							<div>{error} ‎   </div>
+						))}
+						<p
+							className="close-err-msg"
+							onClick={() => setReviewErrors(false)}
+						>
+							‎ ‎ X
+						</p>
+					</div>
+				)}
 			</div>
 			<div className="new-rev-frm-wrap center">
 				<div className="review-form-container">
@@ -173,6 +190,7 @@ const EditReview = () => {
 								{reviewImages.map((image) => (
 									<div className="rev-img-wrap-x center">
 										<img
+											alt={image.url}
 											className="review-single-image"
 											src={image.url}
 											onError={({ currentTarget }) => {

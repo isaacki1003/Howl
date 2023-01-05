@@ -50,6 +50,7 @@ export const getSingleBusiness = (business_id) => async (dispatch) => {
 };
 
 export const createBusiness = (businessInfo) => async (dispatch) => {
+	console.log(businessInfo)
 	const response = await fetch(`/api/business`, {
 		method: 'POST',
 		headers: {
@@ -69,14 +70,17 @@ export const createBusiness = (businessInfo) => async (dispatch) => {
 	}
 };
 
-export const editBusiness = (business_info, business_id) => async () => {
-	const response = await fetch(`/api/business/${business_id}`, {
+export const editBusiness = (businessInfo, id) => async () => {
+	console.log(businessInfo)
+	console.log(id)
+	const response = await fetch(`/api/business/${id}`, {
 		method: 'PUT',
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: JSON.stringify(business_info)
+		body: JSON.stringify(businessInfo)
 	});
+
 
 	if (response.ok) {
 		const data = await response.json();
