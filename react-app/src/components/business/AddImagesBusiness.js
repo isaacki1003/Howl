@@ -54,17 +54,17 @@ const AddImagesBusiness = ({ businessId }) => {
 				<input
 					type="url"
 					placeholder="image url"
-					className="business-images-input-field"
+					className="bus-img-inp-xy"
 					onChange={(e) => setUrls(e.target.value)}
 					value={urls}
 				/>
 				<button type="add" className="add-a-image" onClick={checkPhoto}>
 					Add photo
 				</button>
-				<div className="business-preview-image">
+				<div className="bus-prev-img-x">
 					{reviewImages.map((url) => (
 						<img
-							className="add-business-single-image"
+							className="add-bus-one-img"
 							src={url}
 							onError={({ currentTarget }) => {
 								currentTarget.onerror = null;

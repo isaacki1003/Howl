@@ -111,6 +111,7 @@ const LoginForm = () => {
 				<div className="login-col-right">
 					<img
 						style={{ height: '250px', width: '350px' }}
+						alt="login-illustration"
 						src="https://s3-media0.fl.yelpcdn.com/assets/2/www/img/7922e77f338d/signup/signup_illustration.png"
 					/>
 				</div>

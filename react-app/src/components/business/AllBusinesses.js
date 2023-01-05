@@ -20,7 +20,6 @@ const AllBusinesses = () => {
         test();
       }, []);
 
-
     return (
         <div className="rec-bus-wrapper center">
           <h2 className='font-howl'>

@@ -1,140 +1,153 @@
-.business-details-page-wrapper{
-    box-sizing: border-box;
-    width: 100%;
-    margin-top: 350px;
-    flex-direction: column;
-    overflow: hidden;
-    /* min-height: 100vh; */
-
-}
-
-/* Business header CSS*/
-.business-details-images-container{
-    height: 450px;
-    width: 100vw;
-    min-width: 800px;
+#op-hr-cont {
     display: flex;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-    top: 93.88px;
-}
-.business-detail-faded-background{
-    height: 450px;
-    width: 100vw;
-    min-width: 800px;
-    position: absolute;
-    background: linear-gradient(0deg, rgba(39, 38, 42, 1) 0%, rgba(255, 255, 255, 0) 70%);
 }
 
-.business-details-images-container > img{
-    object-fit: cover;
+#hrs-op {
+    column-gap: 1.3rem;
+    display: flex;
+}
+
+#ev-day-1 {
+    flex-direction: column;
+    row-gap: 0.7rem;
+    display: flex;
+}
+
+.dets-bus-img-cont > img {
     flex-grow: 1;
-    /* filter: brightness(70%); */
-
+    object-fit: cover;
 }
-.business-details-header-wrapper{
-    /* border: 3px solid orange; */
-    width: 60vw;
-    min-width: 700px;
-    color: white;
+
+.dets-bus-wrap-head {
     font-weight: bold;
     display: flex;
     flex-direction: column;
     row-gap: 0.8rem;
+    width: 60vw;
+    min-width: 700px;
+    color: white;
     padding-bottom: 25px;
     margin-top: 1.8em;
     font-family: 'Josefin Sans', sans-serif;
 }
 
-
-.business-details-name{
-    font-size: 3rem;
+.dets-bus-name {
     margin: 0;
     min-width: fit-content;
+    font-size: 3rem;
 }
 
-.business-details-price-categories{
-    display: flex;
+.dets-bus-p-cat {
     column-gap: 0.4rem;
+    display: flex;
 }
 
-.business-details-category-link{
+.dets-bus-cat-redir {
     color: white;
 }
-.business-details-category-link:hover {
+
+.dets-bus-cat-redir:hover {
     text-decoration: underline;
 }
 
-.business-details-hours{
-    display: flex;
+.dets-bus-hours {
     column-gap: 0.5rem;
+    display: flex;
 }
 
-.open{
-    color: #04C858;
-}
-.close{
-    color: #FF8B87;
+.open {
+    color: #05da61;
 }
 
-.business-details-total-reviews{
-    font-size: 1.8rem;
+.close {
+    color: #fd7672;
+}
+
+.dets-bus-tot-revs {
     display: flex;
     align-items: center;
+    font-size: 1.8rem;
 }
 
-.total-reviews{
-    font-size: 1.3rem;
+.tot-revs {
     margin-left: 10px;
     color: white;
+    font-size: 1.3rem;
 }
+
 .oneStar {
-    color: rgb(255, 204, 75)
+    color: rgb(255, 206, 83)
 }
+
 .twoStars {
-    color: rgb(255, 173, 72)
+    color: rgb(253, 169, 66)
 }
 
-.threeStars{
-  color: rgb(255, 135, 66);
+.threeStars {
+  color: rgb(251, 130, 60);
 }
-.fourStars{
-  color: rgb(255, 100, 61);
-}
-.fiveStars{
-  color: rgb(251, 67, 60);
-}
-/* Business header CSS END */
 
-/* Business details CSS */
-.business-details-body-wrapper{
-    /* border: 3px solid red; */
-    width: 60vw;
-    min-width: 700px;
+.fourStars {
+  color: rgb(252, 92, 52);
+}
+
+.fiveStars {
+  color: rgb(250, 53, 46);
+}
+
+.dets-bus-page-wrapper {
+    margin-top: 350px;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+}
+
+.dets-bus-img-cont {
+    display: flex;
+    overflow: hidden;
+    height: 450px;
+    width: 100vw;
+    z-index: -1;
+    top: 93.88px;
+    min-width: 800px;
+    position: absolute;
+}
+
+.bus-det-back {
+    min-width: 800px;
+    position: absolute;
+    height: 450px;
+    width: 100vw;
+    background: linear-gradient(0deg, rgba(39, 38, 42, 1) 0%, rgba(255, 255, 255, 0) 70%);
+}
+
+.dets-bus-bd-wrap {
     display: flex;
     color: black;
+    width: 50vw;
+    min-width: 700px;
 }
 
-.business-details-container {
-    /* border: 1px solid red; */
+.dets-bus-cont {
     width: 80%;
 }
 
-.business-details-block{
-    display: flex;
-    flex-direction: column;
+.dets-bus-blk {
     row-gap: 1rem;
     border-top: 1px solid #ebebeb;
     margin-top: 1em;
+    display: flex;
+    flex-direction: column;
     margin-bottom: 1em;
     padding-top: 0.5em;
     padding-bottom: 0.5em;
 }
 
 .title-business-smaller {
-    margin-bottom: 0em;
     font-size: 1.5rem;
+    margin-bottom: 0em;
+
 }
 
 .title-business-smaller1 {
@@ -142,248 +155,219 @@
     font-size: 1.5rem;
 }
 
-.business-details-block-map{
-    display: flex;
-    column-gap: 3rem;
-    border-top: 1px solid #ebebeb;
+.dets-bus-blk-map {
     min-width: fit-content;
+    display: flex;
     align-items: center;
     margin-bottom: 1.5em;
     margin-top: 0.5em;
+    column-gap: 3rem;
+    border-top: 1px solid #ebebeb;
 }
-/* @media (max-width: 1530px) {
-    .business-details-block-map{
-        flex-direction: column;
-    }
- } */
 
-
-.hours-wrapper{
+.hrs-wrap {
     min-width: fit-content;
-    /* border: 1px solid red; */
 }
-#day-of-week{
+
+#day-wk {
     margin-right: 2rem;
 }
 
-#operation-hours-container{
-    display: flex;
-}
-#hours-of-operation{
-    display: flex;
-    column-gap: 1.3rem;
-}
 
-#each-day{
-    display: flex;
-    flex-direction: column;
-    row-gap: 0.7rem;
-}
-
-.business-details-description{
+.dets-bus-desc {
     line-height: 1rem;
 }
 
-
-.business-review-card-container{
-    display: flex;
+.bus-rev-crd-cont {
     flex-direction: column;
     row-gap: 1rem;
+    display: flex;
     padding-bottom: 2rem;
 }
-#card-reviewer-name{
-    display: flex;
-    align-items: center;
-    column-gap: 1rem;
-}
-#card-review-review{
+
+#card-rev-rev {
     white-space: pre-line;
+    word-wrap: break-word;
 }
 
-#card-review-images{
-    /* border: 3px solid orange; */
-    height: 136px;
+#card-rev-imgs-x {
     display: flex;
+    height: 136px;
     column-gap: 1rem;
 }
 
-#card-review-stars{
-    display: flex;
+#card-rev-strs-1 {
     font-size: 20px;
+    display: flex;
     align-items: center;
 }
-#card-review-date{
-    margin: 0;
-    padding: 0;
+
+#card-rev-dt-1 {
     font-size: 13px;
     margin-left: 1rem;
-}
-.card-rev-sing-img{
-    width: 174px;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 4px;
-    transition: all .3s ease-in-out;
+    margin: 0;
+    padding: 0;
 }
 
-.card-rev-sing-img:hover{
-    transform: scale(1.25);
+.card-rev-sing-img {
+    width: 174px;
+    object-fit: cover;
+    border-radius: 4px;
+    height: 100%;
 }
-.user-review-icon{
+
+.rev-name-correct {
+    margin-bottom: 0;
+    white-space: nowrap;
+}
+
+.user-rev-icn-1 {
     font-size: 50px;
 }
 
-.create-new-review-link{
+.new-rev-lnk-1 {
+    font-family: 'Josefin Sans', sans-serif;
     padding: 1em 0 1em 2em;
     color: white;
-    text-decoration: none;
-    background-color: red;
     border-radius: 5px;
     border: none;
     font-size: 16px;
+    text-decoration: none;
+    background-color: red;
     font-weight: 100;
     width: 160px;
-    font-family: 'Josefin Sans', sans-serif;
 }
 
-.create-new-review-link-button{
+.new-rev-lnk-1-butt {
+    margin-left: 2em;
     padding: 1em 0;
+    font-size: 16px;
     color: white;
     text-decoration: none;
+    font-weight: 100;
+    cursor: pointer;
     background-color: red;
     border-radius: 5px;
     border: none;
     width: 190px;
-    font-size: 16px;
-    font-weight: 100;
-    cursor: pointer;
     font-family: 'Josefin Sans', sans-serif;
-    margin-left: 2em;
-}
-
-.create-reviews-wrapper{
-    margin-top: 0.8em;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 0.5em;
 }
 
 
-.edit-review-link{
-    font-size: 25px;
-    color: black;
-    margin-left: 70%;
-}
-
-.edit-review-link:hover {
-    color: red;
-}
-
-.format-name-review {
-    white-space: nowrap;
-    margin-bottom: 0;
-}
-
-
-/* Right side box */
-
-.additional-details-box {
-    border: 1px solid #ebebeb;
-    padding: 1rem;
-    border-radius: 3px;
+.more-dets-box-1 {
     position: sticky;
     top: 13rem;
     margin-left: 2rem;
     width: 100%;
+    border: 1px solid #ebebeb;
+    padding: 1rem;
+    border-radius: 3px;
 }
 
-.business-details-right-Col{
-    min-width: 320px;
+.dets-bus-right-Col {
     margin-left: 2em;
+    min-width: 320px;
 }
 
-.business-right-details{
-    height: 80px;
-    display: flex;
+.bus-dets-right {
     justify-content: space-between;
     align-items: center;
+    height: 80px;
+    display: flex;
     border-bottom: 1px solid #ebebeb;
     column-gap: 1rem;
 }
-.business-right-details > i {
+
+.bus-dets-right > i {
     font-size: 25px;
-}
-.no-border{
-    border: none;
-}
-
-
-
-/* Overall review Bar */
-
-.business-overall-review-bar{
-    display: flex;
-    align-items: center;
-    column-gap: 3rem;
-    margin-bottom: 2rem;
-}
-
-.overall-review-stars {
-    min-width: fit-content;
-}
-
-
-.business-over-bar-wrapper{
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    row-gap: 1rem;
-}
-.stars-bar-gray{
-    height: 13px;
-    width: 100%;
-    border-radius: 13px;
-    background: #F0F0F0;
-}
-.stars-bar-color{
-    position: relative;
-    height: 13px;
-    border-radius: 13px;
-    box-sizing: border-box;
-}
-.stars-bar-title{
-    min-width: fit-content;
-    margin-right: 10px;
-}
-
-.onestar-div{
-    margin-right: 17.5px;
-}
-.stars-bar-container{
-    display: flex;
-    align-items: center;
-
-    /* border: 1px solid red; */
 }
 
 .b-oneStar {
-    background: rgb(255, 204, 75)
+    background: rgb(251, 206, 90)
 }
 
 .b-twoStars {
-    background: rgb(255, 173, 72)
+    background: rgb(251, 168, 65)
 }
 
 .b-threeStars {
-    background: rgb(255, 135, 66);
+    background: rgb(250, 126, 54);
 }
 
 .b-fourStars {
-    background: rgb(255, 100, 61);
+    background: rgb(255, 93, 53);
 }
 
 .b-fiveStars {
-    background: rgb(251, 67, 60);
+    background: rgb(250, 42, 35);
+}
+
+
+.no-border {
+    border: none;
+}
+
+.bus-rev-bar-xx {
+    align-items: center;
+    column-gap: 3rem;
+    display: flex;
+    margin-bottom: 2rem;
+}
+
+.rev-stars-xxx {
+    min-width: fit-content;
+}
+
+.bus-over-wrap {
+    width: 100%;
+    flex-direction: column;
+    row-gap: 1rem;
+    display: flex;
+}
+
+.grey-str-bar {
+    width: 100%;
+    border-radius: 13px;
+    height: 13px;
+    background: #F0F0F0;
+}
+
+.clr-str-bar {
+    height: 13px;
+    position: relative;
+    border-radius: 13px;
+    box-sizing: border-box;
+}
+
+.tit-str-bar {
+    margin-right: 10px;
+    min-width: fit-content;
+}
+
+.one-str-1 {
+    margin-right: 17.5px;
+}
+
+.cont-str-bar {
+    align-items: center;
+    display: flex;
+}
+
+.new-rev-wrap-x {
+    display: flex;
+    align-items: center;
+    margin-top: 0.8em;
+    height: 80px;
+    justify-content: flex-start;
+    margin-bottom: 0.5em;
+}
+
+.edit-rev-lnk-1 {
+    margin-left: 60%;
+    font-size: 30px;
+    color: black;
+}
+
+.edit-rev-lnk-1:hover {
+    color: red;
 }

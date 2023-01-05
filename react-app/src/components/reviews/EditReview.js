@@ -171,7 +171,7 @@ const EditReview = () => {
 							</button>
 							<div className="review-preview-image">
 								{reviewImages.map((image) => (
-									<div className="review-image-wrapper center">
+									<div className="rev-img-wrap-x center">
 										<img
 											className="review-single-image"
 											src={image.url}
@@ -182,7 +182,7 @@ const EditReview = () => {
 											}}
 										/>
 										<div
-											className="delete-review-image"
+											className="del-rev-img-x"
 											onClick={() => handleRemovePhoto(image.id)}
 										>
 											remove
@@ -191,7 +191,7 @@ const EditReview = () => {
 								))}
 							</div>
 						</div>
-						<div className="button-seperator">
+						<div className="sep-butt-x">
 							<button
 								className="rev-submit"
 								type="delete"
@@ -200,7 +200,7 @@ const EditReview = () => {
 								Delete Review
 							</button>
 							<button
-								className="complete-review rev-submit"
+								className="rev-comp-1 rev-submit"
 								type="submit"
 							>
 								Complete

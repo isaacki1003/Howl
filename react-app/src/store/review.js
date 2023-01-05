@@ -78,7 +78,6 @@ export const getSingleBusinessReviews = (businessId) => async (dispatch) => {
 	if (response.ok) {
 		const data = await response.json();
 		dispatch(loadBusinessReviews(data.reviews));
-		console.log(data.reviews)
 		return data.reviews;
 	}
 };
@@ -104,8 +103,9 @@ export const updateReview = (reviewInfo, reviewId) => async () => {
 };
 
 export const postNewReview = (reviewInfo) => async (dispatch) => {
-	const { Business_id } = reviewInfo;
-	const response = await fetch(`/api/business/${Business_id}/reviews`, {
+	const { business_id } = reviewInfo;
+	console.log(reviewInfo)
+	const response = await fetch(`/api/business/${business_id}/reviews`, {
 		method: 'POST',
 		headers: {
 			'Content-Type': 'application/json'
@@ -115,9 +115,11 @@ export const postNewReview = (reviewInfo) => async (dispatch) => {
 	console.log(response)
 	if (response.ok) {
 		const data = await response.json();
+		console.log(data)
 		return data;
 	} else if (response.status < 500) {
 		const data = await response.json();
+		console.log(data)
 		if (data.errors) {
 			return data;
 		}

@@ -10,21 +10,20 @@ const SignUpForm = () => {
 	const [first_name, setFirstName] = useState('');
 	const [last_name, setLastName] = useState('');
 	const [haveErrors, setHaveErrors] = useState(false);
-	const [RepeatPassword, setRepeatPassword] = useState('');
 	const user = useSelector((state) => state.session.user);
 	const history = useHistory();
 	const dispatch = useDispatch();
 
 	const onSignUp = async (e) => {
 		e.preventDefault();
-		const payload = {
+		const userInfo = {
 			first_name,
 			last_name,
 			email,
-			password,
-			RepeatPassword
+			password
 		};
-		const data = await dispatch(signUp(payload));
+		console.log(userInfo)
+		const data = await dispatch(signUp(userInfo));
 		if (data) {
 			setHaveErrors(true);
 			setErrors(data);
@@ -47,9 +46,6 @@ const SignUpForm = () => {
 		setPassword(e.target.value);
 	};
 
-	const updateRepeatPassword = (e) => {
-		setRepeatPassword(e.target.value);
-	};
 	const switchToLogin = () => {
 		history.push('/login');
 	};
@@ -124,16 +120,6 @@ const SignUpForm = () => {
 									className="inp-bxs"
 								></input>
 							</div>
-							<div>
-								<input
-									type="password"
-									name="confirm-password"
-									onChange={updateRepeatPassword}
-									value={RepeatPassword}
-									placeholder="Confirm Password"
-									className="inp-bxs"
-								></input>
-							</div>
 
 							<button type="submit" className="login-demo form-button">
 								Sign Up
@@ -151,6 +137,7 @@ const SignUpForm = () => {
 				<div className="login-col-right">
 					<img
 						style={{ height: '250px', width: '350px' }}
+						alt='signup-illustration'
 						src="https://s3-media0.fl.yelpcdn.com/assets/2/www/img/7922e77f338d/signup/signup_illustration.png"
 					/>
 				</div>

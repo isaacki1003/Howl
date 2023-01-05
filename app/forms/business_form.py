@@ -14,6 +14,6 @@ class BusinessForm(FlaskForm):
     description = TextAreaField('description', validators=[DataRequired('Please tell everyone about your business.')])
     phone_number = StringField('phone_number', validators=[DataRequired('Please enter a phone number.')])
     hours = StringField('hours', validators=[DataRequired('Let everyone know about your business hours.')])
-    business_type = StringField('business_type', validators=[DataRequired('what do you specialize in? (Japanese cuisine, Italian...).')])
+    business_type = StringField('type', validators=[DataRequired('what do you specialize in? (Japanese cuisine, Italian...).')])
     price = IntegerField('price', validators=[DataRequired('Please enter a price.')])
     url = StringField('url')

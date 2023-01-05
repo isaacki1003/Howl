@@ -24,7 +24,7 @@
     flex-direction: column;
     row-gap: 10px;
     border-radius: 10px;
-    height: 280px;
+    height: 400px;
     width: 400px;
 }
 
@@ -35,7 +35,6 @@
 .bring-down {
     margin-top: 1rem;
 }
-
 
 .business-card-card:hover {
     box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
@@ -58,4 +57,5 @@
     color: #027A97;
     font-weight: 500;
     font-family: 'Josefin Sans', sans-serif;
+    margin-top: 1em;
 }
