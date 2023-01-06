@@ -22,6 +22,14 @@
     margin-bottom: 60%;
 }
 
+.add-hours-wrapper > select {
+    font-family: 'Josefin Sans';
+}
+
+.add-hours-wrapper > button {
+    font-family: 'Josefin Sans';
+}
+
 .red-top-bar {
     position: absolute;
     top: 0;

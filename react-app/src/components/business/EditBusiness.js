@@ -7,29 +7,15 @@ import states from '../../UsStates';
 const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
 
 function formatPhoneNumber(value) {
-	// if input value is falsy eg if the user deletes the input, then just return
 	if (!value) return value;
-
-	// clean the input for any non-digit values.
 	const phoneNumber = value.replace(/[^\d]/g, '');
-
-	// phoneNumberLength is used to know when to apply our formatting for the phone number
 	const phoneNumberLength = phoneNumber.length;
-
-	// we need to return the value with no formatting if its less than four digits
-	// this is to avoid weird behavior that occurs if you  format the area code too early
 	if (phoneNumberLength < 4) return phoneNumber;
 
-	// if phoneNumberLength is greater than 4 and less the 7 we start to return
-	// the formatted number
 	if (phoneNumberLength < 7) {
 		return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3)}`;
 	}
-
-	// finally, if the phoneNumberLength is greater then seven, we add the last
-	// bit of formatting and return it.
 	return `(${phoneNumber.slice(0, 3)}) ${phoneNumber.slice(3, 6)}
-
 -${phoneNumber.slice(6, 10)}`;
 }
 
@@ -42,7 +28,7 @@ const EditBusiness = () => {
     const [zip_code, setZipCode] = useState('');
     const [description, setDescription] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
-    const [hours, setOperationHours] = useState([]);
+    const [hours, setHours] = useState([]);
     const [day, setDay] = useState('Mon');
     const [openHour, setOpenHour] = useState('');
 	const [closeHour, setCloseHour] = useState('');
@@ -55,7 +41,6 @@ const EditBusiness = () => {
     const [errors, setErrors] = useState([]);
 
     const user = useSelector((state) => state.session.user);
-    // const business = useSelector((state) => state.business.singleBusiness);
     const { businessId } = useParams();
     const dispatch = useDispatch();
     const history = useHistory();
@@ -65,7 +50,7 @@ const EditBusiness = () => {
             const business = await dispatch(getSingleBusiness(businessId));
             let OpHours = business.hours;
 				OpHours = OpHours.split(',');
-				setOperationHours(OpHours);
+				setHours(OpHours);
 				let operating = OpHours.map((eachDay) => {
                     eachDay = eachDay.split('-');
                     if (eachDay[1] !== 'Closed') {
@@ -111,8 +96,14 @@ const EditBusiness = () => {
 
 		const hour = `${day}-${openHour}-${closeHour}`;
 		const OpHours = hours;
+
+        const dayAlreadyExists = OpHours.some((existingHour) => existingHour?.startsWith(day));
+        if (dayAlreadyExists) {
+            return setHourError('Operation hours for that day have already been set.');
+        }
+
 		OpHours.push(hour);
-		setOperationHours(OpHours);
+		setHours(OpHours);
 		let operating = OpHours.map((eachDay) => {
 			eachDay = eachDay.split('-');
 			if (eachDay[1] !== 'Closed') {
@@ -134,12 +125,11 @@ const EditBusiness = () => {
 		setDisplayHours(operating);
 	};
 
-	const removeHour = (i) => {
-		const hours = displayHours.filter((e, index) => index !== i);
-		const opHours = hours.filter((e, index) => index !== i);
-		setDisplayHours(hours);
-		setOperationHours(opHours);
-	};
+	const removeHour = (index) => {
+        const day = displayHours[index][0];
+        setHours(hours.filter((hour) => !hour.startsWith(day)));
+        setDisplayHours(displayHours.filter((hour) => !hour[0].startsWith(day)));
+      }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -163,7 +153,7 @@ const EditBusiness = () => {
             business_type,
             price: Number(price),
             url,
-        };
+    };
 
         console.log(businessInfo)
         console.log(businessId)
@@ -406,7 +396,6 @@ const EditBusiness = () => {
             </div>
         </div>
     )
-
 };
 
 export default EditBusiness;

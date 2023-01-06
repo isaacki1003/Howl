@@ -2,19 +2,19 @@ from app.models import db, Review, environment, SCHEMA
 
 def seed_reviews():
     thebc1 = Review(
-        user_id=1,
+        user_id=2,
         business_id=1,
         review="This is a great place to get a drink and hang out with friends. The staff is friendly and the drinks are great. I love the atmosphere and the music. I would definitely recommend this place to anyone looking for a good time.",
         stars=5
     )
     thebc2 = Review(
-        user_id=2,
+        user_id=3,
         business_id=1,
         review="I love this place! The staff is always friendly and the drinks are great. I love the atmosphere and the music. I would definitely recommend this place to anyone looking for a good time.",
         stars=5
     )
     thebc3 = Review(
-        user_id=3,
+        user_id=4,
         business_id=1,
         review="The food is amazing. Would definitely recommend this place to anyone looking for a good time.",
         stars=5

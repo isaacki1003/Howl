@@ -14,6 +14,7 @@ class User(db.Model, UserMixin):
     last_name = db.Column(db.String(255), nullable=False)
     email = db.Column(db.String(255), nullable=False, unique=True)
     hashed_password = db.Column(db.String(255), nullable=False)
+    hashed_confirm_password = db.Column(db.String(255), nullable=False)
 
     user_businesses = db.relationship("Business", back_populates="owner", cascade='all, delete')
     user_reviews = db.relationship("Review", back_populates="user")
@@ -28,6 +29,17 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+    @property
+    def confirm_password(self):
+        return self.hashed_confirm_password
+
+    @confirm_password.setter
+    def confirm_password(self, confirm_password):
+        self.hashed_confirm_password = generate_password_hash(confirm_password)
+
+    def check_confirm_password(self, confirm_password):
+        return check_password_hash(self.confirm_password, confirm_password)
 
     def to_dict(self):
         return {

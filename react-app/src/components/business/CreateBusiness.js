@@ -40,7 +40,7 @@ const CreateBusiness = () => {
     const [name, setName] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
-    const [state, setState] = useState('');
+    const [state, setState] = useState('Alabama');
     const [country, setCountry] = useState('USA');
     const [zip_code, setZipCode] = useState('');
     const [description, setDescription] = useState('');
@@ -65,10 +65,16 @@ const CreateBusiness = () => {
     const addHours = (e) => {
 		e.preventDefault();
 		if (!openHour || !closeHour)
-			return setHourError('Please enter enter operation hours.');
+			return setHourError('Please enter operation hours.');
 
 		const hour = `${day}-${openHour}-${closeHour}`;
 		const OpHours = operation_hours;
+
+        const dayAlreadyExists = OpHours.some((existingHour) => existingHour.startsWith(day));
+        if (dayAlreadyExists) {
+            return setHourError('Operation hours for that day have already been set.');
+        }
+
 		OpHours.push(hour);
 		setOperationHours(OpHours);
 		let operating = OpHours.map((eachDay) => {
@@ -133,6 +139,7 @@ const CreateBusiness = () => {
         } else {
             setBusinessId(business.id);
             setShowImagesForm(true);
+            setHaveErrors(false)
         }
     };
 
@@ -303,7 +310,7 @@ const CreateBusiness = () => {
                                 What are your business hours?
                             </label>
                             <label className="business-small-text">
-                                Please do not add on days you are closed.
+                                Please do not add for days you are closed.
                             </label>
 							<div className="add-hours-wrapper">
 								<select

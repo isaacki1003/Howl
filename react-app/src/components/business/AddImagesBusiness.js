@@ -7,19 +7,32 @@ const AddImagesBusiness = ({ businessId }) => {
     const [urls, setUrls] = useState('');
 	const [reviewImages, setReviewImages] = useState([]);
 	const [imageError, setImageError] = useState('');
+	const [hasError, setHasError] = useState(false);
 	const [error, setError] = useState(false);
 	const dispatch = useDispatch();
 	const history = useHistory();
 
     const checkPhoto = (e) => {
-        e.preventDefault();
+		e.preventDefault();
 
-        let images = reviewImages;
-        images.push(urls);
-        setReviewImages(images);
-        setUrls('');
-        setImageError('');
-    }
+		if (!urls) {
+		  setImageError('Please enter an valid image URL (ending in .jpg or .png).');
+		  setHasError(true);
+		  return;
+		}
+
+		if (!urls.endsWith('.jpg') && !urls.endsWith('.png')) {
+		  setImageError('Please enter an image URL that ends in .jpg or .png');
+		  setHasError(true);
+		  return;
+		}
+
+		let images = reviewImages;
+		images.push(urls);
+		setReviewImages(images);
+		setUrls('');
+		setImageError('');
+	}
 
     const submitImages = async (e) => {
         e.preventDefault();
@@ -43,6 +56,9 @@ const AddImagesBusiness = ({ businessId }) => {
 
     return (
 		<>
+			{hasError && (
+				<div className="center err-bx1">{imageError}</div>
+			)}
 			<form
 				className="business-images-form center"
 				onSubmit={submitImages}
