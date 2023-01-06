@@ -57,17 +57,17 @@ def update_business(id):
     print('FORM DATA -------------______---------> ', form.data)
 
     if form.validate_on_submit():
-        business.name = form.data['name'],
-        business.address = form.data['address'],
-        business.city = form.data['city'],
-        business.state = form.data['state'],
-        business.zip_code = form.data['zip_code'],
-        business.description = form.data['description'],
-        business.phone_number = form.data['phone_number'],
-        business.hours = form.data['hours'],
-        business.business_type = form.data['business_type'],
-        business.price = form.data['price'],
-        business.url = form.data['url'],
+        business.name = form.data['name']
+        business.address = form.data['address']
+        business.city = form.data['city']
+        business.state = form.data['state']
+        business.zip_code = form.data['zip_code']
+        business.description = form.data['description']
+        business.phone_number = form.data['phone_number']
+        business.hours = form.data['hours']
+        business.business_type = form.data['business_type']
+        business.price = form.data['price']
+        business.url = form.data['url']
         db.session.commit()
         return business.to_dict()
     return {'errors': validation_errors_to_error_messages(form.errors)}, 401

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { NavLink, useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { createBusiness } from '../../store/business';
 import AddImagesBusiness from './AddImagesBusiness';
 import states from '../../UsStates';
@@ -51,6 +51,7 @@ const CreateBusiness = () => {
 	const [closeHour, setCloseHour] = useState('');
     const [displayHours, setDisplayHours] = useState([]);
     const [hourError, setHourError] = useState('');
+    const [haveErrors, setHaveErrors] = useState(false);
     const [business_type, setBusinessType] = useState('');
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
@@ -60,7 +61,6 @@ const CreateBusiness = () => {
     const user = useSelector((state) => state.session.user);
 
     const dispatch = useDispatch();
-    const history = useHistory();
 
     const addHours = (e) => {
 		e.preventDefault();
@@ -127,13 +127,13 @@ const CreateBusiness = () => {
         console.log(businessInfo)
 
         const business = await dispatch(createBusiness(businessInfo));
-        // if (business.errors) {
-        //     setErrors(business.errors);
-        // } else {
+        if (business.errors) {
+            setErrors(business.errors);
+            setHaveErrors(true);
+        } else {
             setBusinessId(business.id);
             setShowImagesForm(true);
-            // console.log(businessInfo)
-        // }
+        }
     };
 
     return (
@@ -142,6 +142,21 @@ const CreateBusiness = () => {
 				<NavLink className="nav-link logo-name" to="/">
 					HOWL
 				</NavLink>
+			</div>
+            <div className='center'>
+				{haveErrors && (
+					<div className="center err-bx1">
+						{errors.map((error, ind) => (
+							<div>{error} ‎   </div>
+						))}
+						<p
+							className="close-err-msg"
+							onClick={() => setErrors(false)}
+						>
+							‎ ‎ X
+						</p>
+					</div>
+				)}
 			</div>
             <div className="create-business-container">
 				<div className="left-side">
@@ -176,7 +191,7 @@ const CreateBusiness = () => {
                                 value={phone_number}
                                 placeholder="e.g. 555 555-5555"
                                 onChange={(e) =>
-                                    setPhoneNumber(e.target.value)
+                                    setPhoneNumber(formatPhoneNumber(e.target.value))
                                 }
                             />
 
@@ -362,7 +377,7 @@ const CreateBusiness = () => {
                 </div>
             </div>
             <div>
-                <img className='calcifer-create' src="https://i.redd.it/jjr3eurvhzt71.jpg" alt="calcifer photo" />
+                <img className='calcifer-create' src="https://i.redd.it/jjr3eurvhzt71.jpg" alt="calcifer-img" />
             </div>
         </div>
     )

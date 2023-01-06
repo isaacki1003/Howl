@@ -47,10 +47,10 @@ const AddImagesBusiness = ({ businessId }) => {
 				className="business-images-form center"
 				onSubmit={submitImages}
 			>
+				<div>
 				<label className="business-large-text">
-					Lets add some images to your business profile.
+					Let's add some images to your business profile.
                 </label>
-				<div id="rev-img-errs">{imageError}</div>
 				<input
 					type="url"
 					placeholder="image url"
@@ -58,9 +58,13 @@ const AddImagesBusiness = ({ businessId }) => {
 					onChange={(e) => setUrls(e.target.value)}
 					value={urls}
 				/>
-				<button type="add" className="add-a-image" onClick={checkPhoto}>
+				<button type="add" className="rev-submit1" onClick={checkPhoto}>
 					Add photo
 				</button>
+				<button className="rev-submit1 complete" type="submit">
+					{reviewImages.length > 0 ? 'Complete' : "I'll add it later"}
+				</button>
+				</div>
 				<div className="bus-prev-img-x">
 					{reviewImages.map((url) => (
 						<img
@@ -76,9 +80,7 @@ const AddImagesBusiness = ({ businessId }) => {
 					))}
 				</div>
 
-				<button className="rev-submit complete" type="submit">
-					{reviewImages.length > 0 ? 'Complete' : "I'll add it later"}
-				</button>
+
 			</form>
 		</>
 	);

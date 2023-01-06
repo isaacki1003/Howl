@@ -94,17 +94,16 @@ const SingleBusinessReviews = ({ business }) => {
 				const show = review?.user_id === user?.id;
 				return (
 					<div className="bus-rev-crd-cont">
-						<div id="card-reviewer-name">
+						<div className="rev-name-correct">
 							<div className="user-rev-icn-1">
 								<img
 									src="https://www.pngrepo.com/png/296664/180/alien-avatar.png"
 									alt="self logo"
 									style={{ height: '40px', width: '40px' }}
 								/>
-							</div>
-							<div className='rev-name-correct'>
-								{review.reviewer?.first_name} {review.reviewer?.last_name}
-							</div>
+
+‎ {review.reviewer?.first_name} {review.reviewer?.last_name}‎
+
 							{show && (
 								<NavLink
 									to={`/business/${businessId}/reviews/${review.id}/edit`}
@@ -113,6 +112,7 @@ const SingleBusinessReviews = ({ business }) => {
 									<i class="fa-solid fa-ellipsis"></i>
 								</NavLink>
 							)}
+							</div>
 						</div>
 						<div id="card-rev-strs-1">
 							<Stars rating={review.stars} />{' '}

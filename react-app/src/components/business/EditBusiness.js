@@ -48,6 +48,7 @@ const EditBusiness = () => {
 	const [closeHour, setCloseHour] = useState('');
     const [displayHours, setDisplayHours] = useState([]);
     const [hourError, setHourError] = useState('');
+    const [haveErrors, setHaveErrors] = useState(false);
     const [business_type, setBusinessType] = useState('');
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
@@ -101,7 +102,7 @@ const EditBusiness = () => {
             }
         };
         getBusiness();
-    }, [businessId]);
+    }, [businessId, dispatch]);
 
     const addHours = (e) => {
 		e.preventDefault();
@@ -178,6 +179,21 @@ const EditBusiness = () => {
 					HOWL
 				</NavLink>
 			</div>
+            <div className='center'>
+				{haveErrors && (
+					<div className="center err-bx1">
+						{errors.map((error, ind) => (
+							<div>{error} ‎   </div>
+						))}
+						<p
+							className="close-err-msg"
+							onClick={() => setErrors(false)}
+						>
+							‎ ‎ X
+						</p>
+					</div>
+				)}
+			</div>
             <div className="create-business-container">
 				<div className="left-side">
 
@@ -211,7 +227,7 @@ const EditBusiness = () => {
                             value={phone_number}
                             placeholder="e.g. 555 555-5555"
                             onChange={(e) =>
-                                setPhoneNumber(e.target.value)
+                                setPhoneNumber(formatPhoneNumber(e.target.value))
                             }
                         />
 
@@ -386,7 +402,7 @@ const EditBusiness = () => {
                 </div>
             </div>
             <div>
-                <img className='calcifer-create' src="https://i.redd.it/jjr3eurvhzt71.jpg" alt="calcifer photo" />
+                <img className='calcifer-create' src="https://i.redd.it/jjr3eurvhzt71.jpg" alt="calcifer-img-1" />
             </div>
         </div>
     )
