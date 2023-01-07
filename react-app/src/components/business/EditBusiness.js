@@ -386,7 +386,13 @@ const EditBusiness = () => {
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                         />
-
+                        <label className="business-large-text">
+                            What are your business hours?
+                        </label>
+                        <label className="business-small-text">
+                            Please do not add for days you are closed.
+                        </label>
+                        <div className="business-frm-err">{hourError}</div>
 						<div className="add-hours-wrapper">
 							<select
 								type="text"
