@@ -53,6 +53,10 @@ const CreateBusiness = () => {
 		if (!openHour || !closeHour)
 			return setHourError('Please enter operation hours.');
 
+        if (openHour >= closeHour) {
+            return setHourError('Open hour must be before close hour.');
+        }
+
 		const hour = `${day}-${openHour}-${closeHour}`;
 		const OpHours = operation_hours;
 
@@ -82,6 +86,7 @@ const CreateBusiness = () => {
 			return eachDay;
 		});
 		setDisplayHours(operating);
+        setHourError('')
 	};
 
 	const removeHour = (i) => {
@@ -298,6 +303,7 @@ const CreateBusiness = () => {
                             <label className="business-small-text">
                                 Please do not add for days you are closed.
                             </label>
+                            <div className="business-frm-err">{hourError}</div>
 							<div className="add-hours-wrapper">
 								<select
 									type="text"

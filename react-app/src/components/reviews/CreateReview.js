@@ -14,7 +14,7 @@ const starsColor = (rating) => {
 };
 
 function validateUrl(url) {
-	const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+(?:jpg|png|jpeg|gif)$/;
+	const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+(?:.jpg|.png|.jpeg|.gif)$/;
 	if (!urlRegex.test(url)) {
 	  return 'Invalid URL';
 	}

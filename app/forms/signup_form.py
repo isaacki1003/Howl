@@ -21,8 +21,8 @@ def password_match(form, field):
 
 
 class SignUpForm(FlaskForm):
-    first_name = StringField('first_name', validators=[DataRequired('Please enter your first name.')])
-    last_name = StringField('last_name', validators=[DataRequired('Please enter your last name.')])
-    email = StringField('email', validators=[DataRequired('Please enter your email.') ,user_exists])
+    first_name = StringField('first_name', validators=[DataRequired('Please enter your first name.'), Length(max=15, message='Your first name must be less than 15 characters.')])
+    last_name = StringField('last_name', validators=[DataRequired('Please enter your last name.'), Length(max=15, message='Your last name must be less than 15 characters.')])
+    email = StringField('email', validators=[DataRequired('Please enter your email.'), user_exists])
     password = StringField('password', validators=[DataRequired('Please enter a password.'), Length(min=8, message='Your password must be at least 8 characters.')])
     confirm_password = StringField('confirm_password', validators=[DataRequired('Please confirm your password.'), password_match])
