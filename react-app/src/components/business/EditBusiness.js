@@ -90,40 +90,49 @@ const EditBusiness = () => {
     }, [businessId, dispatch]);
 
     const addHours = (e) => {
-		e.preventDefault();
-		if (!openHour || !closeHour)
-			return setHourError('Please enter enter operation hours.');
+        e.preventDefault();
 
-		const hour = `${day}-${openHour}-${closeHour}`;
-		const OpHours = hours;
+        if (openHour >= closeHour) {
+            return setHourError('Open hour must be before close hour.');
+        }
 
-        const dayAlreadyExists = OpHours.some((existingHour) => existingHour?.startsWith(day));
+        const dayIndex = days.indexOf(day);
+
+        const dayAlreadyExists = hours.some((existingHour) => existingHour.startsWith(day));
         if (dayAlreadyExists) {
             return setHourError('Operation hours for that day have already been set.');
         }
 
-		OpHours.push(hour);
-		setHours(OpHours);
-		let operating = OpHours.map((eachDay) => {
-			eachDay = eachDay.split('-');
-			if (eachDay[1] !== 'Closed') {
-				const openHour = eachDay[1].split(':'); //  ['11', '30']
-				const closeHour = eachDay[2].split(':'); // ['21', '30']
-				openHour[1] =
-					Number(openHour[0]) > 11 ? openHour[1] + ' PM' : openHour[1] + ' AM';
-				closeHour[1] =
-					Number(closeHour[0]) > 11
-						? closeHour[1] + ' PM'
-						: closeHour[1] + ' AM';
-				openHour[0] = ((Number(openHour[0]) + 11) % 12) + 1;
-				closeHour[0] = ((Number(closeHour[0]) + 11) % 12) + 1;
-				eachDay[1] = openHour.join(':') + ' - ' + closeHour.join(':');
-				return eachDay.slice(0, 2);
-			}
-			return eachDay;
-		});
-		setDisplayHours(operating);
-	};
+        // split openHour and closeHour into hours and minutes
+        const openHourSplit = openHour.split(':');
+        const closeHourSplit = closeHour.split(':');
+
+        // add AM or PM to the minutes
+        const openHourAMPM = Math.floor(Number(openHourSplit[0]) / 12) >= 1 ? 'PM' : 'AM';
+        const closeHourAMPM = Math.floor(Number(closeHourSplit[0]) / 12) >= 1 ? 'PM' : 'AM';
+
+        // convert the hours to 12-hour format
+        const openHour12 = (Number(openHourSplit[0]) % 12) || 12;
+        const closeHour12 = (Number(closeHourSplit[0]) % 12) || 12;
+
+        // combine the hours and minutes with AM/PM
+        const openHourFormatted = `${openHour12}:${openHourSplit[1]} ${openHourAMPM}`;
+        const closeHourFormatted = `${closeHour12}:${closeHourSplit[1]} ${closeHourAMPM}`;
+
+        // join the day, open hour, and close hour with hyphens
+        const formattedHour = `${day}-${openHourSplit[0]}:${openHourSplit[1]}-${closeHourSplit[0]}:${closeHourSplit[1]}`;
+
+        setHours([
+            ...hours.slice(0, dayIndex),
+            formattedHour,
+            ...hours.slice(dayIndex),
+        ]);
+        setDisplayHours([
+            ...displayHours.slice(0, dayIndex),
+            [day, `${openHourFormatted} - ${closeHourFormatted}`],
+            ...displayHours.slice(dayIndex),
+        ]);
+    }
 
 	const removeHour = (index) => {
         const day = displayHours[index][0];
@@ -133,34 +142,86 @@ const EditBusiness = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let res_opHours = hours;
-		let closedDays = days.filter(
-			(day) => !hours.join(',').includes(day)
-		);
-		closedDays = closedDays.map((day) => day + '-Closed');
-		res_opHours = res_opHours.concat(closedDays);
-        const businessInfo = {
-            owner_id: user.id,
-            name,
-            address,
-            city,
-            state,
-            country,
-            zip_code,
-            description,
-            phone_number: String(phone_number),
-            hours: res_opHours.join(','),
-            business_type,
-            price: Number(price),
-            url,
-    };
-
-        console.log(businessInfo)
-        console.log(businessId)
-        const business2 = await dispatch(editBusiness(businessInfo, businessId));
-        await dispatch(getSingleBusiness(businessId));
-        history.push(`/business/${businessId}`);
+        if (name === '' || name.length > 200) {
+            setErrors([...errors, 'Name must be between 1 and 200 characters.']);
+            setHaveErrors(true);
         }
+        if (address === '' || address.length > 150) {
+            setErrors([...errors, 'Address must be between 1 and 150 characters.']);
+            setHaveErrors(true);
+        }
+        if (city === '' || city.length > 50) {
+            setErrors([...errors, 'City must be between 1 and 50 characters.']);
+            setHaveErrors(true);
+        }
+        if (state === '' || state.length > 50) {
+            setErrors([...errors, 'State must be between 1 and 50 characters.']);
+            setHaveErrors(true);
+        }
+        if (country === '' || country.length > 50) {
+            setErrors([...errors, 'Country must be between 1 and 50 characters.']);
+            setHaveErrors(true);
+        }
+        if (zip_code === '' || zip_code.length > 15 || !/^[\d-]+$/.test(zip_code)) {
+            setErrors([...errors, 'Postal code must contain only numbers and the character "-"']);
+            setHaveErrors(true);
+        }
+        if (description === '' || description.length > 250) {
+            setErrors([...errors, 'Description must be between 1 and 250 characters.']);
+            setHaveErrors(true);
+        }
+        if (phone_number === '' || phone_number.length !== 14) {
+            setErrors([...errors, 'Phone number must be 10 characters.']);
+            setHaveErrors(true);
+        }
+        if (hours.length === 0 || hours.length > 400) {
+            setErrors([...errors, 'Business hours must be between 1 and 400 characters.']);
+            setHaveErrors(true);
+        }
+        if (business_type === '' || business_type.length > 250) {
+            setErrors([...errors, 'Business type must be between 1 and 250 characters.']);
+            setHaveErrors(true);
+        }
+        if (price === '' || price < 1 || price > 5000) {
+            setErrors([...errors, 'Price must be between $1 and $5,000.']);
+            setHaveErrors(true);
+        }
+        if (url !== '' && (!/^https?:\/\/[^\s]+$/.test(url) || url.length > 250)) {
+            setErrors([...errors, 'Business page URL must be a valid URL and must be less than 250 characters.']);
+            setHaveErrors(true);
+        }
+            let res_opHours = hours;
+            let closedDays = days.filter(
+                (day) => !hours.join(',').includes(day)
+            );
+            closedDays = closedDays.map((day) => day + '-Closed');
+            res_opHours = res_opHours.concat(closedDays);
+            const businessInfo = {
+                owner_id: user.id,
+                name,
+                address,
+                city,
+                state,
+                country,
+                zip_code,
+                description,
+                phone_number: String(phone_number),
+                hours: res_opHours.join(','),
+                business_type,
+                price: Number(price),
+                url,
+        };
+            console.log(businessInfo)
+            console.log(businessId)
+            const business2 = await dispatch(editBusiness(businessInfo, businessId));
+
+            if (business2.errors) {
+			setErrors(business2.errors);
+		    } else {
+			await dispatch(getSingleBusiness(businessId));
+			history.push(`/business/${businessId}`);
+		}
+    }
 
     return (
         <div>
@@ -172,7 +233,7 @@ const EditBusiness = () => {
             <div className='center'>
 				{haveErrors && (
 					<div className="center err-bx1">
-						{errors.map((error, ind) => (
+						{errors?.map((error, ind) => (
 							<div>{error} ‎   </div>
 						))}
 						<p

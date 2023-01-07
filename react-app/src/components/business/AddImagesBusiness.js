@@ -27,11 +27,19 @@ const AddImagesBusiness = ({ businessId }) => {
 		  return;
 		}
 
-		let images = reviewImages;
-		images.push(urls);
-		setReviewImages(images);
-		setUrls('');
-		setImageError('');
+		const img = new Image();
+		img.src = urls;
+		img.onload = () => {
+		  let images = reviewImages;
+		  images.push(urls);
+		  setReviewImages(images);
+		  setUrls('');
+		  setImageError('');
+		};
+		img.onerror = () => {
+		  setImageError('There was an error loading the image. Please try a different URL.');
+		  setHasError(true);
+		};
 	}
 
     const submitImages = async (e) => {
