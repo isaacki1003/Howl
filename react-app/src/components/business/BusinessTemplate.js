@@ -16,7 +16,7 @@ const BusinessTemplate = ({ business }) => {
                     {descriptionHelper}
                 </div>
                 <div className='bring-down'>
-                    <img alt={`${business.images[0].url}`} src={`${business.images[0].url}`} style={{height: '230px', width: '90%'}}/>
+                    <img alt={`${business.images[0]?.url}`} src={business.images[0]?.url ? `${business.images[0].url}` : 'https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?w=2000'} style={{height: '230px', width: '90%'}}/>
                 </div>
             </div>
         </div>

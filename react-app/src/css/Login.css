@@ -118,10 +118,12 @@
     padding: 0 1rem;
     height: 45px;
     color: black;
-    width: 600px;
+    width: 80vw;
     font-size: 0.9rem;
     position: absolute;
     top: 65px;
+    font-family: 'Josefin Sans', sans-serif;
+
 }
 
 .err-bx1 {
@@ -129,10 +131,11 @@
     padding: 0 1rem;
     height: 45px;
     color: black;
-    width: 65vw;
-    font-size: 0.9rem;
+    width: 80vw;
+    font-size: 0.7rem;
     position: absolute;
     top: 65px;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .close-err-msg {

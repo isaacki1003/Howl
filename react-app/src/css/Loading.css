@@ -26,3 +26,15 @@
     font-weight: bold;
     font-size: 1.8rem;
 }
+
+.format-footer {
+    font-family: 'Josefin Sans', sans-serif;
+    margin-top: 4em;
+
+}
+
+.format-footer1 {
+    font-family: 'Josefin Sans', sans-serif;
+    margin-top: 1em;
+    margin-bottom: 2em;
+}

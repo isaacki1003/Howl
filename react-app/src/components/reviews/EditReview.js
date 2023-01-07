@@ -20,6 +20,12 @@ const starsColor = (rating) => {
 	else return 'rgb(251, 67, 47)';
 };
 
+function validateUrl(url) {
+	const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+(?:jpg|png|jpeg|gif)$/;
+	if (!urlRegex.test(url)) {
+	  return 'Invalid URL';
+	}
+  }
 
 const EditReview = () => {
 	const { reviewId, businessId } = useParams();
@@ -77,10 +83,16 @@ const EditReview = () => {
 	const handleAddPhoto = async (e) => {
 		e.preventDefault();
 
+		// Validate the URL
+		const urlError = validateUrl(urls);
+		if (urlError) {
+		  // Display the error message and return early to exit the function
+		  return setImageError(urlError);
+		}
 
 		const image = {
-			review_id: Number(reviewId),
-			url: urls
+		  review_id: Number(reviewId),
+		  url: urls
 		};
 
 		const newImage = await dispatch(postNewReviewImage(image));
@@ -89,7 +101,7 @@ const EditReview = () => {
 		setReviewImages(images);
 		setUrls('');
 		setImageError('');
-	};
+	  };
 
 	const handleRemovePhoto = async (id) => {
 		let images = reviewImages;

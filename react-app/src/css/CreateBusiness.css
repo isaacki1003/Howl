@@ -22,6 +22,14 @@
     margin-bottom: 60%;
 }
 
+.add-hours-wrapper > select {
+    font-family: 'Josefin Sans';
+}
+
+.add-hours-wrapper > button {
+    font-family: 'Josefin Sans';
+}
+
 .red-top-bar {
     position: absolute;
     top: 0;
@@ -152,7 +160,6 @@ label.business-small-text1 {
 .business-label-long {
     display: flex;
     margin-left: 6em;
-
     margin-top: 2em;
     width: 74%;
     height: 200px;
@@ -217,9 +224,9 @@ img.calcifer-create {
     display: flex;
     flex-wrap: wrap;
     gap: 0.5rem;
-    border-top: 1px solid gray;
     justify-content: space-between;
     padding: 2rem;
+    justify-content: center;
 }
 
 .bus-img-inp-xy {
@@ -268,4 +275,15 @@ img.calcifer-create {
 .remove-display-hour{
     cursor: pointer;
     color: #0073BB;
+}
+
+.rev-submit1 {
+    border-radius: 10px;
+    width: 100px;
+    align-self: flex-end;
+    cursor: pointer;
+    background-color: #D32323;
+    border: none;
+    color: white;
+    height: 3em;
 }

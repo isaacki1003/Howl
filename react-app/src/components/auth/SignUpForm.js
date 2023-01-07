@@ -7,6 +7,7 @@ const SignUpForm = () => {
 	const [errors, setErrors] = useState([]);
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');
+	const [confirm_password, setConfirmPassword] = useState('');
 	const [first_name, setFirstName] = useState('');
 	const [last_name, setLastName] = useState('');
 	const [haveErrors, setHaveErrors] = useState(false);
@@ -20,7 +21,8 @@ const SignUpForm = () => {
 			first_name,
 			last_name,
 			email,
-			password
+			password,
+			confirm_password
 		};
 		console.log(userInfo)
 		const data = await dispatch(signUp(userInfo));
@@ -44,6 +46,10 @@ const SignUpForm = () => {
 
 	const updatePassword = (e) => {
 		setPassword(e.target.value);
+	};
+
+	const updateConfirmPassword = (e) => {
+		setConfirmPassword(e.target.value);
 	};
 
 	const switchToLogin = () => {
@@ -117,6 +123,16 @@ const SignUpForm = () => {
 									onChange={updatePassword}
 									value={password}
 									placeholder="Password"
+									className="inp-bxs"
+								></input>
+							</div>
+							<div>
+								<input
+									type="password"
+									name="confirm_password"
+									onChange={updateConfirmPassword}
+									value={confirm_password}
+									placeholder="Confirm Password"
 									className="inp-bxs"
 								></input>
 							</div>

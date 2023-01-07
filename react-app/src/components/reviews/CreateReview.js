@@ -13,6 +13,13 @@ const starsColor = (rating) => {
 	else return 'rgb(251, 67, 60)';
 };
 
+function validateUrl(url) {
+	const urlRegex = /^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+(?:jpg|png|jpeg|gif)$/;
+	if (!urlRegex.test(url)) {
+	  return 'Invalid URL';
+	}
+  }
+
 const CreateReview = () => {
 	const { businessId } = useParams();
     let business = useSelector((state) => state.business.singleBusiness);
@@ -79,6 +86,11 @@ const CreateReview = () => {
 
 	const handleAddPhoto = (e) => {
 		e.preventDefault();
+
+		const urlError = validateUrl(urls);
+		if (urlError) {
+			return setImageError(urlError);
+		}
 
 		let images = reviewImages;
 		images.push(urls);
