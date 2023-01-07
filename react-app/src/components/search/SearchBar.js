@@ -96,7 +96,7 @@ const SearchBar = () => {
 					<div className="search-bar search-bar-type">
 						<input
 							id="type-search"
-							placeholder="YinTang, Quan Ngon..."
+							placeholder="The Boiling Crab, Seafood..."
 							className="search-bar-input search-bar-input-left"
 							value={search}
 							onChange={(e) => {
@@ -115,7 +115,7 @@ const SearchBar = () => {
 					<div className="search-bar search-bar-location">
 						<input
 							id="type-search"
-							placeholder="address, city, state or zip"
+							placeholder="City, State or Zip Code"
 							className="search-bar-input"
 							value={searchLocation}
 							onChange={(e) => {
@@ -129,7 +129,7 @@ const SearchBar = () => {
 							}}
 						/>
 					</div>
-					<button className="magnifying-glasses-submit-button">
+					<button className="mag-gls-submit">
 						<i className="fa-solid fa-magnifying-glass" id="magnifying-glass" />
 					</button>
 				</form>

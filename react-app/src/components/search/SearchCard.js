@@ -25,7 +25,7 @@ const SearchCard = ({ business, loc, setSelectedBusiness }) => {
 		>
 			<div
 				className="search-result-found-image"
-				onClick={() => history.push(`/${business.id}`)}
+				onClick={() => history.push(`/business/${business.id}`)}
 			>
 				<img
 					src={previewImage[0].url}
@@ -45,10 +45,10 @@ const SearchCard = ({ business, loc, setSelectedBusiness }) => {
 				</div>
 				<div
 					className="search-result-found-stars"
-					onClick={() => history.push(`/${business.id}`)}
+					onClick={() => history.push(`/business/${business.id}`)}
 				>
-					<Stars rating={business.avgRating} />{' '}
-					{business.totalReviews} reviews
+					<Stars rating={business.averageRating} />{' '}
+					{business.num_reviews} reviews
 				</div>
 				<div className="search-result-found-categories">
 					{categories.map((category) => (

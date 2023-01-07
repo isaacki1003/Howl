@@ -44,7 +44,7 @@ const SearchResultPage = () => {
 					if (
 						loc.includes(business.city) ||
 						loc.includes(business.state) ||
-						loc.includes(business.zip)
+						loc.includes(business.zip_code)
 					)
 						return business;
 				}
