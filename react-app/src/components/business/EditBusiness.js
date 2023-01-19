@@ -386,7 +386,6 @@ const EditBusiness = () => {
                             value={price}
                             onChange={(e) => setPrice(e.target.value)}
                         />
-
                         <label className="business-large-text">
                             What are your business hours?
                         </label>
