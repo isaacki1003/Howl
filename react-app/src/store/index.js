@@ -7,7 +7,7 @@ import review from './review'
 const rootReducer = combineReducers({
   session,
   business,
-  review
+  review,
 });
 
 

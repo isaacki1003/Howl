@@ -3,7 +3,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
-// import NavBar from './components/NavBar';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 import UsersList from './components/UsersList';
 import User from './components/User';
@@ -12,13 +11,15 @@ import CreateBusiness from './components/business/CreateBusiness';
 import Landing from './components/landing/Landing';
 import EditBusiness from './components/business/EditBusiness';
 import SingleBusiness from './components/business/SingleBusiness';
-// import FindBusinessToReview from './components/reviews/FindBusinessToReview';
+import FindBusinessToReview from './components/reviews/FindBusinessToReview';
 import CreateReview from './components/reviews/CreateReview';
 import Header from './components/Header';
 import BlackHeader from './components/BlackHeader';
 import EditReview from './components/reviews/EditReview';
 import PageNotFound from './components/PageNotFound';
-import ComingSoon from './components/ComingSoon';
+// import ComingSoon from './components/ComingSoon';
+import SearchResults from './components/search/SearchResults';
+
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -44,9 +45,13 @@ function App() {
         <Route path='/signup' exact={true}>
           <SignUpForm />
         </Route>
+        <Route path="/search">
+					<BlackHeader />
+					<SearchResults />
+				</Route>
         <ProtectedRoute path='/writeareview' exact={true}>
-          {/* <FindBusinessToReview /> */}
-          <ComingSoon />
+          <FindBusinessToReview />
+          {/* <ComingSoon /> */}
         </ProtectedRoute>
         <ProtectedRoute path="/create-business" exact={true}>
 					<CreateBusiness />

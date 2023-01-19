@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import { logout } from '../store/session';
-// import SearchBar from './SearchBar';
+import SearchBar from '../components/search/SearchBar';
 
 
 const Header = () => {
@@ -42,7 +42,7 @@ const Header = () => {
 					HOWL
 				</NavLink>
 			</div>
-			{/* <SearchBar /> */}
+			<SearchBar />
 			<div className="top-nav-nav-wrap">
 				<NavLink
 					to={`/${user ? 'create-business' : 'login'}`}
