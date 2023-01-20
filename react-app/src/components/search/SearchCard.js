@@ -9,7 +9,7 @@ function setPriceDollarSign(price) {
 	else if (price > 60) return '$$$$';
 }
 
-const SearchCard = ({ business, loc, setSelectedBusiness }) => {
+const SearchCard = ({ business, loc }) => {
 	const previewImage = business.images.filter((image) => image.preview == true);
 	const history = useHistory();
 	const categories = business.business_type.split(',');
@@ -20,8 +20,6 @@ const SearchCard = ({ business, loc, setSelectedBusiness }) => {
 	return (
 		<div
 			className="search-result-found-card"
-			onMouseOver={() => setSelectedBusiness(business.id)}
-			onMouseLeave={() => setSelectedBusiness(0)}
 		>
 			<div
 				className="search-result-found-image"

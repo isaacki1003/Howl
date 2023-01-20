@@ -1,23 +1,26 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink, useHistory, useLocation } from 'react-router-dom';
+import { NavLink, useHistory } from 'react-router-dom';
 import { getAllBusinesses } from '../../store/business';
 
 const FindBusinessToReview = () => {
 	const dispatch = useDispatch();
 	const history = useHistory();
-	const location = useLocation();
-	// const params = new URLSearchParams(location.search);
 	const [search, setSearch] = useState('');
 	const [searchOpen, setSearchOpen] = useState(false);
 	const [searchResults, setSearchResults] = useState([]);
+
+	const [searchLocation, setSearchLocation] = useState('');
+	const [searchLocationOpen, setsearchLocationOpen] = useState(false);
+	const [searchLocationResult, setsearchLocationResult] = useState([]);
+
 	const allBusinesses = useSelector((state) =>
 		Object.values(state.business.allBusinesses)
 	);
 
 	useEffect(() => {
 		if (!allBusinesses.length) dispatch(getAllBusinesses());
-	}, [allBusinesses.length, dispatch]);
+	}, []);
 
 	useEffect(() => {
 		if (search.length > 0) {
@@ -35,8 +38,33 @@ const FindBusinessToReview = () => {
 		} else {
 			setSearchResults([]);
 		}
-	}, [search, allBusinesses]);
 
+		if (searchLocation.length > 0) {
+			let matches = [];
+			function handleSearchLocation(searchword) {
+				for (let i = 0; i < allBusinesses.length; i++) {
+					const data = allBusinesses[i];
+					const location = data.city + data.state;
+
+					if (location.toLowerCase().includes(searchword)) {
+						matches.push(data);
+					}
+				}
+				setsearchLocationResult(matches);
+			}
+			handleSearchLocation(searchLocation);
+		} else {
+			setsearchLocationResult([]);
+		}
+	}, [search, searchLocation]);
+
+	const handleSearchSubmit = (e) => {
+		e.preventDefault();
+		setSearch('');
+		setSearchLocation('');
+		return history.push(`/search/?desc=${search}&loc=${searchLocation}`);
+	};
+	// click event listener for search bar
 	useEffect(() => {
 		if (!searchOpen) return;
 
@@ -48,7 +76,18 @@ const FindBusinessToReview = () => {
 
 		return () => document.removeEventListener('click', closeMenu);
 	}, [searchOpen]);
+	// click event listener for location search bar
+	useEffect(() => {
+		if (!searchLocationOpen) return;
 
+		const closeMenu = () => {
+			setsearchLocationOpen(false);
+		};
+
+		document.addEventListener('click', closeMenu);
+
+		return () => document.removeEventListener('click', closeMenu);
+	}, [searchLocationOpen]);
 	return (
 		<>
 			<div className="red-top-bar center">
@@ -59,12 +98,12 @@ const FindBusinessToReview = () => {
 			<div className="rev-create-wrapper center">
 				<div className="cent-rev-create-nav-div">
 					<div className="left-side-wrapper">
-						<div className="write-review-title">Search for a business to review (TO DO)</div>
-						<div className="div-search-rev-create">
+						<div className="write-review-title">Search for a business to review</div>
+						<form onSubmit={handleSearchSubmit} className="div-search-rev-create">
 							<div className="search-bar-write-review search-bar-type">
 								<input
 									id="type-search"
-									placeholder="Seafood"
+									placeholder="The Boiling Crab, Seafood..."
 									className="search-bar-input search-bar-input-left"
 									value={search}
 									onChange={(e) => {
@@ -126,7 +165,7 @@ const FindBusinessToReview = () => {
 									id="magnifying-glass"
 								/>
 							</button>
-						</div>
+						</form>
 					</div>
 					<div>
 						<img alt='find-business-img' src="https://s3-media0.fl.yelpcdn.com/assets/public/first_to_review_375x200_v2.yji-df81b4f3f809d02f4d8f.svg" />

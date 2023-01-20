@@ -29,7 +29,9 @@
     padding-bottom: 25px;
     margin-top: 1.8em;
     font-family: 'Josefin Sans', sans-serif;
+    margin-right: 6em;
 }
+
 
 .dets-bus-name {
     margin: 0;
@@ -125,7 +127,7 @@
 .dets-bus-bd-wrap {
     display: flex;
     color: black;
-    width: 50vw;
+    width: 70vw;
     min-width: 700px;
 }
 
@@ -153,6 +155,11 @@
 .title-business-smaller1 {
     margin-bottom: 0.3em;
     font-size: 1.5rem;
+}
+
+.hours-smaller {
+    font-size: 1rem;
+
 }
 
 .dets-bus-blk-map {
@@ -262,8 +269,8 @@
 
 .more-dets-box-1 {
     position: sticky;
-    top: 13rem;
-    margin-left: 2rem;
+    top: 40rem;
+    margin-left: 4rem;
     width: 100%;
     border: 1px solid #ebebeb;
     padding: 1rem;

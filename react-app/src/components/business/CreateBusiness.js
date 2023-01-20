@@ -31,7 +31,7 @@ const CreateBusiness = () => {
     const [zip_code, setZipCode] = useState('');
     const [description, setDescription] = useState('');
     const [phone_number, setPhoneNumber] = useState('');
-	const [operation_hours, setOperationHours] = useState([]);
+	const [hours, setHours] = useState([]);
     const [day, setDay] = useState('Mon');
     const [openHour, setOpenHour] = useState('');
 	const [closeHour, setCloseHour] = useState('');
@@ -50,57 +50,63 @@ const CreateBusiness = () => {
 
     const addHours = (e) => {
 		e.preventDefault();
-		if (!openHour || !closeHour)
+
+        if (!openHour || !closeHour)
 			return setHourError('Please enter operation hours.');
 
         if (openHour >= closeHour) {
             return setHourError('Open hour must be before close hour.');
         }
 
-		const hour = `${day}-${openHour}-${closeHour}`;
-		const OpHours = operation_hours;
+        const dayIndex = days.indexOf(day);
 
-        const dayAlreadyExists = OpHours.some((existingHour) => existingHour.startsWith(day));
+        const dayAlreadyExists = hours.some((existingHour) => existingHour.startsWith(day));
         if (dayAlreadyExists) {
             return setHourError('Operation hours for that day have already been set.');
         }
 
-		OpHours.push(hour);
-		setOperationHours(OpHours);
-		let operating = OpHours.map((eachDay) => {
-			eachDay = eachDay.split('-');
-			if (eachDay[1] !== 'Closed') {
-				const openHour = eachDay[1].split(':'); //  ['11', '30']
-				const closeHour = eachDay[2].split(':'); // ['21', '30']
-				openHour[1] =
-					Number(openHour[0]) > 11 ? openHour[1] + ' PM' : openHour[1] + ' AM';
-				closeHour[1] =
-					Number(closeHour[0]) > 11
-						? closeHour[1] + ' PM'
-						: closeHour[1] + ' AM';
-				openHour[0] = ((Number(openHour[0]) + 11) % 12) + 1;
-				closeHour[0] = ((Number(closeHour[0]) + 11) % 12) + 1;
-				eachDay[1] = openHour.join(':') + ' - ' + closeHour.join(':');
-				return eachDay.slice(0, 2);
-			}
-			return eachDay;
-		});
-		setDisplayHours(operating);
-        setHourError('')
+        // split openHour and closeHour into hours and minutes
+        const openHourSplit = openHour.split(':');
+        const closeHourSplit = closeHour.split(':');
+
+        // add AM or PM to the minutes
+        const openHourAMPM = Math.floor(Number(openHourSplit[0]) / 12) >= 1 ? 'PM' : 'AM';
+        const closeHourAMPM = Math.floor(Number(closeHourSplit[0]) / 12) >= 1 ? 'PM' : 'AM';
+
+        // convert the hours to 12-hour format
+        const openHour12 = (Number(openHourSplit[0]) % 12) || 12;
+        const closeHour12 = (Number(closeHourSplit[0]) % 12) || 12;
+
+        // combine the hours and minutes with AM/PM
+        const openHourFormatted = `${openHour12}:${openHourSplit[1]} ${openHourAMPM}`;
+        const closeHourFormatted = `${closeHour12}:${closeHourSplit[1]} ${closeHourAMPM}`;
+
+        // join the day, open hour, and close hour with hyphens
+        const formattedHour = `${day}-${openHourSplit[0]}:${openHourSplit[1]}-${closeHourSplit[0]}:${closeHourSplit[1]}`;
+
+        setHours([
+            ...hours.slice(0, dayIndex),
+            formattedHour,
+            ...hours.slice(dayIndex),
+        ]);
+        setDisplayHours([
+            ...displayHours.slice(0, dayIndex),
+            [day, `${openHourFormatted} - ${closeHourFormatted}`],
+            ...displayHours.slice(dayIndex),
+        ]);
 	};
 
-	const removeHour = (i) => {
-		const hours = displayHours.filter((e, index) => index !== i);
-		const opHours = operation_hours.filter((e, index) => index !== i);
-		setDisplayHours(hours);
-		setOperationHours(opHours);
+	const removeHour = (index) => {
+		const day = displayHours[index][0];
+        setHours(hours.filter((hour) => !hour.startsWith(day)));
+        setDisplayHours(displayHours.filter((hour) => !hour[0].startsWith(day)));
 	};
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        let res_opHours = operation_hours;
+        let res_opHours = hours;
 		let closedDays = days.filter(
-			(day) => !operation_hours.join(',').includes(day)
+			(day) => !hours.join(',').includes(day)
 		);
 		closedDays = closedDays.map((day) => day + '-Closed');
 		res_opHours = res_opHours.concat(closedDays);

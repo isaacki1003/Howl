@@ -8,7 +8,7 @@ def seed_business_images():
     )
     panera = BusinessImages(
         business_id=2,
-        url="https://s3-media0.fl.yelpcdn.com/bphoto/1jVtCzgdcw0RQ-0qzQ2WWQ/o.jpg",
+        url="https://s3-media0.fl.yelpcdn.com/bphoto/XJ7tpujWoDpUWnPHSprcEg/o.jpg",
         preview=True
     )
     luskin = BusinessImages(
