@@ -37,12 +37,22 @@ const CreateBusiness = () => {
 	const [closeHour, setCloseHour] = useState('');
     const [displayHours, setDisplayHours] = useState([]);
     const [hourError, setHourError] = useState('');
-    const [haveErrors, setHaveErrors] = useState(false);
     const [business_type, setBusinessType] = useState('');
     const [price, setPrice] = useState('');
     const [url, setUrl] = useState('');
-    const [errors, setErrors] = useState([]);
     const [showImagesForm, setShowImagesForm] = useState(false);
+
+    const [nameError, setNameError] = useState("");
+    const [addressError, setAddressError] = useState("");
+    const [cityError, setCityError] = useState("");
+    const [stateError, setStateError] = useState("");
+    const [zipCodeError, setZipCodeError] = useState("");
+    const [descriptionError, setDescriptionError] = useState("");
+    const [phoneNumberError, setPhoneNumberError] = useState("");
+    const [hoursError, setHoursError] = useState("");
+    const [businessTypeError, setBusinessTypeError] = useState("");
+    const [priceError, setPriceError] = useState("");
+    const [urlError, setUrlError] = useState("");
 
     const user = useSelector((state) => state.session.user);
 
@@ -123,20 +133,68 @@ const CreateBusiness = () => {
             hours: res_opHours.join(','),
             business_type,
             price: Number(price),
-            url,
-            // might not need line above since nullable
         };
 
-        console.log(businessInfo)
+        if (url) {
+            businessInfo.url = url;
+            const urlRegex = /^(http:\/\/www\.|https:\/\/www\.|http:\/\/|https:\/\/)?[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,5}(:[0-9]{1,5})?(\/.*)?$/;
+            if (!urlRegex.test(url)) {
+                setUrlError('Please enter a valid URL.');
+            }
+        }
 
         const business = await dispatch(createBusiness(businessInfo));
+
         if (business.errors) {
-            setErrors(business.errors);
-            setHaveErrors(true);
+            business.errors.forEach(error => {
+                if (error.includes("name")) {
+                    setNameError(error);
+                }
+                if (error.includes("address") || error.includes("Address")) {
+                    setAddressError(error);
+                }
+                if (error.includes("city") || error.includes("City")) {
+                    setCityError(error);
+                }
+                if (error.includes("state") || error.includes("State")) {
+                    setStateError(error);
+                }
+                if (error.includes("postal") || error.includes("Postal")) {
+                    setZipCodeError(error);
+                }
+                if (error.includes("tell everyone about your business") || error.includes("Description")) {
+                    setDescriptionError(error);
+                }
+                if (error.includes("phone") || error.includes("Phone")) {
+                    setPhoneNumberError(error);
+                }
+                // if (error.includes("hours")) {
+                //     setHoursError(error);
+                // }
+                if (error.includes("type") || error.includes("categories")) {
+                    setBusinessTypeError(error);
+                }
+                if (error.includes("price") || error.includes("Price")) {
+                    setPriceError(error);
+                }
+                if (error.includes("URL")) {
+                    setUrlError(error);
+                }
+            });
         } else {
             setBusinessId(business.id);
             setShowImagesForm(true);
-            setHaveErrors(false)
+            setNameError("");
+            setAddressError("");
+            setCityError("");
+            setStateError("");
+            setZipCodeError("");
+            setDescriptionError("");
+            setPhoneNumberError("");
+            setHoursError("");
+            setBusinessTypeError("");
+            setPriceError("");
+            setUrlError("");
         }
     };
 
@@ -148,7 +206,7 @@ const CreateBusiness = () => {
 				</NavLink>
 			</div>
             <div className='center'>
-				{haveErrors && (
+				{/* {haveErrors && (
 					<div className="center err-bx1">
 						{errors.map((error, ind) => (
 							<div>{error} ‎   </div>
@@ -160,7 +218,7 @@ const CreateBusiness = () => {
 							‎ ‎ X
 						</p>
 					</div>
-				)}
+				)} */}
 			</div>
             <div className="create-business-container">
 				<div className="left-side">
@@ -173,6 +231,7 @@ const CreateBusiness = () => {
                             <label className="business-small-text">
                                 We’ll use this information to help you claim your Howl page.
                             </label>
+                            {nameError && <div className="error-form-red">{nameError}</div>}
                             <input
                                 type="text"
                                 className="business-label-short"
@@ -188,6 +247,7 @@ const CreateBusiness = () => {
                             <label className="business-small-text">
                                 Add your phone number to help customers connect with you.
                             </label>
+                            {phoneNumberError && <div className="error-form-red">{phoneNumberError}</div>}
                             <input
                                 type="text"
                                 className="business-label-short"
@@ -205,12 +265,13 @@ const CreateBusiness = () => {
                             <label className="business-small-text">
                                 Tell your customers where they can find more information about your business.
                             </label>
+                            {urlError && <div className="error-form-red">{urlError}</div>}
                             <input
                                 type="text"
                                 name="url"
                                 className="business-label-short"
                                 value={url}
-                                placeholder="e.g. https://www.your-website.com"
+                                placeholder="e.g. https://www.your-website.com (optional)"
                                 onChange={(e) => setUrl(e.target.value)}
                             />
 
@@ -220,6 +281,7 @@ const CreateBusiness = () => {
                             <label className="business-small-text">
                                 Help customers find your product and service. You can add up to 3 categories that best describe what your core business is.
                             </label>
+                            {businessTypeError && <div className="error-form-red">{businessTypeError}</div>}
                             <input
                                 type="text"
                                 name="business_type"
@@ -235,6 +297,7 @@ const CreateBusiness = () => {
                             <label className="business-small-text1">
                                 Enter the address for where your customers can find you.
                             </label>
+                            {addressError && <div className="error-form-red1">{addressError}</div>}
                             <label className="business-label-address-small">
                                 Address
                             </label>
@@ -247,6 +310,7 @@ const CreateBusiness = () => {
                                 onChange={(e) => setAddress(e.target.value)}
                             />
 
+                            {cityError && <div className="error-form-red1">{cityError}</div>}
                             <label className="business-label-address-small">
                                 City
                             </label>
@@ -259,6 +323,7 @@ const CreateBusiness = () => {
                                 onChange={(e) => setCity(e.target.value)}
                             />
 
+                            {stateError && <div className="error-form-red1">{stateError}</div>}
                             <label className="business-label-address-small">
                                 State
                             </label>
@@ -274,6 +339,7 @@ const CreateBusiness = () => {
                                 ))}
                             </select>
 
+                            {zipCodeError && <div className="error-form-red1">{zipCodeError}</div>}
                             <label className="business-label-address-small">
                                 Zip
                             </label>
@@ -286,7 +352,6 @@ const CreateBusiness = () => {
                                 onChange={(e) => setZipCode(e.target.value)}
                             />
 
-
                             <label className="business-large-text">
                                 What is your average price?
                             </label>
@@ -294,6 +359,7 @@ const CreateBusiness = () => {
                                 How much does each customer normally spend at your
                                 establishment?
                             </label>
+                            {priceError && <div className="error-form-red">{priceError}</div>}
                             <input
                                 type="number"
                                 min={1}
@@ -366,6 +432,7 @@ const CreateBusiness = () => {
                             <label className="business-small-text">
                                 Please provide a description about your business.
                             </label>
+                            {descriptionError && <div className="error-form-red">{descriptionError}</div>}
                             <textarea
                                 name="description"
                                 className="business-label-long"

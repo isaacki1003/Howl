@@ -13,7 +13,6 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
     const history = useHistory();
 
 	let operating = business.hours?.split(',');
-	console.log(business.hours)
 	operating = operating?.map((eachDay) => {
 		eachDay = eachDay.split('-');
 		if (eachDay[1] !== 'Closed') {

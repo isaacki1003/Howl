@@ -41,6 +41,23 @@
     color: white;
 }
 
+.error-form-red {
+    margin-left: 5.8em;
+    font-family: 'Josefin Sans';
+    font-size: 14px;
+    color: red;
+    margin-top: 1em;
+}
+
+.error-form-red1 {
+    margin-left: 5.8em;
+    font-family: 'Josefin Sans';
+    font-size: 14px;
+    color: red;
+    margin-top: 1em;
+    margin-bottom: 1em;
+}
+
 .red-top-bar1 {
     position: absolute;
     top: 0;
@@ -67,6 +84,14 @@ label.business-large-text {
     font-weight: 900;
     display: flex;
     margin-left: 3.2em;
+    justify-content: flex-start;
+}
+
+label.business-large-text1 {
+    font-size: 25px;
+    font-weight: 900;
+    display: flex;
+    /* margin-left: 2em; */
     justify-content: flex-start;
 }
 
@@ -198,8 +223,8 @@ img.calcifer-create {
     float: right;
     width: 40%;
     margin-right: 5em;
-    margin-top: 15%;
-    height: 100%;
+    margin-top: 5%;
+    height: 180vh;
 }
 
 .sep-butt-x {
@@ -230,7 +255,7 @@ img.calcifer-create {
 }
 
 .bus-img-inp-xy {
-    width: 500px;
+    width: 400px;
     height: 35px;
 }
 

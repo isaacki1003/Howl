@@ -193,7 +193,7 @@ const EditReview = () => {
 							/>
 							<button
 								type="add"
-								className="add-a-image"
+								className="add-a-image2"
 								onClick={handleAddPhoto}
 							>
 								Add photo

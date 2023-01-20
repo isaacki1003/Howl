@@ -92,12 +92,17 @@ const CreateReview = () => {
 			return setImageError(urlError);
 		}
 
+		if(reviewImages.length >= 4){
+			return setImageError("Only 4 photos allowed");
+		}
+
 		let images = reviewImages;
 		images.push(urls);
 		setReviewImages(images);
 		setUrls('');
 		setImageError('');
 	};
+
 	if (!business) return null;
 	return (
 		<div className=''>
@@ -179,7 +184,7 @@ const CreateReview = () => {
 								onChange={(e) => setUrls(e.target.value)}
 								value={urls}
 							/>
-							<button type="add" className="add-a-image" onClick={handleAddPhoto}>
+							<button type="add" className="add-a-image2" onClick={handleAddPhoto}>
 								Add photo
 							</button>
 							<div className="rev-prev-imge">

@@ -124,6 +124,25 @@ export const AddBusinessImage = (imagedata, businessId) => async () => {
 	}
 };
 
+export const DeleteBusinessImage = (imageId, businessId) => async () => {
+	try {
+	  const response = await fetch(`/api/business/${businessId}/images/${imageId}`, {
+		method: 'DELETE'
+	  });
+
+	  if (response.ok) {
+		  const data = await response.json();
+		  return data;
+	  }else {
+		  throw new Error(response.statusText);
+	  }
+	} catch (error) {
+	  console.error(error);
+	  return error;
+	}
+  };
+
+
 export const cleanUpBusiness = () => ({
 	type: CLEAR_BUSINESS
 });

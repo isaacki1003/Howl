@@ -176,6 +176,18 @@
     font-family: 'Josefin Sans', sans-serif;
 }
 
+.add-a-image2 {
+    border: none;
+    height: 30px;
+    width: 100px;
+    /* color: white; */
+    /* background-color: #dc6060; */
+    border-radius: 5px;
+    margin: 1rem 0;
+    cursor: pointer;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
 .add-a-image1 {
     border: none;
     height: 30px;
