@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { AddBusinessImage, getSingleBusiness } from '../../store/business';
+import { AddBusinessImage, getSingleBusiness, DeleteBusinessImage } from '../../store/business';
 
 const AddImagesBusiness = ({ businessId }) => {
     const [urls, setUrls] = useState('');
@@ -9,8 +9,24 @@ const AddImagesBusiness = ({ businessId }) => {
 	const [imageError, setImageError] = useState('');
 	const [hasError, setHasError] = useState(false);
 	const [error, setError] = useState(false);
+	const [imagesFetched, setImagesFetched] = useState(false);
 	const dispatch = useDispatch();
 	const history = useHistory();
+
+	useEffect(() => {
+		const getBusiness = async () => {
+			if (!imagesFetched) {
+				const business123 = await dispatch(getSingleBusiness(businessId));
+				let newArray = [];
+				for (let i = 0; i < business123?.images.length; i++) {
+					newArray.push(business123?.images[i].url);
+				}
+				setReviewImages(newArray);
+				setImagesFetched(true);
+			}
+		};
+		getBusiness();
+	}, []);
 
     const checkPhoto = (e) => {
 		e.preventDefault();
@@ -42,10 +58,27 @@ const AddImagesBusiness = ({ businessId }) => {
 		};
 	}
 
-    const submitImages = async (e) => {
-        e.preventDefault();
+	// const deletePhoto = async (e, index) => {
+	// 	e.preventDefault();
+	// 	const updatedImages = reviewImages.filter((image, i) => i !== index);
+	// 	const response = await dispatch(DeleteBusinessImage(index, businessId));
+	// 	if(response.message === 'Image deleted') {
+	// 		setReviewImages(updatedImages);
+	// 	} else {
+	// 		console.log(response)
+	// 	}
+	// };
 
-        reviewImages.forEach(async (url, i) => {
+    const submitImages = async (e) => {
+		e.preventDefault();
+
+		const business = await dispatch(getSingleBusiness(businessId));
+		for (let i = 0; i < business.images.length; i++) {
+			const imageId = business.images[i].id;
+			await dispatch(DeleteBusinessImage(imageId, businessId));
+    	}
+		console.log('reviewImages ------------------>', reviewImages)
+		reviewImages.forEach(async (url, i) => {
 			const imageData = {
 				url,
 				preview: i === 0 ? true : false,
@@ -62,6 +95,8 @@ const AddImagesBusiness = ({ businessId }) => {
 		}
 	};
 
+
+
     return (
 		<>
 			{hasError && (
@@ -72,7 +107,7 @@ const AddImagesBusiness = ({ businessId }) => {
 				onSubmit={submitImages}
 			>
 				<div>
-				<label className="business-large-text">
+				<label className="business-large-text1">
 					Let's add some images to your business profile.
                 </label>
 				<input
@@ -90,9 +125,10 @@ const AddImagesBusiness = ({ businessId }) => {
 				</button>
 				</div>
 				<div className="bus-prev-img-x">
-					{reviewImages.map((url) => (
+					{reviewImages.map((url, index) => (
+						<div>
 						<img
-							alt='add-bus-one-img'
+							alt={url}
 							className="add-bus-one-img"
 							src={url}
 							onError={({ currentTarget }) => {
@@ -101,10 +137,10 @@ const AddImagesBusiness = ({ businessId }) => {
 									'https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?w=2000';
 							}}
 						/>
+						{/* <button className="delete-photo-button" onClick={(e) => deletePhoto(e, index)}>Delete</button> */}
+					</div>
 					))}
 				</div>
-
-
 			</form>
 		</>
 	);

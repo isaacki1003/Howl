@@ -97,6 +97,16 @@ def add_business_images(id):
         return image.to_dict()
     return {'error': 'Error with Image'}
 
+#DELETE IMAGE FROM A BUSINESS
+@business_routes.route('/<int:businessId>/images/<int:imageId>', methods=['DELETE'])
+@login_required
+def delete_business_image(businessId, imageId):
+    image = BusinessImages.query.get(imageId)
+    if image:
+        db.session.delete(image)
+        db.session.commit()
+        return {'message': 'Image deleted'}
+    return {'errors': 'Image not found'}, 404
 
 #GET ALL REVIEWS FOR A BUSINESS
 @business_routes.route('/<int:id>/reviews')
