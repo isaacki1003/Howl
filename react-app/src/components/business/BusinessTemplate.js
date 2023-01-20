@@ -9,14 +9,21 @@ const BusinessTemplate = ({ business }) => {
                 {business.name}
             </NavLink>
             <div className="busser-name-card">
-                {business.type}
+                {business.business_type}
             </div>
             <div className="bus-container-12">
 				<div className="business-card-business">
                     {descriptionHelper}
                 </div>
                 <div className='bring-down'>
-                    <img alt={`${business.images[0]?.url}`} src={business.images[0]?.url ? `${business.images[0].url}` : 'https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?w=2000'} style={{height: '230px', width: '90%'}}/>
+                    <img
+                        alt={`${business.images[0]?.url}`}
+                        src={business.images[0]?.url ? `${business.images[0].url}` : 'https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?w=2000'}
+                        style={{height: '230px', width: '90%'}}
+                        onError={(e) => {
+                            e.target.src = 'https://img.freepik.com/free-vector/red-grunge-style-coming-soon-design_1017-26691.jpg?w=2000'
+                        }}
+                    />
                 </div>
             </div>
         </div>

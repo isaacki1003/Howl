@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams, NavLink } from "react-router-dom";
 import { deleteBusiness } from "../../store/business";
 import SingleBusinessReviews from "../reviews/SingleBusinessReviews";
+import MapHelper from "../MapHelper";
 
 const SingleBusinessBody = ({ business, operatingHours }) => {
     const user = useSelector(state => state.session.user);
@@ -85,6 +86,9 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 							</div>
 						)}
 						<div className="dets-bus-blk-map">
+							<div>
+								<MapHelper business={business} />
+							</div>
 						<div className="hrs-wrap">
 								<h1 className="title-business-smaller1">Hours</h1>
 								<div id="op-hr-cont">
@@ -96,7 +100,7 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 									<div id="ev-day-1">
 										{operating?.map((day) => (
 											<div id="hrs-op">
-												<div>{day[1]}</div>
+												<div className="hours-smaller">{day[1]}</div>
 												{day[0] === todayDay && (
 													<div
 														className={`business-open-close ${
@@ -210,6 +214,9 @@ const SingleBusinessBody = ({ business, operatingHours }) => {
 					</div>
 				)}
 				<div className="dets-bus-blk-map">
+					<div>
+						<MapHelper business={business} />
+					</div>
 				<div className="hrs-wrap">
 						<h1 className="title-business-smaller1">Hours</h1>
 						<div id="op-hr-cont">

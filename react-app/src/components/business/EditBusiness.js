@@ -92,6 +92,9 @@ const EditBusiness = () => {
     const addHours = (e) => {
         e.preventDefault();
 
+        if (!openHour || !closeHour)
+			return setHourError('Please enter operation hours.');
+
         if (openHour >= closeHour) {
             return setHourError('Open hour must be before close hour.');
         }
