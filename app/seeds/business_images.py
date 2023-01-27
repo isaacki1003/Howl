@@ -8,7 +8,7 @@ def seed_business_images():
     )
     panera = BusinessImages(
         business_id=2,
-        url="https://s3-media0.fl.yelpcdn.com/bphoto/XJ7tpujWoDpUWnPHSprcEg/o.jpg",
+        url="https://s3-media0.fl.yelpcdn.com/bphoto/C2ayw-ETOi5SZapAegmaig/o.jpg",
         preview=True
     )
     luskin = BusinessImages(
@@ -38,7 +38,7 @@ def seed_business_images():
     )
     theBao = BusinessImages(
         business_id=8,
-        url="https://s3-media0.fl.yelpcdn.com/bphoto/AD3DSey_ezw9qbWo95kxJg/o.jpg",
+        url="https://s3-media0.fl.yelpcdn.com/bphoto/dYhSk8BMzx5j0HHnJwiZlQ/o.jpg",
         preview=True
     )
     theCheesecakeFactory = BusinessImages(
