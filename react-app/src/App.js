@@ -19,6 +19,7 @@ import EditReview from './components/reviews/EditReview';
 import PageNotFound from './components/PageNotFound';
 // import ComingSoon from './components/ComingSoon';
 import SearchResults from './components/search/SearchResults';
+import ScrollToTop from './components/ScrollToTop';
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Switch>
         <Route path='/login' exact={true}>
           <LoginForm />
