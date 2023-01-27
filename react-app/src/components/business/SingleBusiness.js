@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, NavLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import SingleBusinessBody from './SingleBusinessBody';
 
@@ -107,14 +107,12 @@ const SingleBusiness = () => {
 					<div style={{ fontWeight: '400' }}>{priceRange} • </div>
 					{categories?.map((category) => (
 						<>
-							{/* <NavLink
+							<NavLink
 								to={`/search/?desc=${category.replace(/^\s+|\s+$/g, '')}&loc=`}
 								className="nav-link dets-bus-cat-redir"
-							> */}
-							<div className='nav-link dets-bus-cat-redir'>
+							>
 								{category},
-							</div>
-							{/* </NavLink> */}
+							</NavLink>
 						</>
 					))}
 				</div>

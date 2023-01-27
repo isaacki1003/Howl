@@ -91,7 +91,7 @@ label.business-large-text1 {
     font-size: 25px;
     font-weight: 900;
     display: flex;
-    /* margin-left: 2em; */
+    /* margin-left: 2m; */
     justify-content: flex-start;
 }
 
@@ -223,7 +223,7 @@ img.calcifer-create {
     float: right;
     width: 40%;
     margin-right: 5em;
-    margin-top: 5%;
+    margin-top: 0%;
     height: 180vh;
 }
 

@@ -4,19 +4,17 @@ import Geocode from 'react-geocode';
 import { useSelector, useDispatch } from 'react-redux';
 import { getKey } from '../store/map';
 
-// const libraries = ['places'];
 
 const Map = ({ apiKey, business }) => {
 	const { isLoaded } = useJsApiLoader({
 		id: 'google-map-script',
 		googleMapsApiKey: apiKey,
-		// libraries
 	  });
 
 	return (
 		<>
 			{isLoaded && (
-				<SingleMap business={business} isLoaded={isLoaded} />
+				<SingleMap isLoaded={isLoaded} business={business} />
 			)}
 		</>
 	)
@@ -27,6 +25,7 @@ const SingleMap = ({ isLoaded, business }) => {
   const key = useSelector((state) => state.map.key);
   const dispatch = useDispatch();
 
+
   // set response language. Defaults to english.
   Geocode.setLanguage('en');
 
@@ -34,6 +33,8 @@ const SingleMap = ({ isLoaded, business }) => {
 
   // Enable or disable logs. Its optional.
   Geocode.enableDebug();
+
+
 
   useEffect(() => {
     dispatch(getKey());
