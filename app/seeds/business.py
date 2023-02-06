@@ -75,7 +75,7 @@ def seed_businesses():
         zip_code='20036',
         description='Fine dining Japanese restaurant that serves traditional and modern sushi, sashimi, and other dishes',
         phone_number='(202) 462-8999',
-        hours='Mon-12:00-14:30,Mon-17:30-22:00,Tue-12:00-14:30,Tue-17:30-22:00,Wed-12:00-14:30,Wed-17:30-22:00,Thu-12:00-14:30,Thu-17:30-22:00,Fri-12:00-14:30,Fri-17:30-22:00,Sat-17:30-22:00,Sun-17:30-22:00',
+        hours='Mon-12:00-14:30,Tue-12:00-14:30,Wed-12:00-14:30,Thu-12:00-14:30,Fri-12:00-14:30,Sat-17:30-22:00,Sun-17:30-22:00',
         business_type='Japanese, Sushi',
         price=200,
         url='https://www.sushitaro.com',
