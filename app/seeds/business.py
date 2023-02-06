@@ -152,7 +152,7 @@ def seed_businesses():
         city='New York',
         state='NY',
         country='USA',
-        zip_code='10036',
+        zip_code='10035',
         description='Casual fast food chain that serves burgers, hot dogs, shakes, and other American favorites',
         phone_number='(212) 918-0106',
         hours='Mon-11:00-00:00,Tue-11:00-00:00,Wed-11:00-00:00,Thu-11:00-00:00,Fri-11:00-01:00,Sat-10:00-01:00,Sun-10:00-00:00',
