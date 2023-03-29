@@ -59,20 +59,22 @@ const CreateBusiness = () => {
     const dispatch = useDispatch();
 
     const addHours = (e) => {
-		e.preventDefault();
+        e.preventDefault();
 
         if (!openHour || !closeHour)
-			return setHourError('Please enter operation hours.');
+          return setHourError('Please enter operation hours.');
 
         if (openHour >= closeHour) {
-            return setHourError('Open hour must be before close hour.');
+          return setHourError('Open hour must be before close hour.');
         }
 
         const dayIndex = days.indexOf(day);
 
-        const dayAlreadyExists = hours.some((existingHour) => existingHour.startsWith(day));
+        const dayAlreadyExists = hours.some((existingHour) =>
+          existingHour.startsWith(day)
+        );
         if (dayAlreadyExists) {
-            return setHourError('Operation hours for that day have already been set.');
+          return setHourError('Operation hours for that day have already been set.');
         }
 
         // split openHour and closeHour into hours and minutes
@@ -80,8 +82,10 @@ const CreateBusiness = () => {
         const closeHourSplit = closeHour.split(':');
 
         // add AM or PM to the minutes
-        const openHourAMPM = Math.floor(Number(openHourSplit[0]) / 12) >= 1 ? 'PM' : 'AM';
-        const closeHourAMPM = Math.floor(Number(closeHourSplit[0]) / 12) >= 1 ? 'PM' : 'AM';
+        const openHourAMPM =
+          Math.floor(Number(openHourSplit[0]) / 12) >= 1 ? 'PM' : 'AM';
+        const closeHourAMPM =
+          Math.floor(Number(closeHourSplit[0]) / 12) >= 1 ? 'PM' : 'AM';
 
         // convert the hours to 12-hour format
         const openHour12 = (Number(openHourSplit[0]) % 12) || 12;
@@ -99,12 +103,13 @@ const CreateBusiness = () => {
             formattedHour,
             ...hours.slice(dayIndex),
         ]);
+
         setDisplayHours([
-            ...displayHours.slice(0, dayIndex),
+            ...displayHours,
             [day, `${openHourFormatted} - ${closeHourFormatted}`],
-            ...displayHours.slice(dayIndex),
-        ]);
-	};
+        ].sort((a, b) => days.indexOf(a[0]) - days.indexOf(b[0])));
+      };
+
 
 	const removeHour = (index) => {
 		const day = displayHours[index][0];
@@ -115,11 +120,14 @@ const CreateBusiness = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         let res_opHours = hours;
-		let closedDays = days.filter(
-			(day) => !hours.join(',').includes(day)
-		);
-		closedDays = closedDays.map((day) => day + '-Closed');
-		res_opHours = res_opHours.concat(closedDays);
+        let closedDays = days.filter((day) => !hours.join(',').includes(day));
+        closedDays = closedDays.map((day) => day + '-Closed');
+        res_opHours = res_opHours.concat(closedDays);
+        res_opHours.sort((a, b) => {
+            const dayA = days.indexOf(a.split('-')[0]);
+            const dayB = days.indexOf(b.split('-')[0]);
+            return dayA - dayB;
+        });
         const businessInfo = {
             owner_id: user.id,
             name,
