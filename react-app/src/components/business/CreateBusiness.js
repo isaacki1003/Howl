@@ -128,6 +128,7 @@ const CreateBusiness = () => {
             const dayB = days.indexOf(b.split('-')[0]);
             return dayA - dayB;
         });
+        
         const businessInfo = {
             owner_id: user.id,
             name,
