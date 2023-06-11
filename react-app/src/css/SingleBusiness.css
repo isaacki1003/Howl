@@ -223,6 +223,10 @@
     height: 100%;
 }
 
+.card-rev-sing-img:hover {
+    transform: scale(2);
+}
+
 .rev-name-correct {
     margin-bottom: 0;
     white-space: nowrap;
