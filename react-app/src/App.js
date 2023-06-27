@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Route, Switch, useLocation } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import LoginForm from './components/auth/LoginForm';
 import SignUpForm from './components/auth/SignUpForm';
@@ -20,11 +20,22 @@ import PageNotFound from './components/PageNotFound';
 // import ComingSoon from './components/ComingSoon';
 import SearchResults from './components/search/SearchResults';
 import ScrollToTop from './components/ScrollToTop';
+import { initGA, logPageView } from './analytics';
+
+const TRACKING_ID = "G-0DHWH5RWQX";
 
 
 function App() {
   const [loaded, setLoaded] = useState(false);
   const dispatch = useDispatch();
+  useEffect(() => {
+    initGA(TRACKING_ID);
+    logPageView();
+  }, []);
+
+  useEffect(() => {
+    logPageView();
+  }, [location]);
 
   useEffect(() => {
     (async() => {
